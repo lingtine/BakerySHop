@@ -1,0 +1,52 @@
+.top-bar {
+  background-color: var(--primary-color);
+  .top-header--container {
+    display: flex;
+    justify-content: center;
+    padding: 8px 0;
+    font-size: 1.6rem;
+    letter-spacing: 4px;
+    font-weight: 300;
+    color: #fff;
+  }
+}
+
+.nav-bar {
+  padding: 16px 0;
+  .nav-bar--logo {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    img {
+      width: 180px;
+    }
+  }
+
+  .nav-bar--actions {
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--primary-color);
+
+    .actions-item {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      font-size: 1.2rem;
+    }
+
+    .actions-login {
+      font-size: 1.7rem;
+    }
+  }
+
+  .nav-bar--cart {
+    height: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: var(--primary-color);
+    font-size: 1.7rem;
+  }
+}
