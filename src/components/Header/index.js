@@ -22,7 +22,7 @@ function Header() {
                 <img alt="logo" src={logoSrc} />
               </div>
             </div>
-            <div className={cx("col", "c-5")}>
+            <div className={cx("col", "c-6")}>
               <div className={cx("nav-bar--actions")}>
                 <div className={cx("actions-item")}>PLAN A BIRTHDAY </div>
                 <div className={cx("actions-item")}>SHOP ALL </div>

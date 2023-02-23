@@ -27,7 +27,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: var(--primary-color);
+    color: var(--color-text);
 
     .actions-item {
       height: 100%;
@@ -46,7 +46,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    color: var(--primary-color);
+    color: var(--color-text);
     font-size: 1.7rem;
   }
 }
