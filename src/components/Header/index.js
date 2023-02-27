@@ -2,8 +2,10 @@ import classNames from "classnames/bind";
 import styles from "./Header.module.scss";
 import { BsCart3 } from "react-icons/bs";
 import { SlUser } from "react-icons/sl";
+import { AiOutlineMenu } from "react-icons/ai";
 
 import TopBar from "./TopBar";
+import Button from "../Button";
 
 const cx = classNames.bind(styles);
 
@@ -17,26 +19,31 @@ function Header() {
       <div className={cx("nav-bar")}>
         <div className={cx("grid", "wide")}>
           <div className={cx("row")}>
-            <div className={cx("col", "c-5")}>
-              <div className={cx("nav-bar--logo")}>
+            <div className={cx("col", "l-0", "m-0", "c-2")}>
+              <Button className={cx("nav-bar--menu")}>
+                <AiOutlineMenu />
+              </Button>
+            </div>
+            <div className={cx("col", "l-4", "m-3", "c-8")}>
+              <Button className={cx("nav-bar--logo")}>
                 <img alt="logo" src={logoSrc} />
-              </div>
+              </Button>
             </div>
-            <div className={cx("col", "c-6")}>
+            <div className={cx("col", "l-7", "m-8", "c-0")}>
               <div className={cx("nav-bar--actions")}>
-                <div className={cx("actions-item")}>PLAN A BIRTHDAY </div>
-                <div className={cx("actions-item")}>SHOP ALL </div>
-                <div className={cx("actions-item")}>BAKES CLUB</div>
-                <div className={cx("actions-item")}>ABOUT</div>
-                <div className={cx("actions-item", "actions-login")}>
+                <Button className={cx("actions-item")}>PLAN A BIRTHDAY </Button>
+                <Button className={cx("actions-item")}>SHOP ALL </Button>
+                <Button className={cx("actions-item")}>BAKES CLUB</Button>
+                <Button className={cx("actions-item")}>ABOUT</Button>
+                <Button className={cx("actions-item", "actions-login")}>
                   <SlUser />
-                </div>
+                </Button>
               </div>
             </div>
-            <div className={cx("col", "c-1")}>
-              <div className={cx("nav-bar--cart")}>
+            <div className={cx("col", "l-1", "m-1", "c-2")}>
+              <Button to={""} className={cx("nav-bar--cart")}>
                 <BsCart3 />
-              </div>
+              </Button>
             </div>
           </div>
         </div>
