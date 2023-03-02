@@ -1,5 +1,5 @@
 .top-bar {
-  background-color: var(--primary-color);
+  background-color: var(---color-announcement-bg);
   .top-header--container {
     display: flex;
     justify-content: center;
@@ -7,7 +7,7 @@
     font-size: 1.6rem;
     letter-spacing: 4px;
     font-weight: 300;
-    color: #fff;
+    color: var(---color-announcement-text);
   }
 }
 
@@ -29,12 +29,12 @@
     align-items: center;
     justify-content: space-between;
     height: 100%;
-    color: var(--color-text);
+    color: var(---color-nav-text);
 
     .actions-item {
       display: flex;
       font-size: 1.2rem;
-      color: var(--color-text);
+      color: var(---color-nav-text);
       padding: 0;
     }
 
@@ -47,7 +47,7 @@
   .nav-bar--cart {
     height: 100%;
     justify-content: flex-start;
-    color: var(--color-text);
+    color: var(---color-nav-text);
     font-size: 1.7rem;
   }
 }
@@ -61,7 +61,7 @@
       height: 100%;
       width: 100%;
       padding: 0;
-      color: var(--color-text);
+      color: var(---color-nav-text);
     }
     .nav-bar--logo {
       justify-content: center;

@@ -1,9 +1,9 @@
 .footer {
-  background-color: #f9f6f2;
+  background-color: var(---color-footer-bg);
   padding: 32px 16px;
 
   .footer-heading {
-    color: #9e513b;
+    color: var(---color-footer-text);
     padding-bottom: 10px;
     font-size: 1.2rem;
     font-weight: 600px;
@@ -11,7 +11,7 @@
   .footer-content {
     padding-top: 10px;
     font-size: 1.4rem;
-    color: rgba(158, 81, 59, 0.9);
+    color: var(---color-footer-a90);
     line-height: 20px;
     margin-bottom: 20px;
   }
