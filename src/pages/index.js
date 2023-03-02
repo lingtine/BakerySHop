@@ -1,1 +1,14 @@
-export { default as Home } from "./Home/Home";
+export { default as HomePage } from "./HomePage";
+export { default as AboutPage } from "./AboutPage";
+export { default as BakesClubPage } from "./BakesClubPage";
+export { default as BDayBookingPage } from "./BDayBookingPage";
+export { default as BirthdayCakesPage } from "./BirthdayCakesPage";
+export { default as CartPage } from "./CartPage";
+export { default as DrinksPage } from "./DrinksPage";
+export { default as FagsPage } from "./FagsPage";
+export { default as GiftDecorPage } from "./GiftDecorPage";
+export { default as IndividualCakesPage } from "./IndividualCakesPage";
+export { default as LoginPage } from "./LoginPage";
+export { default as MacronsPage } from "./MacronsPage";
+export { default as PetGiftPage } from "./PetGiftPage";
+export { default as RegisterPage } from "./RegisterPage";
