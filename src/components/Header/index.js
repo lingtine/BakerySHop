@@ -1,6 +1,7 @@
 import classNames from "classnames/bind";
 import styles from "./Header.module.scss";
 import { BsCart3 } from "react-icons/bs";
+import { useRef, useState } from "react";
 import { SlUser } from "react-icons/sl";
 import { AiOutlineMenu } from "react-icons/ai";
 
@@ -10,13 +11,27 @@ import Button from "../Button";
 const cx = classNames.bind(styles);
 
 function Header() {
+  const [isDisplayFixed, setIsDisplayFixed] = useState(false);
+  const headerRef = useRef(null);
+
+  document.addEventListener("scroll", (e) => {
+    let scrollVal = e.target.documentElement.scrollTop;
+
+    if (scrollVal >= 35) {
+      setIsDisplayFixed(true);
+    } else {
+      setIsDisplayFixed(false);
+    }
+    return () => {
+      document.removeEventListener("scroll");
+    };
+  });
   const logoSrc =
     "https://cdn.shopify.com/s/files/1/2675/2320/files/BAKES__Logo-06_220x.png?v=1638454703";
-
   return (
-    <header>
-      <TopBar />
-      <div className={cx("nav-bar")}>
+    <header ref={headerRef}>
+      {!isDisplayFixed ? <TopBar /> : <></>}
+      <div className={cx("nav-bar", { fixed: isDisplayFixed })}>
         <div className={cx("grid", "wide")}>
           <div className={cx("row")}>
             <div className={cx("col", "l-0", "m-0", "c-2")}>
