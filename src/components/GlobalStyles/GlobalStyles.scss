@@ -111,3 +111,29 @@ a {
 .p-30 {
   padding: 30px;
 }
+
+.content-heading {
+  display: flex;
+  justify-content: center;
+  color: var(---color-text-light);
+  font-size: 1.8rem;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+
+  p {
+    position: relative;
+    padding-bottom: 18px;
+    &::after {
+      content: "";
+      margin: auto;
+      width: 30px;
+      height: 3px;
+      position: absolute;
+      bottom: 0;
+      background: var(---color-text-dark);
+      opacity: 0.2;
+      left: 0;
+      right: 0;
+    }
+  }
+}

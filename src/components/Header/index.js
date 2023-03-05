@@ -66,7 +66,7 @@ function Header() {
     );
   });
   return (
-    <header ref={headerRef}>
+    <header className={cx("header")} ref={headerRef}>
       {!isDisplayFixed ? <TopBar /> : <></>}
       <div className={cx("nav-bar", { fixed: isDisplayFixed })}>
         <div className={cx("grid", "wide")}>
@@ -77,13 +77,15 @@ function Header() {
               </Button>
             </div>
             <div className={cx("col", "l-4", "m-3", "c-8")}>
-              <Button className={cx("nav-bar--logo")}>
+              <Button to="/" className={cx("nav-bar--logo")}>
                 <img alt="logo" src={logoSrc} />
               </Button>
             </div>
             <div className={cx("col", "l-7", "m-8", "c-0")}>
               <div className={cx("nav-bar--actions")}>
-                <Button className={cx("actions-item")}>PLAN A BIRTHDAY </Button>
+                <Button to="/b-day-booking" className={cx("actions-item")}>
+                  PLAN A BIRTHDAY
+                </Button>
                 <Tippy
                   theme="light"
                   placement="bottom"
@@ -99,7 +101,9 @@ function Header() {
                     </div>
                   )}
                 >
-                  <Button className={cx("actions-item")}>SHOP ALL </Button>
+                  <Button to="/collections" className={cx("actions-item")}>
+                    SHOP ALL{" "}
+                  </Button>
                 </Tippy>
                 <Button className={cx("actions-item")}>BAKES CLUB</Button>
                 <Button className={cx("actions-item")}>ABOUT</Button>

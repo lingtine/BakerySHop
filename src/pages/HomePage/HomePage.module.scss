@@ -31,26 +31,6 @@
   .new-product-heading {
     display: flex;
     justify-content: center;
-    font-size: 1.8rem;
-    margin-bottom: 12px;
-    text-transform: uppercase;
-
-    p {
-      position: relative;
-      padding-bottom: 18px;
-      &::after {
-        content: "";
-        margin: auto;
-        width: 30px;
-        height: 3px;
-        position: absolute;
-        bottom: 0;
-        background: var(---color-text-dark);
-        opacity: 0.2;
-        left: 0;
-        right: 0;
-      }
-    }
   }
 
   .new-product-content {
@@ -68,30 +48,10 @@
   .quality-heading {
     display: flex;
     justify-content: center;
-    font-size: 1.8rem;
-    margin-bottom: 12px;
-    text-transform: uppercase;
-
-    p {
-      position: relative;
-      padding-bottom: 18px;
-      &::after {
-        content: "";
-        margin: auto;
-        width: 30px;
-        height: 3px;
-        position: absolute;
-        bottom: 0;
-        background: var(---color-text-dark);
-        opacity: 0.2;
-        left: 0;
-        right: 0;
-      }
-    }
   }
 }
 
-.flagship-container {
+.address-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -101,37 +61,16 @@
   color: var(---color-text-light);
   .flagship-heading {
     display: flex;
-
     justify-content: center;
-    font-size: 1.8rem;
-    margin-bottom: 12px;
-    text-transform: uppercase;
-
-    p {
-      position: relative;
-      padding-bottom: 18px;
-      &::after {
-        content: "";
-        margin: auto;
-        width: 30px;
-        height: 3px;
-        position: absolute;
-        bottom: 0;
-        background: var(---color-text-dark);
-        opacity: 0.2;
-        left: 0;
-        right: 0;
-      }
-    }
   }
 
-  .flagship-content {
+  .address-content {
     font-size: 1.3rem;
     line-height: 2rem;
     word-spacing: 2px;
   }
 
-  .flagship-action {
+  .address-action {
     margin-top: 12px;
     padding: 8px 16px;
     color: var(---inverse-text);
@@ -141,8 +80,7 @@
     }
   }
 }
-
-.flagship-image {
+.address-image {
   height: 728px;
   background-image: url("https://cdn.shopify.com/s/files/1/2675/2320/files/Bakes_Facade_S3-_1_61f80be6-b158-465a-8d2a-33d94f7f9d60_1080x.jpg?v=1638452542");
   background-position: center;
