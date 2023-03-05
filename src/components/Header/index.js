@@ -68,7 +68,7 @@ function Header() {
   return (
     <header className={cx("header")} ref={headerRef}>
       {!isDisplayFixed ? <TopBar /> : <></>}
-      <div className={cx("nav-bar", { fixed: isDisplayFixed })}>
+      <div className={cx("nav-bar")}>
         <div className={cx("grid", "wide")}>
           <div className={cx("row")}>
             <div className={cx("col", "l-0", "m-0", "c-2")}>
