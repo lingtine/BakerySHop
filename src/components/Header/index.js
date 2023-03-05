@@ -4,6 +4,8 @@ import { BsCart3 } from "react-icons/bs";
 import { useRef, useState } from "react";
 import { SlUser } from "react-icons/sl";
 import { AiOutlineMenu } from "react-icons/ai";
+import Tippy from "@tippyjs/react/headless";
+// op
 
 import TopBar from "./TopBar";
 import Button from "../Button";
@@ -26,8 +28,43 @@ function Header() {
       document.removeEventListener("scroll");
     };
   });
+
   const logoSrc =
     "https://cdn.shopify.com/s/files/1/2675/2320/files/BAKES__Logo-06_220x.png?v=1638454703";
+  const subNav = [
+    {
+      id: Math.random(),
+      content: "birthday cakes",
+    },
+    {
+      id: Math.random(),
+      content: "girt & decor",
+    },
+    {
+      id: Math.random(),
+      content: "INDIVIDUAL CAKES",
+    },
+    {
+      id: Math.random(),
+      content: "PET GOODS",
+    },
+    {
+      id: Math.random(),
+      content: "macarons",
+    },
+    {
+      id: Math.random(),
+      content: "drinks",
+    },
+  ];
+
+  const renderSubNav = subNav.map((item) => {
+    return (
+      <Button className={cx("sub-nav-item")} key={item.id}>
+        {item.content}
+      </Button>
+    );
+  });
   return (
     <header ref={headerRef}>
       {!isDisplayFixed ? <TopBar /> : <></>}
@@ -47,7 +84,23 @@ function Header() {
             <div className={cx("col", "l-7", "m-8", "c-0")}>
               <div className={cx("nav-bar--actions")}>
                 <Button className={cx("actions-item")}>PLAN A BIRTHDAY </Button>
-                <Button className={cx("actions-item")}>SHOP ALL </Button>
+                <Tippy
+                  theme="light"
+                  placement="bottom"
+                  interactive={true}
+                  render={(attrs) => (
+                    <div
+                      className={cx("sub-nav")}
+                      data-animation="shift-towards-subtle"
+                      tabIndex="-1"
+                      {...attrs}
+                    >
+                      {renderSubNav}
+                    </div>
+                  )}
+                >
+                  <Button className={cx("actions-item")}>SHOP ALL </Button>
+                </Tippy>
                 <Button className={cx("actions-item")}>BAKES CLUB</Button>
                 <Button className={cx("actions-item")}>ABOUT</Button>
                 <Button className={cx("actions-item", "actions-login")}>
