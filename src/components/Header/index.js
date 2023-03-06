@@ -105,9 +105,19 @@ function Header() {
                     SHOP ALL{" "}
                   </Button>
                 </Tippy>
-                <Button className={cx("actions-item")}>BAKES CLUB</Button>
-                <Button className={cx("actions-item")}>ABOUT</Button>
-                <Button className={cx("actions-item", "actions-login")}>
+                <Button to="/bakes-club" className={cx("actions-item")}>
+                  BAKES CLUB
+                </Button>
+                <Button to="/about" className={cx("actions-item")}>
+                  ABOUT
+                </Button>
+                <Button to="/fags" className={cx("actions-item")}>
+                  fags
+                </Button>
+                <Button
+                  to="/login"
+                  className={cx("actions-item", "actions-login")}
+                >
                   <SlUser />
                 </Button>
               </div>
