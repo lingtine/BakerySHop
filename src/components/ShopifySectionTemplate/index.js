@@ -11,25 +11,25 @@ function ShopifySectionTemplate({ data }) {
   const renderItems = data.content.map((item) => {
     if (dataContentLength === 3) {
       return (
-        <div className={cx("col", "l-4", "m-4", "c-12")}>
+        <div key={item.id} className={cx("col", "l-4", "m-4", "c-12")}>
           <Card content={item} />
         </div>
       );
     } else if (dataContentLength === 4) {
       return (
-        <div className={cx("col", "l-3", "m-3", "c-12")}>
+        <div key={item.id} className={cx("col", "l-3", "m-3", "c-12")}>
           <Card content={item} />
         </div>
       );
     } else if (dataContentLength === 6) {
       return (
-        <div className={cx("col", "l-2", "m-4", "c-12")}>
+        <div key={item.id} className={cx("col", "l-2", "m-4", "c-12")}>
           <Card content={item} />
         </div>
       );
     } else if (dataContentLength === 1) {
       return (
-        <div className={cx("col", "l-12", "m-12", "c-12")}>
+        <div key={item.id} className={cx("col", "l-12", "m-12", "c-12")}>
           <Card content={item} />
         </div>
       );

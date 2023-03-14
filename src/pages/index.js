@@ -13,3 +13,4 @@ export { default as MacronsPage } from "./MacronsPage";
 export { default as PetGiftPage } from "./PetGiftPage";
 export { default as RegisterPage } from "./RegisterPage";
 export { default as Collections } from "./Collections";
+export { default as AccountPage } from "./AccountPage";

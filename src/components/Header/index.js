@@ -7,12 +7,15 @@ import { AiOutlineMenu } from "react-icons/ai";
 import Tippy from "@tippyjs/react/headless";
 // op
 
+import { useSelector } from "react-redux";
+
 import TopBar from "./TopBar";
 import Button from "../Button";
 
 const cx = classNames.bind(styles);
 
 function Header() {
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const [isDisplayFixed, setIsDisplayFixed] = useState(false);
   const headerRef = useRef(null);
 
@@ -35,6 +38,7 @@ function Header() {
     {
       id: Math.random(),
       content: "birthday cakes",
+      to: "/collections/birthday-cakes",
     },
     {
       id: Math.random(),
@@ -60,7 +64,7 @@ function Header() {
 
   const renderSubNav = subNav.map((item) => {
     return (
-      <Button className={cx("sub-nav-item")} key={item.id}>
+      <Button to={item.to} className={cx("sub-nav-item")} key={item.id}>
         {item.content}
       </Button>
     );
@@ -115,7 +119,7 @@ function Header() {
                   fags
                 </Button>
                 <Button
-                  to="/login"
+                  to={isLoggedIn ? "/account" : "/login"}
                   className={cx("actions-item", "actions-login")}
                 >
                   <SlUser />

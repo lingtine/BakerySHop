@@ -14,6 +14,7 @@ import {
   MacronsPage,
   PetGiftPage,
   RegisterPage,
+  AccountPage,
 } from "~/pages";
 import { DefaultLayout } from "~/layouts";
 
@@ -21,10 +22,11 @@ const privateRoutes = [];
 const publicRoutes = [
   { path: "/", component: HomePage, layout: DefaultLayout },
   { path: "/about", component: AboutPage, layout: DefaultLayout },
+  { path: "/account", component: AccountPage, layout: DefaultLayout },
   { path: "/bakes-club", component: BakesClubPage, layout: DefaultLayout },
   { path: "/b-day-booking", component: BDayBookingPage, layout: DefaultLayout },
   {
-    path: "/birthday-cakes",
+    path: "/collections/birthday-cakes",
     component: BirthdayCakesPage,
     layout: DefaultLayout,
   },
