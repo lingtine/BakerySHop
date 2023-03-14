@@ -15,12 +15,14 @@ import {
   PetGiftPage,
   RegisterPage,
   AccountPage,
+  NotFoundPage,
 } from "~/pages";
 import { DefaultLayout } from "~/layouts";
 
 const privateRoutes = [];
 const publicRoutes = [
   { path: "/", component: HomePage, layout: DefaultLayout },
+  { path: "*", component: NotFoundPage, layout: DefaultLayout },
   { path: "/about", component: AboutPage, layout: DefaultLayout },
   { path: "/account", component: AccountPage, layout: DefaultLayout },
   { path: "/bakes-club", component: BakesClubPage, layout: DefaultLayout },
