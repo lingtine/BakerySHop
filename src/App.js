@@ -10,22 +10,21 @@ function App() {
 
   const accessToken = localStorage.getItem("accessToken");
 
-  const fetchData = async () => {
-    try {
-      await axios.get("http://localhost:81/api/auth/user-profile", {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      });
-      dispatch(login());
-    } catch (error) {
-      console.log(error);
-      dispatch(logout());
-    }
-  };
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await axios.get("http://localhost:81/api/auth/user-profile", {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+        dispatch(login());
+      } catch (error) {
+        dispatch(logout());
+      }
+    };
     fetchData();
-  }, [fetchData]);
+  }, [dispatch, accessToken]);
   return (
     <div className="App">
       <Router>

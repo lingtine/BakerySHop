@@ -94,6 +94,7 @@ function Header() {
                   theme="light"
                   placement="bottom"
                   interactive={true}
+                  appendTo={document.body}
                   render={(attrs) => (
                     <div
                       className={cx("sub-nav")}

@@ -10,43 +10,43 @@ function FagsPage() {
   };
   const propsItem = [
     {
-      id: "asdada",
+      id: Math.random(),
       label: "Can i learn react ?",
       content:
         "Yes you can. Yes you can.Yes you can.Yes you can.Yes you can.Yes you can.",
     },
     {
-      id: "asdada",
+      id: Math.random(),
       label: "Can i learn react ?",
       content:
         "Yes you can. Yes you can.Yes you can.Yes you can.Yes you can.Yes you can.",
     },
     {
-      id: "asdada",
+      id: Math.random(),
       label: "Can i learn react ?",
       content:
         "Yes you can. Yes you can.Yes you can.Yes you can.Yes you can.Yes you can.",
     },
     {
-      id: "asdada",
+      id: Math.random(),
       label: "Can i learn react ?",
       content:
         "Yes you can. Yes you can.Yes you can.Yes you can.Yes you can.Yes you can.",
     },
     {
-      id: "asdada",
+      id: Math.random(),
       label: "Can i learn react ?",
       content:
         "Yes you can. Yes you can.Yes you can.Yes you can.Yes you can.Yes you can.",
     },
     {
-      id: "dasd",
+      id: Math.random(),
       label: "Can i learn react ?",
       content:
         "Yes you can. Yes you can.Yes you can.Yes you can.Yes you can.Yes you can.",
     },
     {
-      id: "da",
+      id: Math.random(),
       label: "Can i learn react ?",
       content:
         "Yes you can. Yes you can.Yes you can.Yes you can.Yes you can.Yes you can.",
