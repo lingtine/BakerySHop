@@ -10,14 +10,16 @@ function Card({ content }) {
       <Button to="/">
         <div className={cx("container")}>
           <div className={cx("container-img")}>
-            <img src={content.images.urlImage1} alt="" />
+            <img alt="" />
             <div className={cx("container-sub-img")}>
               {/* <img src="" alt="" /> */}
             </div>
           </div>
           <div className={cx("content")}>
             <div className={cx("content-title")}>{content.name}</div>
-            <div className={cx("content-price")}>{content.price}.000₫</div>
+            <div className={cx("content-price")}>
+              {content.promotion_price / 1000}.000₫
+            </div>
           </div>
         </div>
       </Button>

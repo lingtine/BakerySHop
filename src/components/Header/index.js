@@ -1,16 +1,16 @@
 import classNames from "classnames/bind";
 import styles from "./Header.module.scss";
-import { BsCart3 } from "react-icons/bs";
 import { useRef, useState } from "react";
+import { BsCart3 } from "react-icons/bs";
 import { SlUser } from "react-icons/sl";
 import { AiOutlineMenu } from "react-icons/ai";
 import Tippy from "@tippyjs/react/headless";
 // op
-
 import { useSelector } from "react-redux";
 
 import TopBar from "./TopBar";
 import Button from "../Button";
+import { useFetchCollectionsQuery } from "~/store/apis/collectionsApi";
 
 const cx = classNames.bind(styles);
 
@@ -19,6 +19,9 @@ function Header() {
   const [isDisplayFixed, setIsDisplayFixed] = useState(false);
   const headerRef = useRef(null);
 
+  const { isLoading, data, isError, isSuccess } = useFetchCollectionsQuery();
+
+  // hidden top bar
   document.addEventListener("scroll", (e) => {
     let scrollVal = e.target.documentElement.scrollTop;
 
@@ -34,41 +37,63 @@ function Header() {
 
   const logoSrc =
     "https://cdn.shopify.com/s/files/1/2675/2320/files/BAKES__Logo-06_220x.png?v=1638454703";
-  const subNav = [
+
+  const menuItems = [
     {
       id: Math.random(),
-      content: "birthday cakes",
-      to: "/collections/birthday-cakes",
+      content: "plan a birthday",
+      to: "/b-day-booking",
     },
     {
       id: Math.random(),
-      content: "girt & decor",
+      content: "shop all",
+      to: "/collections",
+      children: [
+        {
+          id: Math.random(),
+          content: "plan a birthday",
+          to: "/b-day-booking",
+        },
+        {
+          id: Math.random(),
+          content: "plan a birthday",
+          to: "/b-day-booking",
+        },
+        {
+          id: Math.random(),
+          content: "plan a birthday",
+          to: "/b-day-booking",
+        },
+      ],
     },
     {
       id: Math.random(),
-      content: "INDIVIDUAL CAKES",
-    },
-    {
-      id: Math.random(),
-      content: "PET GOODS",
-    },
-    {
-      id: Math.random(),
-      content: "macarons",
-    },
-    {
-      id: Math.random(),
-      content: "drinks",
+      content: "faqs",
+      to: "/faqs",
     },
   ];
+  let subNav;
 
-  const renderSubNav = subNav.map((item) => {
-    return (
-      <Button to={item.to} className={cx("sub-nav-item")} key={item.id}>
-        {item.content}
-      </Button>
-    );
-  });
+  if (isLoading) {
+    subNav = <></>;
+  } else if (isError) {
+    subNav = <h1>Lỗi òi</h1>;
+  } else if (isSuccess) {
+    subNav = data.map((collection) => {
+      return (
+        <Button
+          to={`/collections/${collection.id}`}
+          className={cx("sub-nav-item")}
+          key={collection.id}
+        >
+          {collection.name}
+        </Button>
+      );
+    });
+  }
+
+  // function
+
   return (
     <header className={cx("header")} ref={headerRef}>
       {!isDisplayFixed ? <TopBar /> : <></>}
@@ -76,9 +101,10 @@ function Header() {
         <div className={cx("grid", "wide")}>
           <div className={cx("row")}>
             <div className={cx("col", "l-0", "m-0", "c-2")}>
-              <Button className={cx("nav-bar--menu")}>
+              <Button className={cx("action--menu")}>
                 <AiOutlineMenu />
               </Button>
+              {}
             </div>
             <div className={cx("col", "l-4", "m-3", "c-8")}>
               <Button to="/" className={cx("nav-bar--logo")}>
@@ -86,15 +112,15 @@ function Header() {
               </Button>
             </div>
             <div className={cx("col", "l-7", "m-8", "c-0")}>
-              <div className={cx("nav-bar--actions")}>
-                <Button to="/b-day-booking" className={cx("actions-item")}>
+              <div className={cx("nav-bar--menu")}>
+                <Button to="/b-day-booking" className={cx("menu-item")}>
                   PLAN A BIRTHDAY
                 </Button>
                 <Tippy
                   theme="light"
                   placement="bottom"
                   interactive={true}
-                  appendTo={document.body}
+                  appendTo="parent"
                   render={(attrs) => (
                     <div
                       className={cx("sub-nav")}
@@ -102,35 +128,40 @@ function Header() {
                       tabIndex="-1"
                       {...attrs}
                     >
-                      {renderSubNav}
+                      {subNav}
                     </div>
                   )}
                 >
-                  <Button to="/collections" className={cx("actions-item")}>
-                    SHOP ALL{" "}
+                  <Button to="/collections" className={cx("menu-item")}>
+                    SHOP ALL
                   </Button>
                 </Tippy>
-                <Button to="/bakes-club" className={cx("actions-item")}>
+                <Button to="/bakes-club" className={cx("menu-item")}>
                   BAKES CLUB
                 </Button>
-                <Button to="/about" className={cx("actions-item")}>
+                <Button to="/about" className={cx("menu-item")}>
                   ABOUT
                 </Button>
-                <Button to="/fags" className={cx("actions-item")}>
+                <Button to="/fags" className={cx("menu-item")}>
                   fags
-                </Button>
-                <Button
-                  to={isLoggedIn ? "/account" : "/login"}
-                  className={cx("actions-item", "actions-login")}
-                >
-                  <SlUser />
                 </Button>
               </div>
             </div>
             <div className={cx("col", "l-1", "m-1", "c-2")}>
-              <Button to={""} className={cx("nav-bar--cart")}>
-                <BsCart3 />
-              </Button>
+              <div className={cx("nav-bar-actions")}>
+                <Button
+                  to={isLoggedIn ? "/account" : "/login"}
+                  className={cx("action-item", "action-login")}
+                >
+                  <SlUser />
+                </Button>
+                <Button
+                  to={"/cart"}
+                  className={cx("action-item", "action-cart")}
+                >
+                  <BsCart3 />
+                </Button>
+              </div>
             </div>
           </div>
         </div>

@@ -10,6 +10,7 @@ import {
   RegisterPage,
   AccountPage,
   NotFoundPage,
+  ProductTypePage,
 } from "~/pages";
 import { DefaultLayout } from "~/layouts";
 
@@ -32,6 +33,11 @@ const publicRoutes = [
   { path: "/login", component: LoginPage, layout: DefaultLayout },
 
   { path: "/register", component: RegisterPage, layout: DefaultLayout },
+  {
+    path: "/collections/:collectionId",
+    component: ProductTypePage,
+    layout: DefaultLayout,
+  },
 ];
 
 export { privateRoutes, publicRoutes };

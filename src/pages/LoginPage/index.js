@@ -1,38 +1,26 @@
 import { useState } from "react";
 import styles from "./LoginPage.module.scss";
 import classNames from "classnames/bind";
-import { Button } from "~/components";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { login } from "~/store";
-import { useDispatch } from "react-redux";
+import { useLoginMutation } from "~/store";
+import { Button } from "~/components";
 
 const cx = classNames.bind(styles);
 
 function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [login] = useLoginMutation();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = {
+    const { data } = await login({
       email: username,
       password: password,
-    };
-    try {
-      const response = await axios.post(
-        "http://localhost:81/api/auth/login",
-        data
-      );
-      localStorage.setItem("accessToken", response.data.access_token);
-      navigate("/");
-      dispatch(login());
-    } catch (error) {
-      console.log(error);
-      console.log("lỗi rồi");
-    }
+    });
+    localStorage.setItem("accessToken", data.access_token);
+    navigate("/");
   };
 
   return (
