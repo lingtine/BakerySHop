@@ -3,8 +3,7 @@ import { useFetchProductsByTypeQuery } from "~/store";
 import styles from "./ProductTypePage.module.scss";
 import classNames from "classnames/bind";
 import { useState } from "react";
-
-import { Card } from "~/components";
+import { Card, SelectBox } from "~/components";
 
 import {
   TfiLayoutGrid2Alt,
@@ -17,6 +16,8 @@ const cx = classNames.bind(styles);
 function ProductTypePage() {
   const [isShowFilter, setIsShowFilter] = useState(false);
   const [layoutActive, setLayoutActive] = useState(1);
+  const [optionSelect, setOptionSelect] = useState(null);
+
   const { collectionId } = useParams();
   const { isLoading, data, isSuccess, isError } =
     useFetchProductsByTypeQuery(collectionId);
@@ -54,6 +55,18 @@ function ProductTypePage() {
       </button>
     );
   });
+
+  // select box
+
+  const handleSelected = (option) => {
+    setOptionSelect(option);
+  };
+
+  const options = [
+    { id: Math.random(), label: "Red", value: "red" },
+    { id: Math.random(), label: "Green", value: "green" },
+    { id: Math.random(), label: "Yellow", value: "yellow" },
+  ];
   return (
     <div className={cx("wrapper")}>
       <div className={cx("grid", "wide")}>
@@ -69,7 +82,14 @@ function ProductTypePage() {
                 >
                   {isShowFilter ? "hide filter" : "filter"}
                 </button>
-                <div className={cx("collection-nav-button")}>sort</div>
+
+                <SelectBox
+                  className={cx("collection-nav-button")}
+                  selected={optionSelect}
+                  onChange={handleSelected}
+                  options={options}
+                  placeholder={options[0].label}
+                />
               </div>
               <div className={cx("collection-nav-layout")}>{renderLayout}</div>
             </div>
