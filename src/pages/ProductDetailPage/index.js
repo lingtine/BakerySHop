@@ -4,7 +4,7 @@ import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { getProduct } from "~/store";
-import { InputQuantity, Button } from "~/components";
+import { InputQuantity, Button, Accordion } from "~/components";
 import { usePriceFormatter, useThunk } from "~/hooks";
 
 const cx = classNames.bind(styles);
@@ -14,11 +14,16 @@ function ProductDetailPage() {
   const [quantity, setQuantity] = useState(1);
   const [doGetProduct, isLoading, error] = useThunk(getProduct);
   const { data } = useSelector((state) => state.product);
-  const price = usePriceFormatter(data.productsDetail.unit_price, "VND");
-  const total = usePriceFormatter(
-    data.productsDetail.unit_price * quantity,
+
+  const price = usePriceFormatter(
+    data ? data.productsDetail.unit_price : 0,
     "VND"
   );
+  const total = usePriceFormatter(
+    data ? data.productsDetail.unit_price * quantity : 0,
+    "VND"
+  );
+
   useEffect(() => {
     doGetProduct(productId);
   }, [productId, doGetProduct]);
@@ -32,6 +37,14 @@ function ProductDetailPage() {
   } else if (error) {
     content = <h1>lỗi rồi</h1>;
   } else if (data) {
+    console.log(data);
+    const contentAccordion = [
+      {
+        id: Math.random(),
+        label: "description",
+        content: data.productsDetail.description,
+      },
+    ];
     content = (
       <div className={cx("product-action")}>
         <div>
@@ -40,8 +53,10 @@ function ProductDetailPage() {
         </div>
         <div>
           <InputQuantity quantity={quantity} onChange={handleChangeQuantity} />
-          <Button>ADD TO CART {total}</Button>
+          <Button className={cx("btn-purchase")}>ADD TO CART {total}</Button>
         </div>
+        <Accordion items={contentAccordion} />
+        <div>VAT will be added at check out.</div>
       </div>
     );
   }
