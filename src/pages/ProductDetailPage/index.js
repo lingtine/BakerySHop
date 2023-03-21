@@ -46,17 +46,19 @@ function ProductDetailPage() {
       },
     ];
     content = (
-      <div className={cx("product-action")}>
-        <div>
-          <div>{data.productsDetail.name}</div>
-          <div>{price}</div>
+      <div className={cx("product-container")}>
+        <div className={cx("product-content")}>
+          <div className={cx("product-name")}>{data.productsDetail.name}</div>
+          <div className={cx("product-price")}>{price}</div>
         </div>
-        <div>
+        <div className={cx("product-actions")}>
           <InputQuantity quantity={quantity} onChange={handleChangeQuantity} />
           <Button className={cx("btn-purchase")}>ADD TO CART {total}</Button>
         </div>
         <Accordion items={contentAccordion} />
-        <div>VAT will be added at check out.</div>
+        <div className={cx("product-note")}>
+          VAT will be added at check out.
+        </div>
       </div>
     );
   }
