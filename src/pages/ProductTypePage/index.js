@@ -1,9 +1,12 @@
-import { useParams } from "react-router-dom";
-import { useFetchProductsByTypeQuery } from "~/store";
 import styles from "./ProductTypePage.module.scss";
 import classNames from "classnames/bind";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 import { Card, SelectBox } from "~/components";
+import { fetchProductsByCollection } from "~/store";
+import { useThunk } from "~/hooks";
 
 import {
   TfiLayoutGrid2Alt,
@@ -17,18 +20,22 @@ function ProductTypePage() {
   const [isShowFilter, setIsShowFilter] = useState(false);
   const [layoutActive, setLayoutActive] = useState(1);
   const [optionSelect, setOptionSelect] = useState(null);
-
   const { collectionId } = useParams();
-  const { isLoading, data, isSuccess, isError } =
-    useFetchProductsByTypeQuery(collectionId);
+  const { data } = useSelector((state) => state.productsByCollection);
+
+  const [doFetchProducts, isLoading, error] = useThunk(
+    fetchProductsByCollection
+  );
+  useEffect(() => {
+    doFetchProducts(collectionId);
+  }, [collectionId, doFetchProducts]);
 
   let content;
   if (isLoading) {
     content = <h1>isLoading</h1>;
-  } else if (isError) {
+  } else if (error) {
     content = <h1>isError</h1>;
-  } else if (isSuccess) {
-    console.log(data.productByType);
+  } else if (data) {
     content = data.productByType.map((product) => {
       return (
         <div key={product.id} className={cx("col", "l-4", "l-4", "c-4")}>

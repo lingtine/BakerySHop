@@ -10,3 +10,4 @@ export { default as Collections } from "./Collections";
 export { default as AccountPage } from "./AccountPage";
 export { default as NotFoundPage } from "./NotFoundPage";
 export { default as ProductTypePage } from "./ProductTypePage";
+export { default as ProductDetailPage } from "./ProductDetailPage";

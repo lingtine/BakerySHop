@@ -1,6 +1,6 @@
 import classNames from "classnames/bind";
 import styles from "./Header.module.scss";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BsCart3 } from "react-icons/bs";
 import { SlUser } from "react-icons/sl";
 import { AiOutlineMenu } from "react-icons/ai";
@@ -10,16 +10,23 @@ import { useSelector } from "react-redux";
 
 import TopBar from "./TopBar";
 import Button from "../Button";
-import { useFetchCollectionsQuery } from "~/store/apis/collectionsApi";
+import { fetchCollections } from "~/store";
+import { useThunk } from "~/hooks";
 
 const cx = classNames.bind(styles);
 
 function Header() {
-  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const isLoggedIn = useSelector((state) => state.auth.isAuthenticated);
+  const { data } = useSelector((state) => {
+    return state.collections;
+  });
   const [isDisplayFixed, setIsDisplayFixed] = useState(false);
   const headerRef = useRef(null);
+  const [doFetchCollections, isLoading, error] = useThunk(fetchCollections);
 
-  const { isLoading, data, isError, isSuccess } = useFetchCollectionsQuery();
+  useEffect(() => {
+    doFetchCollections();
+  }, [doFetchCollections]);
 
   // hidden top bar
   document.addEventListener("scroll", (e) => {
@@ -38,47 +45,13 @@ function Header() {
   const logoSrc =
     "https://cdn.shopify.com/s/files/1/2675/2320/files/BAKES__Logo-06_220x.png?v=1638454703";
 
-  const menuItems = [
-    {
-      id: Math.random(),
-      content: "plan a birthday",
-      to: "/b-day-booking",
-    },
-    {
-      id: Math.random(),
-      content: "shop all",
-      to: "/collections",
-      children: [
-        {
-          id: Math.random(),
-          content: "plan a birthday",
-          to: "/b-day-booking",
-        },
-        {
-          id: Math.random(),
-          content: "plan a birthday",
-          to: "/b-day-booking",
-        },
-        {
-          id: Math.random(),
-          content: "plan a birthday",
-          to: "/b-day-booking",
-        },
-      ],
-    },
-    {
-      id: Math.random(),
-      content: "faqs",
-      to: "/faqs",
-    },
-  ];
   let subNav;
 
   if (isLoading) {
     subNav = <></>;
-  } else if (isError) {
+  } else if (error) {
     subNav = <h1>Lỗi òi</h1>;
-  } else if (isSuccess) {
+  } else if (data) {
     subNav = data.map((collection) => {
       return (
         <Button

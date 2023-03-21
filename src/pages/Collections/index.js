@@ -1,20 +1,31 @@
 import styles from "./Collections.module.scss";
 import classNames from "classnames/bind";
 import { Link } from "react-router-dom";
-import { useFetchCollectionsQuery } from "~/store";
+import { useSelector } from "react-redux";
+import { fetchCollections } from "~/store";
+import { useThunk } from "~/hooks";
+import { useEffect } from "react";
 
 const cx = classNames.bind(styles);
 
 function Collections() {
-  const { isLoading, data, isSuccess, isError } = useFetchCollectionsQuery();
+  const { data } = useSelector((state) => {
+    return state.collections;
+  });
+
+  // const { isLoading, data, isSuccess, isError } = useFetchCollectionsQuery();
+  const [doFetchCollections, isLoading, error] = useThunk(fetchCollections);
+
+  useEffect(() => {
+    doFetchCollections();
+  }, [doFetchCollections]);
 
   let content;
-
   if (isLoading) {
     content = <></>;
-  } else if (isError) {
+  } else if (error) {
     content = <h1>Lỗi rồi</h1>;
-  } else if (isSuccess) {
+  } else if (data) {
     content = data.map((item) => {
       return (
         <div key={item.id} className={cx("col", "l-6", "m-6", "c-6")}>

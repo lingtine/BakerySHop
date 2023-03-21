@@ -7,3 +7,4 @@ export { default as Card } from "./Card";
 export { default as ShopifySectionTemplate } from "./ShopifySectionTemplate";
 export { default as Accordion } from "./Accordion";
 export { default as SelectBox } from "./SelectBox";
+export { default as InputQuantity } from "./InputQuantity";

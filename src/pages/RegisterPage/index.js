@@ -3,8 +3,6 @@ import styles from "./RegisterPage.module.scss";
 import classNames from "classnames/bind";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { login } from "~/store";
-import { useDispatch } from "react-redux";
 
 import { Button } from "~/components";
 
@@ -17,7 +15,6 @@ function RegisterPage() {
     password: "",
     password_confirmation: "",
   });
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
@@ -31,7 +28,6 @@ function RegisterPage() {
       );
       localStorage.setItem("accessToken", response.data.access_token);
       navigate("/");
-      dispatch(login());
     } catch (error) {
       console.log(error);
       console.log("lỗi rồi");

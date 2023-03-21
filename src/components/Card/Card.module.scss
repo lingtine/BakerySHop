@@ -47,6 +47,10 @@
 }
 
 .content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   .content-title {
     font-weight: 500;
     margin-bottom: 8px;

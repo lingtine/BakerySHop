@@ -11,6 +11,7 @@ import {
   AccountPage,
   NotFoundPage,
   ProductTypePage,
+  ProductDetailPage,
 } from "~/pages";
 import { DefaultLayout } from "~/layouts";
 
@@ -36,6 +37,11 @@ const publicRoutes = [
   {
     path: "/collections/:collectionId",
     component: ProductTypePage,
+    layout: DefaultLayout,
+  },
+  {
+    path: "/collections/:collectionId/:productId",
+    component: ProductDetailPage,
     layout: DefaultLayout,
   },
 ];

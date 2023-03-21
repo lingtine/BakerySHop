@@ -2,6 +2,7 @@ import styles from "./HomePage.module.scss";
 import classNames from "classnames/bind";
 import { GiFruitTree } from "react-icons/gi";
 
+import { useSelector } from "react-redux";
 import { Banner, Button, Card, ShopifySectionTemplate } from "~/components";
 
 const cx = classNames.bind(styles);

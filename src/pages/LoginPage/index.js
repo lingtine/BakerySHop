@@ -2,7 +2,11 @@ import { useState } from "react";
 import styles from "./LoginPage.module.scss";
 import classNames from "classnames/bind";
 import { useNavigate } from "react-router-dom";
-import { useLoginMutation } from "~/store";
+import { useSelector } from "react-redux";
+
+import { obtainAccessToken } from "~/store";
+import { useThunk } from "~/hooks";
+
 import { Button } from "~/components";
 
 const cx = classNames.bind(styles);
@@ -10,18 +14,19 @@ const cx = classNames.bind(styles);
 function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [login] = useLoginMutation();
+  const [doObtainAccessToken, isLoading, error] = useThunk(obtainAccessToken);
   const navigate = useNavigate();
+  const accessToken = useSelector((state) => state.auth.accessToken);
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-    const { data } = await login({
-      email: username,
-      password: password,
-    });
-    localStorage.setItem("accessToken", data.access_token);
-    navigate("/");
+    doObtainAccessToken({ email: username, password });
   };
+  if (isLoading) {
+  } else if (error) {
+  } else if (accessToken) {
+    navigate("/");
+  }
 
   return (
     <div className={cx("wrapper")}>

@@ -1,20 +1,42 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { obtainAccessToken } from "../thunks";
 
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    isLoggedIn: false,
+    accessToken: null,
+    isAuthenticated: false,
+    status: "idle",
+    error: null,
   },
   reducers: {
-    login: (state) => {
-      state.isLoggedIn = true;
+    setToken: (state, action) => {
+      state.accessToken = action.payload;
+      state.isAuthenticated = true;
     },
-    logout: (state) => {
-      state.isLoggedIn = false;
+    clearToken: (state) => {
+      state.accessToken = null;
+      state.isAuthenticated = false;
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(obtainAccessToken.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(obtainAccessToken.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.isAuthenticated = true;
+        state.accessToken = action.payload.access_token;
+      })
+      .addCase(obtainAccessToken.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+        state.isAuthenticated = false;
+      });
   },
 });
 
-export const { login, logout } = authSlice.actions;
-
-export const authReducer = authSlice.reducer;
+export { authSlice };
+export const { clearToken } = authSlice.actions;
+export default authSlice.reducer;

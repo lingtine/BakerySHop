@@ -1,13 +1,13 @@
-import { logout } from "~/store";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-function AccountPage() {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+import { clearToken } from "~/store";
+import { useDispatch } from "react-redux";
 
+function AccountPage() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleLogout = () => {
-    dispatch(logout());
     localStorage.removeItem("accessToken");
+    dispatch(clearToken());
     navigate("/");
   };
   return (
