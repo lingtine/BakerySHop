@@ -70,9 +70,14 @@ function ProductTypePage() {
   };
 
   const options = [
-    { id: Math.random(), label: "Red", value: "red" },
-    { id: Math.random(), label: "Green", value: "green" },
-    { id: Math.random(), label: "Yellow", value: "yellow" },
+    { id: Math.random(), label: "THEO THỨ TỰ BẢNG CHỮ CÁI, A-Z", value: "red" },
+    {
+      id: Math.random(),
+      label: "THEO THỨ TỰ BẢNG CHỮ CÁI, Z-A",
+      value: "green",
+    },
+    { id: Math.random(), label: "Giá, từ thấp đến cao", value: "yellow" },
+    { id: Math.random(), label: "Giá, từ cao đến thấp", value: "yellow" },
   ];
   return (
     <div className={cx("wrapper")}>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./LoginPage.module.scss";
 import classNames from "classnames/bind";
 import { useNavigate } from "react-router-dom";
@@ -15,18 +15,18 @@ function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [doObtainAccessToken, isLoading, error] = useThunk(obtainAccessToken);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const navigate = useNavigate();
-  const accessToken = useSelector((state) => state.auth.accessToken);
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/");
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     doObtainAccessToken({ email: username, password });
   };
-  if (isLoading) {
-  } else if (error) {
-  } else if (accessToken) {
-    navigate("/");
-  }
 
   return (
     <div className={cx("wrapper")}>

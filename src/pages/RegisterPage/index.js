@@ -20,7 +20,6 @@ function RegisterPage() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     // Handle form submission here
-    console.log(formData);
     try {
       const response = await axios.post(
         "http://localhost:81/api/auth/register",
@@ -30,7 +29,6 @@ function RegisterPage() {
       navigate("/");
     } catch (error) {
       console.log(error);
-      console.log("lỗi rồi");
     }
   };
 

@@ -1,42 +1,65 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { obtainAccessToken } from "../thunks";
+import { obtainAccessToken, getUser, authRefresh } from "../thunks";
 
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    accessToken: null,
+    accessToken: localStorage.getItem("accessToken") || null,
     isAuthenticated: false,
+    user: null,
     status: "idle",
     error: null,
   },
-  reducers: {
-    setToken: (state, action) => {
-      state.accessToken = action.payload;
-      state.isAuthenticated = true;
-    },
-    clearToken: (state) => {
-      state.accessToken = null;
-      state.isAuthenticated = false;
-    },
-  },
+
   extraReducers: (builder) => {
+    //logout in
     builder
       .addCase(obtainAccessToken.pending, (state) => {
         state.status = "loading";
       })
       .addCase(obtainAccessToken.fulfilled, (state, action) => {
         state.status = "succeeded";
-        state.isAuthenticated = true;
         state.accessToken = action.payload.access_token;
+        state.isAuthenticated = true;
+        localStorage.setItem("accessToken", action.payload.access_token);
       })
       .addCase(obtainAccessToken.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
+      });
+    //get user
+    builder
+      .addCase(getUser.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(getUser.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.user = action.user;
+        state.isAuthenticated = true;
+      })
+      .addCase(getUser.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      });
+
+    //logout
+    builder
+      .addCase(authRefresh.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(authRefresh.fulfilled, (state) => {
+        state.status = "succeeded";
+        state.accessToken = null;
         state.isAuthenticated = false;
+        localStorage.removeItem("accessToken");
+      })
+      .addCase(authRefresh.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
       });
   },
 });
 
 export { authSlice };
-export const { clearToken } = authSlice.actions;
+
 export default authSlice.reducer;

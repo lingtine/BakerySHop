@@ -8,6 +8,9 @@ const productsByCollectionSlice = createSlice({
     error: null,
     status: "idle",
   },
+  reducers: {
+    sortProduct: (state, actions) => {},
+  },
 
   extraReducers: (builder) => {
     builder

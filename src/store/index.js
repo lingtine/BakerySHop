@@ -1,12 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
-
 import {
   authReducer,
-  authSlice,
   collectionsReducer,
   productsByCollectionReducer,
   productReducer,
+  cartReducer,
 } from "./slices";
 
 const store = configureStore({
@@ -15,15 +14,12 @@ const store = configureStore({
     collections: collectionsReducer,
     productsByCollection: productsByCollectionReducer,
     product: productReducer,
+    cart: cartReducer,
   },
 });
 
 export { store };
 setupListeners(store.dispatch);
 
-const token = localStorage.getItem("accessToken");
-if (token) {
-  store.dispatch(authSlice.actions.setToken(token));
-}
 export * from "./thunks";
 export * from "./slices";

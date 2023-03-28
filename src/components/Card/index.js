@@ -5,16 +5,18 @@ import { usePriceFormatter } from "~/hooks";
 const cx = classNames.bind(styles);
 
 function Card({ content }) {
-  const price = usePriceFormatter(content.unit_price, "VND");
-
+  const price = usePriceFormatter(
+    content.unit_price ? content.unit_price : 0,
+    "VND"
+  );
   return (
     <div className={cx("wrapper")}>
       <Link to={`/collections/${content.id_type}/${content.id}`}>
         <div className={cx("container")}>
           <div className={cx("container-img")}>
-            <img alt="" />
+            <img src={`${content.image}`} alt="" />
             <div className={cx("container-sub-img")}>
-              {/* <img src="" alt="" /> */}
+              {<img src={`${content.image}`} alt="" />}
             </div>
           </div>
           <div className={cx("content")}>
