@@ -15,16 +15,23 @@ function ProductDetailPage() {
   const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
   const [doGetProduct, isLoading, error] = useThunk(getProduct);
-  const { data } = useSelector((state) => state.product);
-  const { isAuthenticated } = useSelector((state) => state.auth);
+  const { data: product } = useSelector((state) => state.product);
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
+  const { data } = useSelector((state) => state.cart);
+
   const dispatch = useDispatch();
 
-  const price = usePriceFormatter(data ? data.unit_price : 0, "VND");
-  const total = usePriceFormatter(data ? data.unit_price * quantity : 0, "VND");
+  const price = usePriceFormatter(product ? product.unit_price : 0, "VND");
+  const total = usePriceFormatter(
+    product ? product.unit_price * quantity : 0,
+    "VND"
+  );
+  console.log(product);
 
   useEffect(() => {
     doGetProduct(productId);
   }, [productId, doGetProduct]);
+  useEffect(() => {}, [data.items, data.totalPrice]);
   const handleChangeQuantity = (value) => {
     setQuantity(value);
   };
@@ -33,7 +40,19 @@ function ProductDetailPage() {
     if (!isAuthenticated) {
       navigate("/login");
     } else {
-      dispatch(addToCart());
+      dispatch(
+        addToCart({
+          userId: user.id,
+          product: {
+            productId: product.id,
+            productType: product.id_type,
+            productName: product.name,
+            productImage: product.image,
+            quantity,
+            price: product.promotion_price || product.unit_price,
+          },
+        })
+      );
     }
   };
 
@@ -42,18 +61,18 @@ function ProductDetailPage() {
     content = <h1>loading</h1>;
   } else if (error) {
     content = <h1>lỗi rồi</h1>;
-  } else if (data) {
+  } else if (product) {
     const contentAccordion = [
       {
         id: Math.random(),
         label: "description",
-        content: data.description,
+        content: product.description,
       },
     ];
     content = (
       <div className={cx("product-container")}>
         <div className={cx("product-content")}>
-          <div className={cx("product-name")}>{data.name}</div>
+          <div className={cx("product-name")}>{product.name}</div>
           <div className={cx("product-price")}>{price}</div>
         </div>
         <div className={cx("product-actions")}>
@@ -79,7 +98,7 @@ function ProductDetailPage() {
               <div className={cx("product-wrapper-image")}>
                 <img
                   className={cx("product-image")}
-                  src={data ? `${data.image}` : ""}
+                  src={product ? `${product.image}` : ""}
                   alt="thọ ngu"
                 />
               </div>

@@ -32,11 +32,17 @@ function InputQuantity({ quantity, onChange }) {
   };
 
   const handleBlur = (e) => {
+    if (e.target.value === "") {
+      setValue(0);
+      onChange(0);
+      return;
+    }
     const value = parseInt(e.target.value);
     if (value > 99) {
       setValue(99);
       onChange(99);
     } else {
+      setValue(value);
       onChange(value);
     }
   };

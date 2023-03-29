@@ -4,7 +4,7 @@ import classNames from "classnames/bind";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import { obtainAccessToken } from "~/store";
+import { obtainAccessToken, getUser } from "~/store";
 import { useThunk } from "~/hooks";
 
 import { Button } from "~/components";
@@ -14,12 +14,15 @@ const cx = classNames.bind(styles);
 function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [doObtainAccessToken, isLoading, error] = useThunk(obtainAccessToken);
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const [doObtainAccessToken] = useThunk(obtainAccessToken);
+  const [doGetUser] = useThunk(getUser);
+
+  const { isAuthenticated, accessToken } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   useEffect(() => {
     if (isAuthenticated) {
       navigate("/");
+      doGetUser(accessToken);
     }
   }, [isAuthenticated, navigate]);
 
