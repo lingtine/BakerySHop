@@ -38,8 +38,21 @@ function ProductTypePage() {
     content = <h1>isError</h1>;
   } else if (data) {
     content = data.map((product) => {
+      if (layoutActive === 0) {
+        return (
+          <div key={product.id} className={cx("col", "l-6", "l-6", "c-6")}>
+            <Card content={product} />
+          </div>
+        );
+      } else if (layoutActive === 1) {
+        return (
+          <div key={product.id} className={cx("col", "l-4", "l-4", "c-4")}>
+            <Card content={product} />
+          </div>
+        );
+      }
       return (
-        <div key={product.id} className={cx("col", "l-4", "l-4", "c-4")}>
+        <div key={product.id} className={cx("col", "l-3", "l-3", "c-3")}>
           <Card content={product} />
         </div>
       );
