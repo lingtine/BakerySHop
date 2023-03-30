@@ -8,7 +8,7 @@ const fetchProductsByCollection = createAsyncThunk(
       `http://localhost:81/api/products-type/${productTypeId}`
     );
 
-    return response.data;
+    return response.data.productByType;
   }
 );
 

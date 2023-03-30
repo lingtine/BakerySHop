@@ -7,9 +7,23 @@ const productsByCollectionSlice = createSlice({
     data: null,
     error: null,
     status: "idle",
+    sort: "name-asc",
   },
   reducers: {
-    sortProduct: (state, actions) => {},
+    sorted: (state, action) => {
+      state.sort = action.payload;
+      state.data.sort((a, b) => {
+        const [field, order] = action.payload.split("-");
+        const reverse = order === "asc" ? 1 : -1;
+        const valueA = a[field];
+        const valueB = b[field];
+        if (field === "name") {
+          return valueA.localeCompare(valueB) * reverse;
+        }
+
+        return (valueA - valueB) * reverse;
+      });
+    },
   },
 
   extraReducers: (builder) => {
@@ -27,5 +41,7 @@ const productsByCollectionSlice = createSlice({
       });
   },
 });
+
+export const { sorted } = productsByCollectionSlice.actions;
 
 export default productsByCollectionSlice.reducer;

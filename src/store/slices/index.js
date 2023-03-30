@@ -4,3 +4,4 @@ export { default as productsByCollectionReducer } from "./productsByCollection";
 export { default as productReducer } from "./productSlice";
 export { default as cartReducer } from "./cartSlice";
 export * from "./cartSlice";
+export * from "./productsByCollection";

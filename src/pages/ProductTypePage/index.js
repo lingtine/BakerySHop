@@ -2,10 +2,10 @@ import styles from "./ProductTypePage.module.scss";
 import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 import { Card, SelectBox } from "~/components";
-import { fetchProductsByCollection } from "~/store";
+import { fetchProductsByCollection, sorted } from "~/store";
 import { useThunk } from "~/hooks";
 
 import {
@@ -22,6 +22,7 @@ function ProductTypePage() {
   const [optionSelect, setOptionSelect] = useState(null);
   const { collectionId } = useParams();
   const { data } = useSelector((state) => state.productsByCollection);
+  const dispatch = useDispatch();
 
   const [doFetchProducts, isLoading, error] = useThunk(
     fetchProductsByCollection
@@ -36,7 +37,7 @@ function ProductTypePage() {
   } else if (error) {
     content = <h1>isError</h1>;
   } else if (data) {
-    content = data.productByType.map((product) => {
+    content = data.map((product) => {
       return (
         <div key={product.id} className={cx("col", "l-4", "l-4", "c-4")}>
           <Card content={product} />
@@ -67,17 +68,30 @@ function ProductTypePage() {
 
   const handleSelected = (option) => {
     setOptionSelect(option);
+    dispatch(sorted(option.value));
   };
 
   const options = [
-    { id: Math.random(), label: "THEO THỨ TỰ BẢNG CHỮ CÁI, A-Z", value: "red" },
+    {
+      id: Math.random(),
+      label: "THEO THỨ TỰ BẢNG CHỮ CÁI, A-Z",
+      value: "name-asc",
+    },
     {
       id: Math.random(),
       label: "THEO THỨ TỰ BẢNG CHỮ CÁI, Z-A",
-      value: "green",
+      value: "name-desc",
     },
-    { id: Math.random(), label: "Giá, từ thấp đến cao", value: "yellow" },
-    { id: Math.random(), label: "Giá, từ cao đến thấp", value: "yellow" },
+    {
+      id: Math.random(),
+      label: "Giá, từ cao đến thấp",
+      value: "unit_price-asc",
+    },
+    {
+      id: Math.random(),
+      label: "Giá, từ thấp đến cao",
+      value: "unit_price-desc",
+    },
   ];
   return (
     <div className={cx("wrapper")}>
