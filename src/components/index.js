@@ -8,3 +8,4 @@ export { default as ShopifySectionTemplate } from "./ShopifySectionTemplate";
 export { default as Accordion } from "./Accordion";
 export { default as SelectBox } from "./SelectBox";
 export { default as InputQuantity } from "./InputQuantity";
+export { default as SideBar } from "./SideBar";

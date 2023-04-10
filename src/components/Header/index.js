@@ -5,7 +5,7 @@ import { BsCart3 } from "react-icons/bs";
 import { SlUser } from "react-icons/sl";
 import { AiOutlineMenu } from "react-icons/ai";
 import Tippy from "@tippyjs/react/headless";
-// op
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import TopBar from "./TopBar";
@@ -20,7 +20,7 @@ function Header() {
   const { data } = useSelector((state) => {
     return state.collections;
   });
-  const [isDisplayFixed, setIsDisplayFixed] = useState(false);
+  const [isPositionFixed, setIsPositionFixed] = useState(false);
   const headerRef = useRef(null);
   const [doFetchCollections, isLoading, error] = useThunk(fetchCollections);
 
@@ -32,10 +32,10 @@ function Header() {
   document.addEventListener("scroll", (e) => {
     let scrollVal = e.target.documentElement.scrollTop;
 
-    if (scrollVal >= 35) {
-      setIsDisplayFixed(true);
+    if (scrollVal >= 36) {
+      setIsPositionFixed(true);
     } else {
-      setIsDisplayFixed(false);
+      setIsPositionFixed(false);
     }
     return () => {
       document.removeEventListener("scroll");
@@ -69,8 +69,12 @@ function Header() {
 
   return (
     <header className={cx("header")} ref={headerRef}>
-      {!isDisplayFixed ? <TopBar /> : <></>}
-      <div className={cx("nav-bar")}>
+      {!isPositionFixed ? <TopBar /> : <></>}
+      <div
+        className={cx("nav-bar", {
+          fixed: isPositionFixed,
+        })}
+      >
         <div className={cx("grid", "wide")}>
           <div className={cx("row")}>
             <div className={cx("col", "l-0", "m-0", "c-2")}>
@@ -79,61 +83,61 @@ function Header() {
               </Button>
               {}
             </div>
-            <div className={cx("col", "l-4", "m-3", "c-8")}>
+            <div className={cx("col", "l-6", "m-6", "c-8")}>
               <Button to="/" className={cx("nav-bar--logo")}>
                 <img alt="logo" src={logoSrc} />
               </Button>
             </div>
-            <div className={cx("col", "l-7", "m-8", "c-0")}>
-              <div className={cx("nav-bar--menu")}>
-                <Button to="/b-day-booking" className={cx("menu-item")}>
-                  PLAN A BIRTHDAY
-                </Button>
-                <Tippy
-                  theme="light"
-                  placement="bottom"
-                  interactive={true}
-                  appendTo="parent"
-                  render={(attrs) => (
-                    <div
-                      className={cx("sub-nav")}
-                      data-animation="shift-towards-subtle"
-                      tabIndex="-1"
-                      {...attrs}
-                    >
-                      {subNav}
+            <div className={cx("col", "l-6", "m-6", "c-2")}>
+              <div className={cx("nav-bar--container")}>
+                <div className={cx("row", "w-full")}>
+                  <div className={cx("col", "l-10", "m-10", "c-0")}>
+                    <div className={cx("nav-bar--menu")}>
+                      <Tippy
+                        theme="light"
+                        placement="bottom"
+                        interactive={true}
+                        appendTo="parent"
+                        render={(attrs) => (
+                          <div
+                            className={cx("sub-nav")}
+                            data-animation="shift-towards-subtle"
+                            tabIndex="-1"
+                            {...attrs}
+                          >
+                            {subNav}
+                          </div>
+                        )}
+                      >
+                        <Link to="/collections" className={cx("menu-item")}>
+                          ORDER NOW
+                        </Link>
+                      </Tippy>
+                      <Link to="/about" className={cx("menu-item")}>
+                        ABOUT
+                      </Link>
+                      <Link to="/fags" className={cx("menu-item")}>
+                        fags
+                      </Link>
                     </div>
-                  )}
-                >
-                  <Button to="/collections" className={cx("menu-item")}>
-                    SHOP ALL
-                  </Button>
-                </Tippy>
-                <Button to="/bakes-club" className={cx("menu-item")}>
-                  BAKES CLUB
-                </Button>
-                <Button to="/about" className={cx("menu-item")}>
-                  ABOUT
-                </Button>
-                <Button to="/fags" className={cx("menu-item")}>
-                  fags
-                </Button>
-              </div>
-            </div>
-            <div className={cx("col", "l-1", "m-1", "c-2")}>
-              <div className={cx("nav-bar-actions")}>
-                <Button
-                  to={isLoggedIn ? "/account" : "/login"}
-                  className={cx("action-item", "action-login")}
-                >
-                  <SlUser />
-                </Button>
-                <Button
-                  to={"/cart"}
-                  className={cx("action-item", "action-cart")}
-                >
-                  <BsCart3 />
-                </Button>
+                  </div>
+                  <div className={cx("col", "l-2", "m-2", "c-2")}>
+                    <div className={cx("nav-bar-actions")}>
+                      <Link
+                        to={isLoggedIn ? "/account" : "/login"}
+                        className={cx("action-item", "action-login")}
+                      >
+                        <SlUser />
+                      </Link>
+                      <Link
+                        to={"/cart"}
+                        className={cx("action-item", "action-cart")}
+                      >
+                        <BsCart3 />
+                      </Link>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

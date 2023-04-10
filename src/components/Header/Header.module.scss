@@ -1,13 +1,11 @@
 .header {
-  height: fit-content;
-  position: fixed;
-  z-index: 999;
   width: 100%;
-  background-color: #fff;
+  max-height: var(---header-height);
 }
 
 .top-bar {
   background-color: var(---color-announcement-bg);
+  min-height: var(---top-bar--height);
   .top-header--container {
     display: flex;
     justify-content: center;
@@ -21,36 +19,52 @@
 
 .nav-bar {
   height: fit-content;
+  width: 100%;
   padding: 16px 0;
+  background-color: #fff;
+
+  &.fixed {
+    position: fixed;
+    z-index: 999;
+    background-color: rgba($color: #fff, $alpha: 0.85);
+    &:hover {
+      background-color: #fff;
+    }
+  }
+
   .nav-bar--logo {
     display: flex;
-    width: 100%;
     justify-content: flex-start;
     align-items: center;
+
     padding: 0;
     img {
       width: 180px;
     }
   }
 
-  .nav-bar--menu {
+  .nav-bar--container {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
     height: 100%;
-    color: var(---color-nav-text);
+    width: 100%;
+  }
 
+  .nav-bar--menu {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    color: var(---color-nav-text);
     .menu-item {
       display: flex;
-      font-size: 1.2rem;
-      color: var(---color-nav-text);
-      padding: 0;
       text-transform: uppercase;
-    }
+      font-weight: 500;
 
-    .menu-login {
-      justify-content: flex-end;
-      font-size: 1.7rem;
+      margin-left: 12px;
+      margin-right: 4px;
     }
 
     .sub-nav {
@@ -60,11 +74,13 @@
       background-color: #fff;
       border-radius: 4px;
       padding: 16px 8px;
+      justify-content: center;
       box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     }
 
     .sub-nav-item {
       width: 100%;
+      display: block;
       font-size: 1.2rem;
       text-align: left;
       justify-content: flex-start;
@@ -78,9 +94,12 @@
   .nav-bar-actions {
     display: flex;
     align-items: center;
-    min-height: 100%;
+    height: 100%;
     justify-content: space-between;
-    font-size: 1.2rem;
+    .action-item {
+      font-size: 1.8rem;
+      margin-right: 4px;
+    }
   }
 }
 

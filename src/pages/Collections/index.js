@@ -33,7 +33,9 @@ function Collections() {
             <div className={cx("content-title")}>{item.name}</div>
             <div className={cx("content-wrapper")}>
               <div
-                style={{ backgroundImage: `url(${item.image})` }}
+                style={{
+                  backgroundImage: `url(data:image/png;base64,${item.image})`,
+                }}
                 className={cx("content-wrapper-image")}
               ></div>
             </div>

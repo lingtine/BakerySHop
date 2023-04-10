@@ -8,6 +8,7 @@
 }
 
 :root {
+  //color
   ---color_video_bg: #f2f2f2;
   ---color-bg: #ffffff;
   ---color-bg-accent: #fcfaf7;
@@ -73,6 +74,12 @@
   ---color-disabled-text: #ddc2ba;
   ---inverse-disabled-bg: #302821;
   ---inverse-disabled-text: #6a645e;
+
+  // size
+  ---header-height: 118px;
+  ---top-bar--height: 36px;
+
+  //css
 }
 
 html {
@@ -82,6 +89,14 @@ html {
 body {
   font-family: "Roboto", sans-serif;
   font-size: 1.6rem;
+}
+
+.h-full {
+  height: 100%;
+}
+
+.w-full {
+  width: 100%;
 }
 
 .separate {

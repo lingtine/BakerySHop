@@ -98,7 +98,7 @@ function ProductDetailPage() {
               <div className={cx("product-wrapper-image")}>
                 <img
                   className={cx("product-image")}
-                  src={product ? `${product.image}` : ""}
+                  src={`data:image/png;base64,${product.image}`}
                   alt="thọ ngu"
                 />
               </div>

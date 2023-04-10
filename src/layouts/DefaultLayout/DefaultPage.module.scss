@@ -1,5 +1,5 @@
-.container {
-  padding-top: 116px;
+.container.pt {
+  padding-top: var(---header-height);
 }
 @media (max-width: 740px) {
   .container {
