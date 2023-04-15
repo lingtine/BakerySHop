@@ -1,0 +1,42 @@
+.admin-content {
+    min-height: calc(100vh );
+    min-width: 275px;
+    position: relative;
+    left: 251px;
+    width: 100%;
+    max-width: calc(100% - 240px);
+    overflow-x: hidden;
+    overflow-y: hidden;
+    background-color: var(---color-footer-bg);
+}
+
+.admin-container {
+    padding: 0 12px;
+   
+        .admin-header {
+            height: 75px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            // box-shadow: 0 2px 0 0 rgba(198, 189, 189, 0.2);
+        }
+        
+        .admin-profile {
+            display: flex;
+            align-items: center;
+            &__user {
+                margin-right: 12px;
+            }
+        }
+
+        .admin-search {
+            display: flex;
+            align-items: center;
+            &__input {
+                border: none;
+                background-color: #fff;
+                border-radius: 19px;
+                overflow: hidden;
+            }
+        }
+}
