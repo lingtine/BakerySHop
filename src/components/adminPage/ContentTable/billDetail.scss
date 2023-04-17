@@ -15,15 +15,44 @@ p {
 .order-title {
     align-items: center;
     padding-top:20px;
+    color: var(---color-nav-text);
     .order-detail {
         display: flex;
         margin-bottom: 10px;
+        justify-content: space-between;
         &__info {
             display: flex;
             flex-direction: column;
             padding: 6px 10px;
         }
+        .order-detail__wrapper {
+            display: flex;
+        }
+        &__btn {
+            margin-right: 24px;
+            &--delete {
+                height: 32px;
+                background-color: var(---color-footer-bg);
+                color: var(---color-nav-text);
+                border: 1px solid var(---color-nav-text);
+                .order-icon__container {
+                    display: flex;
+                    align-items: center;
+                    margin-left: 4px;
+                }
 
+                &:hover {
+                    background-color: var(---color-primary-hover);
+                }
+                &:hover .order-icon__container{
+                    color: var(---color-primary-opposite);
+                }
+
+                &:hover > span{
+                    color: var(---color-primary-opposite);
+                }
+            }
+        }
     }
 }
 
@@ -101,6 +130,13 @@ p {
                 }
             }
         }
+
+        &--detail {
+            &---item {
+                margin: 6px 0;
+            }
+        }
+        
 }
 
 
@@ -110,7 +146,7 @@ p {
     background-color: #fff;
     border-radius: 20px;
     overflow: hidden;
-    
+    height: fit-content;
     & > div:not(.order-content__address--note) {
         padding: 16px;
         border-bottom: 1px solid var(---color-footer-a90);
