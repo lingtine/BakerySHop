@@ -165,7 +165,9 @@ function HomePage() {
                 </p>
               </div>
 
-              <Button className={cx("address-action")}>Directions</Button>
+              <Button primary className={cx("address-action")}>
+                Directions
+              </Button>
             </div>
           </div>
           <div className={cx("col", "l-6", "m-6", "c-6")}>

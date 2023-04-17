@@ -114,7 +114,7 @@ function BakesClubPage() {
                 <div className={cx("benefit-image")}>
                   <img
                     src="https://cdn.shopify.com/s/files/1/2675/2320/files/Screen_Shot_2022-06-17_at_15.53.00_360x.png?v=1655457619"
-                    alt="photo"
+                    alt="da-1"
                   />
                 </div>
                 <div className={cx("benefit-content")}>
@@ -132,7 +132,7 @@ function BakesClubPage() {
                 <div className={cx("benefit-image")}>
                   <img
                     src="https://cdn.shopify.com/s/files/1/2675/2320/files/Screen_Shot_2022-06-17_at_15.53.00_360x.png?v=1655457619"
-                    alt="photo"
+                    alt="dá-2"
                   />
                 </div>
                 <div className={cx("benefit-content")}>
@@ -150,7 +150,7 @@ function BakesClubPage() {
                 <div className={cx("benefit-image")}>
                   <img
                     src="https://cdn.shopify.com/s/files/1/2675/2320/files/Screen_Shot_2022-06-17_at_15.53.00_360x.png?v=1655457619"
-                    alt="photo"
+                    alt="dá-3"
                   />
                 </div>
                 <div className={cx("benefit-content")}>

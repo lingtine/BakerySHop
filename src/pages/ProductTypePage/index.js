@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import { Card, SelectBox, SideBar } from "~/components";
+import { Card, SelectBox } from "~/components";
 import { fetchProductsByCollection, sorted } from "~/store";
 import { useThunk } from "~/hooks";
 

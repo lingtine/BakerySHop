@@ -1,5 +1,5 @@
 import classNames from "classnames/bind";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styles from "./Cart.module.scss";
 import { InputQuantity } from "~/components";
 import { useDispatch } from "react-redux";

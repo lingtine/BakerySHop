@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { getProduct, addToCart } from "~/store";
-import { InputQuantity, Button, Accordion } from "~/components";
+import { InputQuantity, Accordion } from "~/components";
 import { usePriceFormatter, useThunk } from "~/hooks";
 const cx = classNames.bind(styles);
 

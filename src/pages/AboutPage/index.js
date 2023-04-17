@@ -1,6 +1,6 @@
 import styles from "./About.module.scss";
 import classNames from "classnames/bind";
-import { Banner, Card } from "~/components";
+import { Banner } from "~/components";
 
 const cx = classNames.bind(styles);
 
@@ -8,14 +8,6 @@ function AboutPage() {
   const banner = {
     url: "https://cdn.shopify.com/s/files/1/2675/2320/files/IMG_5256_3000x.jpg?v=1652873085",
   };
-
-  const dataRecruitment = [
-    {
-      id: Math.random(),
-      imageUrl:
-        "https://cdn.shopify.com/s/files/1/2675/2320/files/772A6271_360x.jpg?v=1638699160",
-    },
-  ];
 
   return (
     <div className={cx("wrapper")}>
@@ -72,7 +64,10 @@ function AboutPage() {
             </div>
             <div className={cx("col", "l-6", "m-6", "c-12")}>
               <div className={cx("our-kitchen-container")}>
-                <img src="https://cdn.shopify.com/s/files/1/2675/2320/files/kitchen_900x.jpg?v=1638723228" />
+                <img
+                  alt="đấ"
+                  src="https://cdn.shopify.com/s/files/1/2675/2320/files/kitchen_900x.jpg?v=1638723228"
+                />
               </div>
             </div>
           </div>

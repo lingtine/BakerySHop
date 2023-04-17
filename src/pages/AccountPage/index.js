@@ -7,7 +7,7 @@ import { useThunk } from "~/hooks";
 
 const cx = classNames.bind(styles);
 function AccountPage() {
-  const [doLogout, isLoading, error] = useThunk(authRefresh);
+  const [doLogout] = useThunk(authRefresh);
   const navigate = useNavigate();
   const { isAuthenticated } = useSelector((state) => state.auth);
 

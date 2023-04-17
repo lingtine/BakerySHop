@@ -24,7 +24,7 @@ function LoginPage() {
       navigate("/");
       doGetUser(accessToken);
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, navigate, accessToken, doGetUser]);
 
   const handleSubmit = (event) => {
     event.preventDefault();

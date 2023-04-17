@@ -117,8 +117,10 @@
   .address-action {
     margin-top: 12px;
     padding: 8px 16px;
-    color: var(---inverse-text);
     background-color: var(---inverse-primary);
+    span {
+      color: var(---inverse-text);
+    }
     &:hover {
       background-color: var(---inverse-primary-hover);
     }
