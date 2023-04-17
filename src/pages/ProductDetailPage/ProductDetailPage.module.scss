@@ -36,6 +36,17 @@
       &:hover {
         background-color: var(---color-a5);
       }
+      span {
+        opacity: 0.5;
+        padding-left: 4px;
+        padding-right: 4px;
+        border-radius: 50%;
+      }
+    }
+
+    .btn--sold-out {
+      cursor: not-allowed;
+      opacity: 0.4;
     }
   }
 

@@ -43,7 +43,6 @@ const cartSlice = createSlice({
       state.data = action.payload;
     },
     updateCart: (state, action) => {
-      console.log(action.payload);
       const productIndex = state.data.items.findIndex((item) => {
         return (
           item.productId === action.payload.product.productId &&
@@ -65,7 +64,6 @@ const cartSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(getUser.fulfilled, (state, action) => {
-      console.log(1);
       const cart = localStorage.getItem(`cart_${action.payload.id}`);
       if (cart) {
         state.data = cart;

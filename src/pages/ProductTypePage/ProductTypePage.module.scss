@@ -1,8 +1,9 @@
 .collection-nav {
   display: flex;
   justify-content: space-between;
-  width: 100%;
+  min-width: 100%;
   border: 1px solid var(---color-a20);
+  padding: 8px 0;
   border-radius: 2px;
 
   .collection-nav-buttons {

@@ -1,0 +1,28 @@
+.wrapper {
+  margin-top: 24px;
+
+  .account-header {
+    padding: 28px 12px;
+
+    .header-title {
+      font-size: 2.4rem;
+      color: var(---color-text);
+    }
+
+    .action-logout {
+      display: flex;
+      justify-content: flex-end;
+
+      .btn-logout {
+        font-size: 1.4rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: var(---color-text);
+        &:hover {
+          cursor: pointer;
+          opacity: 0.8;
+        }
+      }
+    }
+  }
+}

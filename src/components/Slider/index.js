@@ -1,0 +1,60 @@
+import styles from "./Slide.module.scss";
+import { useState } from "react";
+import classNames from "classnames/bind";
+import { Card } from "~/components";
+import { AiOutlineArrowRight, AiOutlineArrowLeft } from "react-icons/ai";
+
+const cx = classNames.bind(styles);
+
+function Slider({ data, quantityDisplayed = 4 }) {
+  const [slideIndex, setSlideIndex] = useState(0);
+  const lengthSlide = data.length - quantityDisplayed + 1;
+
+  const nextSlide = () => {
+    setSlideIndex(slideIndex + 1);
+  };
+
+  const prevSlide = () => {
+    setSlideIndex(slideIndex - 1);
+  };
+
+  const trackStyles = {
+    transform: `translateX(-${slideIndex * (100 / 3)}%)`,
+  };
+
+  const renderData = data.map((item) => {
+    return (
+      <div className={cx("slide")}>
+        <Card content={item} />
+      </div>
+    );
+  });
+
+  return (
+    <div className={cx("carousel")}>
+      <div className={cx("carousel-action")}>
+        {slideIndex !== 0 ? (
+          <div className={cx("btn")} onClick={prevSlide}>
+            <AiOutlineArrowLeft />
+          </div>
+        ) : (
+          <div></div>
+        )}
+
+        {slideIndex !== lengthSlide ? (
+          <div className={cx("btn", "btn-next")} onClick={nextSlide}>
+            <AiOutlineArrowRight />
+          </div>
+        ) : (
+          <div></div>
+        )}
+      </div>
+
+      <div className={cx("container")} style={trackStyles}>
+        {renderData}
+      </div>
+    </div>
+  );
+}
+
+export default Slider;

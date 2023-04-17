@@ -1,7 +1,6 @@
 import styles from "./Card.module.scss";
 import classNames from "classnames/bind";
 import { Link } from "react-router-dom";
-import { Base64 } from "js-base64";
 
 import { usePriceFormatter } from "~/hooks";
 const cx = classNames.bind(styles);
@@ -17,13 +16,22 @@ function Card({ content }) {
         <div className={cx("container")}>
           <div className={cx("container-img")}>
             <img src={`data:image/png;base64,${content.image}`} alt="" />
-            <div className={cx("container-sub-img")}>
-              {<img src={`data:image/png;base64,${content.image}`} alt="" />}
-            </div>
+            {content.new ? (
+              <div className={cx("status")}>
+                {!content.stock ? "sold out" : "new in"}
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
           <div className={cx("content")}>
             <div className={cx("content-title")}>{content.name}</div>
             <div className={cx("content-price")}>{price}</div>
+            {!content.stock ? (
+              <div className={cx("content-status")}>Sold out</div>
+            ) : (
+              <></>
+            )}
           </div>
         </div>
       </Link>

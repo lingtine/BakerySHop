@@ -21,7 +21,6 @@ function CartPage() {
       );
     });
   } else {
-    console.log(1);
   }
   return (
     <div className={cx("wrapper")}>

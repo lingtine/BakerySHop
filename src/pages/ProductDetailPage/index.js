@@ -26,7 +26,6 @@ function ProductDetailPage() {
     product ? product.unit_price * quantity : 0,
     "VND"
   );
-  console.log(product);
 
   useEffect(() => {
     doGetProduct(productId);
@@ -77,9 +76,17 @@ function ProductDetailPage() {
         </div>
         <div className={cx("product-actions")}>
           <InputQuantity quantity={quantity} onChange={handleChangeQuantity} />
-          <Button onClick={handleBuying} className={cx("btn-purchase")}>
-            ADD TO CART {total}
-          </Button>
+          <button
+            disabled
+            onClick={handleBuying}
+            className={cx("btn-purchase", {
+              "btn--sold-out": !product.stock,
+            })}
+          >
+            {product.stock ? "ADD TO CART" : "Sold out"}
+            <span>•</span>
+            {total}
+          </button>
         </div>
         <Accordion items={contentAccordion} />
         <div className={cx("product-note")}>
@@ -98,7 +105,7 @@ function ProductDetailPage() {
               <div className={cx("product-wrapper-image")}>
                 <img
                   className={cx("product-image")}
-                  src={`data:image/png;base64,${product.image}`}
+                  src={product ? `data:image/png;base64,${product.image}` : ""}
                   alt="thọ ngu"
                 />
               </div>

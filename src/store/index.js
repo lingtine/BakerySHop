@@ -6,6 +6,8 @@ import {
   productsByCollectionReducer,
   productReducer,
   cartReducer,
+  newProductsReducer,
+  sellingProductsReducer,
 } from "./slices";
 
 const store = configureStore({
@@ -15,6 +17,8 @@ const store = configureStore({
     productsByCollection: productsByCollectionReducer,
     product: productReducer,
     cart: cartReducer,
+    newProducts: newProductsReducer,
+    sellingProducts: sellingProductsReducer,
   },
 });
 

@@ -27,9 +27,7 @@ function RegisterPage() {
       );
       localStorage.setItem("accessToken", response.data.access_token);
       navigate("/");
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   const handleInputChange = (event) => {

@@ -55,8 +55,14 @@ function FagsPage() {
   return (
     <div className={cx("wrapper")}>
       <Banner image={banner} />
-      <div className={cx("accordion-wrapper")}>
-        <Accordion items={propsItem} />
+      <div className={cx("grid", "wide")}>
+        <div className={cx("row")}>
+          <div className={cx("col", "l-12", "m-12", "c-12")}>
+            <div className={cx("accordion-wrapper")}>
+              <Accordion items={propsItem} />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
