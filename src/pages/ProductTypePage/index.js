@@ -27,6 +27,7 @@ function ProductTypePage() {
     fetchProductsByCollection
   );
   useEffect(() => {
+    console.log(collectionId);
     doFetchProducts(collectionId);
   }, [collectionId, doFetchProducts]);
 
@@ -36,6 +37,7 @@ function ProductTypePage() {
   } else if (error) {
     content = <h1>isError</h1>;
   } else if (data) {
+    console.log(data);
     content = data.map((product) => {
       if (layoutActive === 0) {
         return (

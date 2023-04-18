@@ -6,6 +6,7 @@ import styles from "./Accordion.module.scss";
 const cx = classNames.bind(styles);
 
 function Accordion({ items, heading }) {
+  console.log(items);
   const [appendedIndex, setAppendedIndex] = useState(0);
   const handleClick = (index) => {
     setAppendedIndex((current) => {
@@ -30,11 +31,11 @@ function Accordion({ items, heading }) {
             handleClick(index);
           }}
         >
-          <div>{item.label}</div>
+          <div>{item.name}</div>
           <div>{icon}</div>
         </div>
         {isAppended && (
-          <div className={cx("accordion-content")}>{item.content}</div>
+          <div className={cx("accordion-content")}>{item.description}</div>
         )}
       </div>
     );

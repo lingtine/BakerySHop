@@ -13,3 +13,18 @@ export { fetchSellingProducts } from "./fetchSellingProducts";
 export { obtainAccessToken } from "./obtainAccessToken";
 export { authRefresh } from "./authRefresh";
 export { getUser } from "./getUser";
+
+//fags
+
+export { fetchFags } from "./fetchFaqs";
+
+//no nasties
+
+export { fetchNoNasties } from "./fetchNoNasties";
+
+//branch
+export { fetchBranch } from "./fetchBranch";
+
+//forte
+
+export { fetchForte } from "./fetchForte";
