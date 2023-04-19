@@ -15,3 +15,12 @@ export { default as branchReducer } from "./branchSlice";
 export { default as forteReducer } from "./forteSlice";
 
 export * from "./productsByCollection";
+
+//aboutPage
+export { default as aboutBakerReducer } from "./aboutBakerSlice";
+export { default as aboutKitchenReducer } from "./aboutKitchenSlice";
+export { default as positionReducer } from "./positionSlice";
+export { default as hiringReducer } from "./hiringSlice";
+
+//slide
+export { default as slideBannerReducer } from "./slideBannerSlice";

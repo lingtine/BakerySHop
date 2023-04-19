@@ -134,7 +134,6 @@ function HomePage() {
   } else if (errorOfFetchNoNasties) {
     contentNoNasties = "lổi rồi";
   } else if (noNasties) {
-    console.log(noNasties);
     contentNoNasties = noNasties.map((item) => {
       return (
         <div key={item.id} className={cx("col", "l-4", "m-4", "c-4")}>

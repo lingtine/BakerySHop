@@ -28,3 +28,9 @@ export { fetchBranch } from "./fetchBranch";
 //forte
 
 export { fetchForte } from "./fetchForte";
+
+export { fetchAboutBaker } from "./fetchAboutBaker";
+export { fetchAboutKitchen } from "./fetchAboutKitchen";
+export { fetchHiring } from "./fetchHiring";
+export { fetchPosition } from "./fetchPosition";
+export { fetchSlideBanner } from "./fetchSlideBanner";

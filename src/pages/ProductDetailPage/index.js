@@ -77,8 +77,8 @@ function ProductDetailPage() {
         <div className={cx("product-actions")}>
           <InputQuantity quantity={quantity} onChange={handleChangeQuantity} />
           <button
-            disabled
             onClick={handleBuying}
+            disabled={!product.stock}
             className={cx("btn-purchase", {
               "btn--sold-out": !product.stock,
             })}

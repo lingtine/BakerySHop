@@ -12,6 +12,11 @@ import {
   noNastiesReducer,
   branchReducer,
   forteReducer,
+  positionReducer,
+  aboutBakerReducer,
+  aboutKitchenReducer,
+  slideBannerReducer,
+  hiringReducer,
 } from "./slices";
 
 const store = configureStore({
@@ -27,6 +32,11 @@ const store = configureStore({
     noNasties: noNastiesReducer,
     branch: branchReducer,
     forte: forteReducer,
+    position: positionReducer,
+    aboutBaker: aboutBakerReducer,
+    aboutKitchen: aboutKitchenReducer,
+    slideBanner: slideBannerReducer,
+    hiring: hiringReducer,
   },
 });
 

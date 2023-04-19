@@ -27,7 +27,6 @@ import { useNavigate } from 'react-router-dom';
         }
         fecthOrder()
         changeState();
-       console.log("thành công");
     },[])
 
     const handleChangePage = (event, newPage) => {
