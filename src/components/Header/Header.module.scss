@@ -6,13 +6,13 @@
 .top-bar {
   background-color: var(---color-announcement-bg);
   min-height: var(---top-bar--height);
-  .top-header--container {
+  .top-header--content {
     display: flex;
     justify-content: center;
     padding: 8px 0;
     font-size: 1.6rem;
     letter-spacing: 4px;
-    font-weight: 300;
+    font-weight: 400;
     color: var(---color-announcement-text);
   }
 }

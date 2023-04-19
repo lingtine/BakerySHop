@@ -1,3 +1,8 @@
+//global variable
+$color-text: var(---color-text);
+$color-btn-hover: var(---color-a5);
+$color-border: var(---color-primary);
+$color-text-light: var(---color-text-light);
 .banner-content {
   display: flex;
   flex-direction: column;
@@ -31,103 +36,36 @@
   .product-image {
     max-width: 100%;
   }
-
   .selling-products-container {
     display: flex;
     height: 100%;
     flex-direction: column;
     justify-content: center;
-    .selling-products-heading {
-      justify-content: flex-start;
-      p {
-        &::after {
-          right: auto;
-        }
-      }
-    }
-    .selling-products-content {
-      color: var(---color-text-light);
-      font-size: 1.8rem;
-      line-height: 28px;
-    }
+
     .selling-products-action {
+      display: flex;
       margin: 18px 0;
       .btn-browse {
-        color: var(---color-text);
+        color: $color-text;
         width: 40%;
         padding: 18px 0;
         font-weight: 500;
-        border: 1px solid var(---color-primary);
+        border: 1px solid $color-border;
         text-transform: uppercase;
         &:hover {
-          background-color: var(---color-a5);
+          background-color: $color-btn-hover;
         }
       }
-    }
-  }
 
-  .container-reverse {
-    .selling-products-heading {
-      justify-content: flex-end;
-      p {
-        &::after {
-          left: auto;
-          right: 0;
-        }
+      &.selling-products-action--right {
+        justify-content: flex-end;
       }
     }
-    .selling-products-content {
-      text-align: end;
-    }
-    .selling-products-action {
-      display: flex;
-      justify-content: flex-end;
-    }
-  }
-}
-
-.quality {
-  padding: 21px;
-  color: var(---color-text-light);
-  .quality-heading {
-    display: flex;
-    justify-content: center;
   }
 }
 
 .no-nasties {
-  margin: 42px 0;
-
-  .no-nasties-container {
-    margin-top: 32px;
-    .no-nasties-image {
-      margin-bottom: 16px;
-      img {
-        width: 100%;
-      }
-    }
-
-    .no-nasties-content {
-      margin-bottom: 24px;
-      padding: 0 4px;
-      .no-nasties-heading {
-        margin: 16px 0;
-        p {
-          color: var(---color-text);
-          font-size: 1.6rem;
-          font-weight: 500;
-          text-align: center;
-        }
-      }
-
-      .no-nasties-description {
-        text-align: center;
-        font-size: 1.5rem;
-        line-height: 2.4rem;
-        color: var(---color-text-light);
-      }
-    }
-  }
+  margin: 40px 0;
 }
 
 .address-container {
@@ -138,10 +76,6 @@
   height: 100%;
   text-align: center;
   color: var(---color-text-light);
-  .flagship-heading {
-    display: flex;
-    justify-content: center;
-  }
 
   .address-content {
     white-space: pre-line;
@@ -152,52 +86,14 @@
       margin-bottom: 22px;
     }
   }
-
-  .address-action {
-    margin-top: 12px;
-    padding: 8px 16px;
-    background-color: var(---inverse-primary);
-    span {
-      color: var(---inverse-text);
-    }
-    &:hover {
-      background-color: var(---inverse-primary-hover);
-    }
-  }
 }
+
 .address-image {
   height: 728px;
   background-position: center;
   background-size: cover;
 }
 
-.about-us {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  margin: 80px 0;
-
-  .about-us-icon {
-    margin-bottom: 16px;
-    img {
-      width: 30px;
-      height: 30px;
-    }
-  }
-
-  .about-us-heading {
-    padding: 8px 0;
-    color: var(---color-text-dark);
-    font-weight: 500;
-  }
-
-  .about-us-content {
-    padding: 8px 0;
-    color: var(---color-text-light);
-    font-size: 1.5rem;
-    line-height: 2.4rem;
-    text-align: center;
-  }
+.forte {
+  margin: 40px 0;
 }

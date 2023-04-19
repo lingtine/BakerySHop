@@ -9,8 +9,8 @@ function TopBar() {
       <div className={cx("grid", "wide")}>
         <div className={cx("row")}>
           <div className={cx("c-12", "col")}>
-            <div className={cx("top-header--container")}>
-              <span>Bakery shop</span>
+            <div className={cx("top-header--content")}>
+              <p>Bakery shop</p>
             </div>
           </div>
         </div>

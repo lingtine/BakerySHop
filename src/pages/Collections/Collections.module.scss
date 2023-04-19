@@ -1,6 +1,9 @@
+$overlay-opacity: 0.15;
+$bg: #000000;
+
 .wrapper {
   margin: 40px 0;
-  .content {
+  .content-link {
     margin-top: 30px;
     display: flex;
     position: relative;
@@ -11,15 +14,16 @@
 
     .content-title {
       position: absolute;
-      z-index: 11;
+      z-index: 3;
       padding: 8px 12px;
-      background-color: var(---color-bg);
       border-radius: 4px;
-      font-weight: 500;
-      font-size: 1.8rem;
+      font-weight: 350;
+      font-size: 3rem;
+      letter-spacing: 2px;
       text-transform: uppercase;
       min-width: 100px;
       text-align: center;
+      color: var(---inverse-text-dark);
     }
 
     .content-wrapper {
@@ -39,6 +43,49 @@
         background-position: center;
         width: 100%;
         height: 100%;
+        transform: scale(1);
+        transition: transform 1s ease;
+      }
+    }
+
+    .content-sub {
+      position: absolute;
+      z-index: 4;
+      color: var(---inverse-text-dark);
+      font-size: 1.4rem;
+      bottom: 0;
+      transform: translateY(40px);
+      text-transform: uppercase;
+      opacity: 0;
+      transition: opacity 1s ease, transform 1s ease;
+
+      .sub-title {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+    .content-overlay {
+      position: absolute;
+      z-index: 2;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      background-color: $bg;
+      opacity: $overlay-opacity;
+    }
+
+    &:hover {
+      .content-sub {
+        opacity: 1;
+        transform: translateY(-10px);
+      }
+
+      .content-wrapper {
+        .content-wrapper-image {
+          transform: scale(1.2);
+        }
       }
     }
   }

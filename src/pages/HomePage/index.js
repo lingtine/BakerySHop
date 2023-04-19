@@ -1,6 +1,5 @@
 import styles from "./HomePage.module.scss";
 import classNames from "classnames/bind";
-import { GiFruitTree } from "react-icons/gi";
 import { useSelector } from "react-redux";
 import { useThunk } from "~/hooks";
 import {
@@ -85,10 +84,11 @@ function HomePage() {
     contentSellingProducts = "lỗi rồi";
   } else if (sellingProducts) {
     contentSellingProducts = sellingProducts.map((item, index) => {
+      const reverse = index % 2 !== 0;
       return (
         <div
           className={cx("row", {
-            reverse: index % 2 !== 0,
+            reverse: reverse,
           })}
         >
           <div className={cx("col", "l-6", "m-6", "c-6")}>
@@ -99,21 +99,29 @@ function HomePage() {
             />
           </div>
           <div className={cx("col", "l-6", "m-6", "c-6")}>
-            <div
-              className={cx("selling-products-container", {
-                "container-reverse": index % 2 !== 0,
-              })}
-            >
+            <div className={cx("selling-products-container")}>
               <div
-                className={cx("selling-products-heading", "content-heading")}
+                className={cx("heading", {
+                  "heading--left": !reverse,
+                  "heading--right": reverse,
+                })}
               >
-                <p>{item.product.name}</p>
+                <h4>{item.product.name}</h4>
               </div>
-              <div className={cx("selling-products-content")}>
+              <div
+                className={cx("content", {
+                  "content--left": !reverse,
+                  "content--right": reverse,
+                })}
+              >
                 <p>{item.product.description}</p>
               </div>
 
-              <div className={cx("selling-products-action")}>
+              <div
+                className={cx("selling-products-action", {
+                  "selling-products-action--right": reverse,
+                })}
+              >
                 <Button
                   to={`/collections/${item.product.id_type}/${item.product.id}`}
                   className={cx("btn-browse")}
@@ -137,15 +145,15 @@ function HomePage() {
     contentNoNasties = noNasties.map((item) => {
       return (
         <div key={item.id} className={cx("col", "l-4", "m-4", "c-4")}>
-          <div className={cx("no-nasties-container")}>
-            <div className={cx("no-nasties-image")}>
+          <div className={cx("cart--container")}>
+            <div className={cx("cart--image")}>
               <img src={`data:image/png;base64,${item.image}`} />
             </div>
-            <div className={cx("no-nasties-content")}>
-              <div className={cx("no-nasties-heading")}>
-                <p>{item.name}</p>
+            <div className={cx("cart--content")}>
+              <div className={cx("cart--heading")}>
+                <h5>{item.name}</h5>
               </div>
-              <div className={cx("no-nasties-description")}>
+              <div className={cx("cart--description")}>
                 <p>{item.description}</p>
               </div>
             </div>
@@ -166,8 +174,8 @@ function HomePage() {
         <div className={cx("row", "no-gutters")}>
           <div className={cx("col", "l-6", "m-6", "c-6")}>
             <div className={cx("address-container")}>
-              <div className={cx("address-heading", "content-heading")}>
-                <p>{item.name}</p>
+              <div className={cx("heading")}>
+                <h4>{item.name}</h4>
               </div>
               <div className={cx("address-content")}>
                 <p>{item.address}</p>
@@ -197,12 +205,19 @@ function HomePage() {
     contentForte = forte.map((item) => {
       return (
         <div key={item.id} className={cx("col", "l-4", "m-4", "c-4")}>
-          <div className={cx("about-us")}>
-            <div className={cx("about-us-icon")}>
+          <div className={cx("cart--container")}>
+            <div className={cx("cart--icon")}>
               <img src={`data:image/png;base64,${item.image}`} />
             </div>
-            <div className={cx("about-us-heading")}>{item.name}</div>
-            <div className={cx("about-us-content")}>{item.description}</div>
+            '
+            <div className={cx("cart--content")}>
+              <div className={cx("cart--heading")}>
+                <h5>{item.name}</h5>
+              </div>
+              <div className={cx("cart--description")}>
+                <p>{item.description}</p>
+              </div>
+            </div>
           </div>
         </div>
       );
@@ -223,8 +238,8 @@ function HomePage() {
         <div className={cx("grid", "wide")}>
           <div className={cx("row")}>
             <div className={cx("col", "l-12", "c-12", "m-12")}>
-              <div className={cx("address-heading", "content-heading")}>
-                <p>NEW & FAVORITES</p>
+              <div className={cx("heading")}>
+                <h4>NEW & FAVORITES</h4>
               </div>
             </div>
           </div>
@@ -238,11 +253,13 @@ function HomePage() {
 
       {/* {selling product} */}
 
-      <div className={cx("grid", "wide")}>
-        <div className={cx("row")}>
-          <div className={cx("col", "l-12", "c-12", "m-12")}>
-            <div className={cx("selling-products")}>
-              {contentSellingProducts}
+      <div className={cx("selling-products")}>
+        <div className={cx("grid", "wide")}>
+          <div className={cx("row")}>
+            <div className={cx("col", "l-12", "c-12", "m-12")}>
+              <div className={cx("selling-product")}>
+                {contentSellingProducts}
+              </div>
             </div>
           </div>
         </div>
@@ -254,8 +271,8 @@ function HomePage() {
         <div className={cx("grid", "wide")}>
           <div className={cx("row")}>
             <div className={cx("col", "l-12", "c-12", "m-12")}>
-              <div className={cx("address-heading", "content-heading")}>
-                <p>NO NASTIES</p>
+              <div className={cx("heading")}>
+                <h4>NO NASTIES</h4>
               </div>
             </div>
           </div>
@@ -265,8 +282,11 @@ function HomePage() {
 
       {/* {address} */}
       <div className={cx("grid")}>{contentBranch}</div>
-      <div className={cx("grid", "wide")}>
-        <div className={cx("row")}>{contentForte}</div>
+
+      <div className={cx(cx("forte"))}>
+        <div className={cx("grid", "wide")}>
+          <div className={cx("row")}>{contentForte}</div>
+        </div>
       </div>
     </div>
   );
