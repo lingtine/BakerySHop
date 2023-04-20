@@ -7,6 +7,8 @@ function EditProduct({ match }) {
   const [product, setProduct] = useState([]);
   const [typeName, setTypeName] = useState();
   const { id } = useParams();
+  const [images, setImages] = useState()
+
 
   console.log(id);
   useEffect(() => {
@@ -23,15 +25,25 @@ function EditProduct({ match }) {
 
   const [value, setValue] = useState({
     name: "",
-    id_type: "1",
+    id_type: "",
     unit_price: "",
     unit: "",
     stock: "",
-    image: File,
-    promotion_price: "0",
-    new: "1",
+    image: "",
+    promotion_price: "",
+    new: "",
     description: "",
   });
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      const base64String = reader.result.split(",")[1];
+      setImages(base64String);
+    };
+  };
 
   async function updateProduct() {
     const response = await fetch(`http://localhost:81/api/products/${id}`, {
@@ -120,7 +132,7 @@ function EditProduct({ match }) {
 
               <div className="addproduct-form__image">
                 <label htmlFor="image">Hình ảnh</label>
-                <img style={{width: '100%', height: '100%'}} src={`data:image/png;base64,${product.image}`}/>
+                <img style={{width: '100%', height: '100%'}} src={`data:image/png;base64,${product.image}` } onChange={handleImageUpload}/>
               </div>
 
               <div className="addproduct-form__description">
