@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
     const [orders, setOrders] = useState([]);
     const [rowsPerPage, setRowsPerPage] = useState(10);
     const [page, setPage] = useState(0);
+    const [state, setState] = useState()
     const startIndex = page * rowsPerPage ;
     const endIndex = startIndex + rowsPerPage;
     const displayedOrder = orders.slice(startIndex, endIndex);
@@ -25,9 +26,10 @@ import { useNavigate } from 'react-router-dom';
                 setOrders(data.order)
             })
         }
+        changeState()
         fecthOrder()
-        changeState();
     },[])
+    console.log(orders);
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -43,14 +45,21 @@ import { useNavigate } from 'react-router-dom';
         navigate(path);
     }
 
-    
-    function changeState(state) {
-        if(state == 0) {
-            return false
-        } else 
-            return true;
+    const changeState = (state) => {
+        switch(state){
+            case 0:
+                return "Đơn chưa hoàn tất";
+            case 1:
+                return "Đang giao hàng";
+            case 2: 
+                return "Đã giao hàng";
+            case 3: 
+                return "Đơn hủy";
+        }
+        setState(state)
+        console.log(state);
     }
-
+ 
 
 
     return (
@@ -85,12 +94,12 @@ import { useNavigate } from 'react-router-dom';
                             {
                                 displayedOrder.map(order => (
                                     <tr style={{textAlign: 'center'}} key={order.id}>
-                                    <Link onClick={() => handleEditOrder(order)} to={`/admin/carts/order/${order.id}`}>{order.id}</Link>
+                                    <Link className="admin-table__info--data---link" onClick={() => handleEditOrder(order)} to={`/admin/carts/order/${order.id}`}>{order.id}</Link>
                                         <td>{order.date_order}</td>
                                         <td>{order.name}</td>
                                         <td>{order.payment}</td>
                                         <td>{order.total}</td>
-                                        <td>{changeState(order.state) ? <div>Chưa hoàn tất</div> : <div>Đã hoàn tất</div>}</td>     
+                                        <td>{order.state}</td>     
                                     </tr>
                                 ))
                             }

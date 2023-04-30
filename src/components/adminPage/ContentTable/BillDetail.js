@@ -1,11 +1,11 @@
-import { useEffect, useState, useCallback, useMemo,useRef } from "react";
+import { useEffect, useState, useCallback, useMemo, useRef } from "react";
 import { useParams } from "react-router-dom";
 import HeaderContent from "../HeaderAdmin/headerContent";
 import "./billDetail.scss";
-import {AiOutlineEdit, AiOutlineDelete} from "react-icons/ai"
+import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import Modal from "../Modal/Modal";
 import Button from "~/components/Button";
-
+import { useNavigate } from "react-router-dom";
 
 function BillDetail({ order }) {
   const { id } = useParams();
@@ -15,9 +15,11 @@ function BillDetail({ order }) {
   const [product, setProduct] = useState([]);
   const [img, setImg] = useState();
   const [productsUpdated, setProductsUpdated] = useState(false);
-  const myRef = useRef(false);
-  const [status, setStatus] = useState(myRef.current);
+  const [status, setStatus] = useState(true);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [customerId, setCustomerId] = useState();
+  const navigate = useNavigate();
+  const [check, setCheck] = useState(false);
 
   useEffect(() => {
     const fetchOrder = async () => {
@@ -28,7 +30,10 @@ function BillDetail({ order }) {
       setBill(json.bill);
       setCustomers(json.customer);
       setBillDetail(json.billDetail);
-      
+      setCustomerId(json.customer.id);
+      if (json.bill.state === 3) {
+        setCheck(true);
+      }
       return json.billDetail;
     };
 
@@ -40,11 +45,37 @@ function BillDetail({ order }) {
       });
       Promise.all(promises).then((productsArr) => {
         setProduct(productsArr);
-  
       });
     });
-  }, []);
+  }, [bill.state]);
+  console.log(bill);
 
+  const handleChangeOrder = (state) => {
+    fetch(`http://localhost:81/api/update-state-bill/${id}`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        state: state,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        // do something with the response, like update the state of the bill in your application
+      })
+      .catch((error) => {
+        console.error("Error updating state of bill:", error);
+      });
+      if(state == 3) {
+        alert(`Đã hủy đơn hàng ${id}`)
+        navigate("/admin/carts")
+      } else {
+        alert(`Đã thay đổi trạng thái`)
+        window.location.reload();
+      }
+  };
 
   useEffect(() => {
     if (product.length > 0) {
@@ -57,35 +88,33 @@ function BillDetail({ order }) {
       setImg(imgArr);
       setProductsUpdated(productsUpdatedArr);
     }
-  }, []);
+  }, [product]);
 
-  function handleDeleteOrder(id) {
-    
-  }
-  
-
-  function changeState(state) {
-    return state !== 0;
-  }
-  const handleEditButtonClick = () => {
-    setStatus(true)
-    // myRef.current = true;
-    console.log(myRef.current);
+  function handleModal(data) {
+    setStatus(data);
   }
 
-  
-
-
+  const changeState = (state) => {
+    switch (state) {
+      case 0:
+        return "Đơn chưa hoàn tất";
+      case 1:
+        return "Đang giao hàng";
+      case 2:
+        return "Đã giao hàng";
+      case 3:
+        return "Đơn hủy";
+    }
+  };
 
   const totalQuantity = useMemo(() => {
     return billDetail.reduce((accumulator, item) => {
       return accumulator + item.quantity;
     }, 0);
   }, [billDetail]);
-  
 
   // getImg();
-// console.log(status);
+  // console.log(status);
   return (
     <div style={{ width: "100%" }} className="order-detail__container">
       <div className="admin-content">
@@ -97,20 +126,16 @@ function BillDetail({ order }) {
                 <div className="order-detail__info">
                   <div className="order-detail__info--title">Mã đơn hàng</div>
                   <div className="order-detail__info--content">{id}</div>
+                </div>
+                <div className="order-detail__info">
+                  <div className="order-detail__info--title">
+                    Trạng thái đơn hàng
                   </div>
-                  <div className="order-detail__info">
-                    <div className="order-detail__info--title">
-                      Trạng thái đơn hàng
-                    </div>
-                    <div className="order-detail__info--content">
-                      {changeState(bill.state) ? (
-                        <div>Chưa hoàn tất</div>
-                      ) : (
-                        <div>Đã hoàn tất</div>
-                      )}
-                    </div>
+                  <div className="order-detail__info--content">
+                    {changeState(bill.state)}
                   </div>
-                  <div className="order-detail__info">
+                </div>
+                <div className="order-detail__info">
                   <div className="order-detail__info--title">
                     Hình thức thanh toán
                   </div>
@@ -120,18 +145,31 @@ function BillDetail({ order }) {
                 </div>
               </div>
 
-              <div className="order-detail__btn">
-                <Button 
-                className="order-detail__btn--delete"
-                disabled={isDeleting}
-                onClick={handleDeleteOrder(id)}
-                >
-                  Hủy đơn hàng
-                  <span className="order-icon__container">
-                    <AiOutlineDelete/>
-                  </span>
-                </Button>
-              </div>
+              
+                {check ? (
+                  <div></div>
+                ) : (
+                  <div className="order-detail__btn">
+                    <div class="dropdown">
+                      <Button class="order-detail__btn--change btn">Thao tác</Button>
+                      <div class="dropdown-content">
+                        <a onClick={() => handleChangeOrder(1)}>Đang giao hàng</a>
+                        <a onClick={() => handleChangeOrder(2)}>Đã giao hàng</a>
+                      </div>
+                    </div>
+                    <Button
+                      className="order-detail__btn--delete btn"
+                      disabled={isDeleting}
+                      onClick={() => handleChangeOrder(3)}
+                    >
+                      Hủy đơn hàng
+                      <span className="order-icon__container">
+                        <AiOutlineDelete />
+                      </span>
+                    </Button>
+                  </div>
+                )}
+              
             </div>
 
             <div className="order-time">
@@ -258,8 +296,10 @@ function BillDetail({ order }) {
                   <address>
                     <div className="order-content__address--ship---edit">
                       <div>
-                      <h4>Thông tin giao hàng</h4> 
-                      <button onClick={handleEditButtonClick}><AiOutlineEdit /></button>
+                        <h4>Thông tin giao hàng</h4>
+                        <button onClick={(e) => setStatus(false)}>
+                          <AiOutlineEdit />
+                        </button>
                       </div>
                     </div>
                     <div className="order-content__address--ship---customer">
@@ -282,7 +322,11 @@ function BillDetail({ order }) {
         </div>
       </div>
 
-      <Modal props={status}/>
+      {status ? null : (
+        <div>
+          <Modal onStatus={handleModal} props={customers} />
+        </div>
+      )}
     </div>
   );
 }

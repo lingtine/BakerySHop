@@ -4,42 +4,44 @@ import HeaderContent from "../HeaderAdmin/headerContent";
 import { AiOutlineDelete, AiOutlineArrowRight } from "react-icons/ai";
 import { FiEdit } from "react-icons/fi";
 import './User.scss'
+import TablePagination from "@mui/material/TablePagination";
+
 
 function Customers() {
-  const [staffs, setStaffs] = useState([]);
+  const [customers, setCustomers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showDetails, setShowDetails] = useState([]);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const startIndex = page * rowsPerPage;
+  const endIndex = startIndex + rowsPerPage;
+  const displayedCustomers = customers.slice(startIndex, endIndex);
   useEffect(() => {
-    const fetchStaff = () => {
-      fetch("http://localhost:81/api/employees")
+    const fetchCustomers = () => {
+      fetch("http://localhost:81/api/customer")
         .then((res) => res.json())
         .then((data) => {
-          setStaffs(data.data);
+          setCustomers(data.customer);
           setLoading(false);
         });
     };
-    fetchStaff();
+    fetchCustomers();
   }, []);
-
-  function getWorkTime(employee) {
-    let totalWorkTime = 0;
-    employee.working_times.forEach((workingTime) => {
-      const total_time = workingTime.total_time.split(":");
-      const hours = parseInt(total_time[0]);
-      const minutes = parseInt(total_time[1]);
-      const seconds = parseInt(total_time[2]);
-      const work_time = hours + minutes * 60 + seconds;
-      totalWorkTime += work_time;
-    });
-    return totalWorkTime;
-  }
-
   const toggleDetails = (id) => {
     setShowDetails((prevShowDetails) =>
       prevShowDetails.includes(id)
         ? prevShowDetails.filter((staffId) => staffId !== id)
         : [...prevShowDetails, id]
     );
+  };
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
   };
 
   return (
@@ -49,7 +51,7 @@ function Customers() {
         <div className="admin-table">
           <div className="admin-table__container">
             <div className="admin-table__header">
-              <h3 className="admin-table__title">Danh sách sản phẩm</h3>
+              <h3 className="admin-table__title">Danh sách khách hàng</h3>
               <div className="admin-table__btn">
                 <button className="admin-table__btn--show"></button>
               </div>
@@ -59,34 +61,34 @@ function Customers() {
               <table className="admin-table__info--show">
                 <thead className="admin-table__info--title">
                   <tr style={{ textAlign: "center" }}>
-                    <th>Nhân viên</th>
-                    <th>Chức vụ</th>
+                    <th>Tên</th>
+                    <th>Giới tính</th>
                     <th>Số điện thoại</th>
                     <th>Địa chỉ</th>
-                    <th>Giờ làm</th>
+                    <th>Email</th>
                     <th></th>
                   </tr>
                 </thead>
 
                 <tbody className="admin-table__info--data">
-                  { loading ? <div></div> : staffs.map((staff) => (
-                    <React.Fragment key={staff.id}>
+                  { loading ? <div></div> : displayedCustomers.map((customer) => (
+                    <React.Fragment key={customer.id}>
                       <tr style={{ textAlign: "center" }}>
-                        <td>{staff.name}</td>
-                        <td>{staff.job_title}</td>
-                        <td>{staff.phone_number}</td>
-                        <td>{staff.address}</td>
-                        <td>{getWorkTime(staff)}</td>
+                        <td>{customer.name}</td>
+                        <td>{customer.gender}</td>
+                        <td>{customer.phone_number}</td>
+                        <td>{customer.address}</td>
+                        <td>{customer.email}</td>
                         <td>
-                          <button onClick={() => toggleDetails(staff.id)}>
+                          <button onClick={() => toggleDetails(customer.id)}>
                             Xem chi tiết
                           </button>
                         </td>
                       </tr>
-                      {showDetails.includes(staff.id) && (
+                      {/* {showDetails.includes(staff.id) && (
                         <tr>
                           <td colSpan={6}>
-                            {/* Render staff details here */}
+                           
                             <div className={`staff-info ${showDetails.includes(staff.id) ? "show" : ""}`}>
                                 <div className="staff-info__detail">
                                     <p>{staff.name}:</p>
@@ -111,16 +113,25 @@ function Customers() {
                                             </tr>
                                         ))}
                                     
-                                {/* Add more details as needed */}
+                                
                                 </div>
                             </div>
                           </td>
                         </tr>
-                      )}
+                      )} */}
                     </React.Fragment>
                   ))}
                 </tbody>
               </table>
+              <TablePagination
+                style={{ fontSize: "16px" }}
+                component="div"
+                count={customers.length}
+                page={page}
+                onPageChange={handleChangePage}
+                rowsPerPage={rowsPerPage}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+              />
             </div>
           </div>
         </div>

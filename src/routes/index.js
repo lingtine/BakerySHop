@@ -24,6 +24,11 @@ import Customers from "~/components/adminPage/Users/Customer";
 import AddProduct from "~/components/adminPage/Products/AddProduct";
 import EditProduct from "~/components/adminPage/Products/EditProduct";
 import ProductTypes from "~/components/adminPage/Products/ProductTypes";
+import ChangeType from "~/components/adminPage/Products/ChangeType";
+import AddType from "~/components/adminPage/Products/AddType";
+import SliderChange from "~/components/adminPage/Slider/Slider"
+import Chart from "~/components/adminPage/Chart/Chart";
+
 
 
 const privateRoutes = [];
@@ -50,28 +55,9 @@ const publicRoutes = [
     component: ProductDetailPage,
     layout: DefaultLayout,
   },
-  { path: "/fags", component: FagsPage, layout: DefaultLayout },
-
-  { path: "/login", component: LoginPage, layout: DefaultLayout },
-
-  { path: "/register", component: RegisterPage, layout: DefaultLayout },
-<<<<<<< Updated upstream
-  { path: "/admin", component: AdminPage, layout: NoneLayout },
-  { path: "/admin/carts", component: ContentTable, layout: NoneLayout },
-  { path: "/admin/carts/order/:id", component: BillDetail, layout: NoneLayout },
-  { path: "/admin/customers", component: Customers, layout: NoneLayout },
-  { path: "/admin/staffs", component: Staff, layout: NoneLayout },
-  { path: "/admin/products", component: ProductsPage, layout: NoneLayout },
-  { path: "/admin/addproducts", component: AddProduct, layout: NoneLayout },
-  {
-    path: "/admin/editproduct/:id",
-    component: EditProduct,
-    layout: NoneLayout,
-  },
-  { path: "/editproducts", component: AdminPage, layout: NoneLayout },
-  { path: "/designwebsite", component: EditProduct, layout: NoneLayout },
-  { path: "/admin/renevue", component: RenevuePage, layout: NoneLayout },
-=======
+  {path: "/fags", component: FagsPage, layout: DefaultLayout },
+  {path: "/login", component: LoginPage, layout: DefaultLayout },
+  {path: "/register", component: RegisterPage, layout: DefaultLayout },
   {path: "/admin", component: AdminPage, layout: NoneLayout},
   {path: "/admin/carts", component: ContentTable, layout: NoneLayout},
   {path: "/admin/carts/order/:id", component: BillDetail, layout: NoneLayout},
@@ -81,9 +67,13 @@ const publicRoutes = [
   {path: "/admin/addproducts", component: AddProduct, layout: NoneLayout},
   {path: "/admin/editproduct/:id", component: EditProduct, layout: NoneLayout},
   {path: "/admin/productbytypes", component: ProductTypes, layout: NoneLayout},
-  {path: "/designwebsite", component: EditProduct, layout: NoneLayout},
-  {path: "/admin/renevue", component: RenevuePage, layout: NoneLayout}
->>>>>>> Stashed changes
+  {path: "/admin/productbytypes/add", component: AddType, layout: NoneLayout},
+  {path: "/admin/productbytypes/edit/:id", component: ChangeType, layout: NoneLayout},
+  {path: "/designwebsite/slide", component: SliderChange, layout: NoneLayout},
+  {path: "/admin/renevue", component: AdminPage, layout: NoneLayout},
+  {path: "/admin/test", component: Chart, layout: NoneLayout},
+
+
 ];
 
 export { privateRoutes, publicRoutes };

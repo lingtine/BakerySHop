@@ -29,11 +29,6 @@
     &__btn {
         border-radius: 5px;
         overflow: hidden;
-        & > button {
-            width: 28px;
-            height: 28px;
-            border: none;
-        }
     }
     &__info {
         width: 100%;
@@ -50,6 +45,11 @@
     }
 }
 .admin-table__info--data{
+    &---link {
+        padding: 10px 20px;
+        margin: 10px;
+        display: block;
+    }
     tr{
         background: #fff;
     }
@@ -67,6 +67,7 @@
             }
         }
     }
+
 }
 
 .admin-table__info--title tr th{
@@ -82,3 +83,5 @@
     background-color: rgba(0, 0, 0, 0.05);
 }
 
+
+  
