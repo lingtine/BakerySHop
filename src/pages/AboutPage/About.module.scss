@@ -20,33 +20,30 @@
 }
 
 .our-kitchen {
-  .our-kitchen-container {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 12px 20px;
-    .our-kitchen-heading {
-      justify-content: flex-start;
-      p {
-        &::after {
-          margin: 0;
-        }
-      }
-    }
+}
 
-    .our-kitchen-content {
-      font-size: 1.8rem;
-      line-height: 30px;
-      color: var(---color-text-light);
-    }
+.recruitment {
+  margin: 40px 0;
+}
 
-    .our-kitchen--image {
-      min-height: 512px;
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-position: center;
-    }
+.theme-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 12px 20px;
+
+  .theme-content {
+    font-size: 1.8rem;
+    line-height: 30px;
+    color: var(---color-text-light);
+  }
+
+  .theme--image {
+    min-height: 512px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
   }
 }

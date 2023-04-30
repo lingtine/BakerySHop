@@ -29,27 +29,41 @@ function ProductCartItem({ product }) {
     );
   };
 
+  console.log(product);
+
   return (
     <div className={cx("product-container")}>
       <div className={cx("row")}>
         <div className={cx("col", "l-5", "m-12", "c-12")}>
-          <div className={cx("product-item")}>{product.productName}</div>
+          <div className={cx("content-info")}>
+            <div
+              className={cx("content-image")}
+              style={{
+                backgroundImage: `url(data:image/png;base64,${product.productImage})`,
+              }}
+            ></div>
+            <div className={cx("content-name")}>{product.productName}</div>
+          </div>
         </div>
         <div className={cx("col", "l-7", "m-0", "c-0")}>
-          <div className={cx("row")}>
-            <div className={cx("col", "l-4")}>
-              <div className={cx("product-item")}>{price}</div>
-            </div>
-            <div className={cx("col", "l-4")}>
-              <div className={cx("product-item")}>
-                <InputQuantity
-                  quantity={quantity}
-                  onChange={handleChangeQuantity}
-                />
+          <div className={cx("product-info")}>
+            <div className={cx("row", "h-full")}>
+              <div className={cx("col", "l-4")}>
+                <div className={cx("product-item")}>{price}</div>
               </div>
-            </div>
-            <div className={cx("col", "l-4")}>
-              <div className={cx("product-item", "product-price")}>{total}</div>
+              <div className={cx("col", "l-4")}>
+                <div className={cx("product-item")}>
+                  <InputQuantity
+                    quantity={quantity}
+                    onChange={handleChangeQuantity}
+                  />
+                </div>
+              </div>
+              <div className={cx("col", "l-4")}>
+                <div className={cx("product-item", "product-price")}>
+                  {total}
+                </div>
+              </div>
             </div>
           </div>
         </div>

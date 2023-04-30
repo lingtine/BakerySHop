@@ -15,6 +15,7 @@
     "css-loader": "^6.7.3",
     "customize-cra": "^1.0.0",
     "datatables.net-dt": "^1.13.4",
+    "formik": "^2.2.9",
     "js-base64": "^3.7.5",
     "jsonwebtoken": "^9.0.0",
     "normalize.css": "^8.0.1",
@@ -29,7 +30,8 @@
     "sass": "^1.58.3",
     "sass-loader": "^13.2.2",
     "tippy.js": "^6.3.7",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^1.1.1"
   },
   "scripts": {
     "start": "react-app-rewired start",

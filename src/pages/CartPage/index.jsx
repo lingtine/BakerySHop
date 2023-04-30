@@ -4,13 +4,16 @@ import { HiOutlineArrowNarrowLeft } from "react-icons/hi";
 import { Button } from "~/components";
 import styles from "./Cart.module.scss";
 import ProductCartItem from "./ProductCartItem";
+
 import { usePriceFormatter } from "~/hooks";
 
 const cx = classNames.bind(styles);
 
 function CartPage() {
   const { data } = useSelector((state) => state.cart);
+
   const total = usePriceFormatter(data ? data.total : 0, "VND");
+
   let renderCart;
   if (data.items) {
     renderCart = data.items.map((item) => {

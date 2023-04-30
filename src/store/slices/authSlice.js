@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { obtainAccessToken, getUser, authRefresh } from "../thunks";
+import { obtainAccessToken, getUser, authRefresh, register } from "../thunks";
 
 const authSlice = createSlice({
   name: "auth",
@@ -26,6 +26,7 @@ const authSlice = createSlice({
       .addCase(obtainAccessToken.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
+        console.log(action.payload);
       });
     //get user
     builder
@@ -54,6 +55,17 @@ const authSlice = createSlice({
         localStorage.removeItem("accessToken");
       })
       .addCase(authRefresh.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      });
+    builder
+      .addCase(register.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(register.fulfilled, (state) => {
+        state.status = "succeeded";
+      })
+      .addCase(register.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       });

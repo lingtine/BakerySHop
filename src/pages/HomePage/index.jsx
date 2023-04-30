@@ -147,7 +147,12 @@ function HomePage() {
         <div key={item.id} className={cx("col", "l-4", "m-4", "c-4")}>
           <div className={cx("cart--container")}>
             <div className={cx("cart--image")}>
-              <img src={`data:image/png;base64,${item.image}`} />
+              <div
+                className={cx("lazy--image")}
+                style={{
+                  backgroundImage: `url(data:image/png;base64,${item.image})`,
+                }}
+              ></div>
             </div>
             <div className={cx("cart--content")}>
               <div className={cx("cart--heading")}>

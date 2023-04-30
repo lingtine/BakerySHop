@@ -11,6 +11,7 @@ export { fetchSellingProducts } from "./fetchSellingProducts";
 
 //login
 export { obtainAccessToken } from "./obtainAccessToken";
+export { register } from "./register";
 export { authRefresh } from "./authRefresh";
 export { getUser } from "./getUser";
 

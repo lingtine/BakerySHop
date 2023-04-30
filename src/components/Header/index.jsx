@@ -130,7 +130,7 @@ function Header() {
                         <SlUser />
                       </Link>
                       <Link
-                        to={"/cart"}
+                        to={isLoggedIn ? "/cart" : "/login"}
                         className={cx("action-item", "action-cart")}
                       >
                         <BsCart3 />
