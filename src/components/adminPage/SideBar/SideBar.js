@@ -47,7 +47,7 @@ function SideBar() {
                     <MenuItem component={<Link to="/admin/products"/>} >Danh sách sản phẩm</MenuItem>
                     <SubMenu label="Chỉnh sửa Sản Phẩm">
                         <MenuItem component={<Link to="/admin/addproducts" />}>Thêm sản phẩm</MenuItem>
-                        <MenuItem component={<Link to="/admin/editproduct" />}>Thêm Loại Sản Phẩm</MenuItem>
+                        <MenuItem component={<Link to="/admin/productbytypes" />}> Loại Sản Phẩm</MenuItem>
                     </SubMenu>
                 </SubMenu>
                 <SubMenu icon={<HiGlobeAlt/>} component={<Link  />} label="Website"> 

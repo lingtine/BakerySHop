@@ -1,12 +1,13 @@
-import {useEffect, useState} from 'react'
+import {useEffect, useState}  from 'react';
+import { useNavigate } from "react-router-dom";
 import HeaderContent from "../HeaderAdmin/headerContent";
 import { MdUpdate } from 'react-icons/md';
 function AddProduct() {
+  const navigate = useNavigate();
   const [types, setTypes] = useState([]);
-  const [typeName, setTypeName] = useState();
-
   const [name, setName] = useState();
   const [images, setImages] = useState()
+  const [image, setImage] = useState();
   const [productType, setProductType] = useState();
   const [productTypeName, setProductTypeName] = useState();
   const [description, setDescription] = useState();
@@ -30,29 +31,17 @@ function AddProduct() {
 },[])
 
 
-    // const [value, setValue] = useState({
-    //     name: '',
-    //     id_type: '1',
-    //     unit_price: '',
-    //     unit: '',
-    //     stock: '',
-    //     image: null,
-    //     promotion_price: '0',
-    //     new: '1',
-    //     description: '',
-    // })
 
-
-    // const handleInputChange = (event) => {
-    //   const { name, value, files } = event.target;
-      
-    //     setValue((prevValue) => ({
-    //       ...prevValue,
-    //       [name]: value,
-    //     }));
-      
-      
-    // };
+    const handleImageUpload = (e) => {
+      const file = e.target.files[0];
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onloadend = () => {
+      setImage(reader.result)
+        const base64String = reader.result.split(",")[1];
+        setImages(base64String);
+      };
+    };
     
     
     function formDataToJson(formData) {
@@ -84,9 +73,8 @@ function AddProduct() {
           headers: {
             "Accept" : "application/json",
             "Content-Type": "application/json",
-            "Content-Type": "multipart/form-data"
           },
-          body: formData
+          body: myJson
         })
         .then(response => response.json())
         .then(data => {
@@ -96,6 +84,7 @@ function AddProduct() {
           console.error('Error adding product:', error);
         });
         alert("đã thêm thành công")
+        navigate("/admin/products")
       };
       
 
@@ -148,7 +137,8 @@ function AddProduct() {
                   <div className="addproduct-form__image">
                     <label htmlFor="image">Hình ảnh</label>
                     {/* <input type="file" accept="image/jpeg,image/png" name="image" onChange={handleInputChange} /> */}
-                    <input type="file"  accept="image/jpeg,image/png" onChange={(e) => setImages(e.target.files[0])} />
+                    <input type="file"  accept="image/jpeg,image/png" onChange={handleImageUpload} />
+                    <img style={{width: '100%'}} src={image}></img>
                   </div>
 
 

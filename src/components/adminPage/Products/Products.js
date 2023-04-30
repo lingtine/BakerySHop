@@ -1,11 +1,23 @@
 import { useEffect, useState, useRef, useLayoutEffect } from "react";
 import HeaderContent from "../HeaderAdmin/headerContent";
+<<<<<<< Updated upstream
 import { FiEdit } from "react-icons/fi";
 import { AiOutlineDelete } from "react-icons/ai";
 import DataTable from "datatables.net-dt";
 import TablePagination from "@mui/material/TablePagination";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+=======
+import {FiEdit} from 'react-icons/fi'
+import {AiOutlineDelete} from 'react-icons/ai'
+import DataTable from 'datatables.net-dt';
+import TablePagination from '@mui/material/TablePagination';
+import {Link} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import "../adminPage.scss";
+
+
+>>>>>>> Stashed changes
 
 function ProductsPage() {
   const [products, setProducts] = useState([]);
