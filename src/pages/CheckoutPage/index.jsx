@@ -1,8 +1,10 @@
 import classNames from "classnames/bind";
 import styles from "./CheckoutPage.module.scss";
 import FormCheckout from "./FormCheckout";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
+import ProductItem from "./ProductItem";
+import { usePriceFormatter } from "~/hooks";
 
 import { TbTruckDelivery } from "react-icons/tb";
 import { BiStoreAlt } from "react-icons/bi";
@@ -14,6 +16,7 @@ function CheckoutPage() {
   const [paymentType, setPaymentType] = useState(0);
   const { user } = useSelector((state) => state.auth);
   const { data } = useSelector((state) => state.cart);
+  const total = usePriceFormatter(data.total, "VND");
 
   const paymentTypes = [
     {
@@ -29,8 +32,6 @@ function CheckoutPage() {
   ];
 
   const handleChangePaymentType = (value) => {
-    console.log(value);
-
     if (value !== paymentType) {
       setPaymentType(value);
     }
@@ -40,24 +41,7 @@ function CheckoutPage() {
   if (data) {
     if (data.items) {
       renderProduct = data.items.map((product) => {
-        return (
-          <div className={cx("product")} key={product.productId}>
-            <div className={cx("product-info")}>
-              <div
-                className={cx("product-image")}
-                style={{
-                  backgroundImage: `url(data:image/png;base64,${product.productImage})`,
-                }}
-              >
-                <div className={cx("product-quantity")}>{product.quantity}</div>
-              </div>
-              <div>
-                <h5>{product.productName}</h5>
-              </div>
-            </div>
-            <div>{product.price * product.quantity}</div>
-          </div>
-        );
+        return <ProductItem data={product} key={product.id} />;
       });
     }
   }
@@ -89,7 +73,7 @@ function CheckoutPage() {
     <div className={cx("checkout-wrapper")}>
       <div className={cx("grid", "wide")}>
         <div className={cx("row")}>
-          <div className={cx("col", "l-6", "m-6", "c-6")}>
+          <div className={cx("col", "l-6", "m-12", "c-12")}>
             <div className={cx("checkout--container")}>
               <div className={cx("name-store")}>
                 <h1>BAKES SAIGON</h1>
@@ -115,17 +99,20 @@ function CheckoutPage() {
                   <h4>Thông tin nhận hàng</h4>
                 </div>
                 <div className={cx("order-info")}>
-                  <FormCheckout />
+                  <FormCheckout paymentType={paymentType} />
                 </div>
               </div>
             </div>
           </div>
-          <div className={cx("col", "l-6", "m-6", "c-6")}>
+          <div className={cx("col", "l-6", "m-12", "c-12")}>
             <div className={cx("checkout--container")}>
+              <div className={cx("checkout-container--heading")}>
+                <h2>Thông Tin Đơn hàng</h2>
+              </div>
               <div className={cx("list-order")}>{renderProduct}</div>
               <div className={cx("price")}>
                 <div className={cx("")}>Tổng cộng</div>
-                <div className={cx("")}>{data ? data.total : ""}</div>
+                <div className={cx("")}>{data ? total : ""}</div>
               </div>
             </div>
           </div>

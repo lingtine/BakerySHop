@@ -104,11 +104,19 @@
       padding-top: 20%;
     }
 
-    .content-name {
+    .content-wrapper {
       display: flex;
-      align-items: center;
+      justify-content: space-evenly;
+      flex-direction: column;
+      margin-left: 18px;
       height: 100%;
-      color: var(---color-text);
+      .content-name {
+      }
+
+      .btn-remove {
+        text-transform: uppercase;
+        color: var(---color-text);
+      }
     }
   }
 

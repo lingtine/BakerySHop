@@ -70,11 +70,11 @@ function HomePage() {
 
   let contentNewProducts;
   if (isLoadingOfNewProducts) {
-    contentNewProducts = "loading";
+    contentNewProducts = <h1>Loading</h1>;
   } else if (errorOfFetchNewProducts) {
-    contentNewProducts = "Lỗi tại thằng Thọ";
+    contentNewProducts = <h1>Lỗi tại thằng Thọ</h1>;
   } else if (newProducts) {
-    contentNewProducts = <Slider data={newProducts} />;
+    contentNewProducts = <Slider quantityDisplayed={3} data={newProducts} />;
   }
 
   let contentSellingProducts;
@@ -88,7 +88,7 @@ function HomePage() {
       return (
         <div
           className={cx("row", {
-            reverse: reverse,
+            "row-reverse": reverse,
           })}
         >
           <div className={cx("col", "l-6", "m-6", "c-6")}>
@@ -144,7 +144,7 @@ function HomePage() {
   } else if (noNasties) {
     contentNoNasties = noNasties.map((item) => {
       return (
-        <div key={item.id} className={cx("col", "l-4", "m-4", "c-4")}>
+        <div key={item.id} className={cx("col", "l-4", "m-4", "c-12")}>
           <div className={cx("cart--container")}>
             <div className={cx("cart--image")}>
               <div
@@ -176,8 +176,8 @@ function HomePage() {
   } else if (branch) {
     contentBranch = branch.map((item) => {
       return (
-        <div className={cx("row", "no-gutters")}>
-          <div className={cx("col", "l-6", "m-6", "c-6")}>
+        <div className={cx("row", "reverse", "no-gutters")}>
+          <div className={cx("col", "l-6", "m-6", "c-12")}>
             <div className={cx("address-container")}>
               <div className={cx("heading")}>
                 <h4>{item.name}</h4>
@@ -188,7 +188,7 @@ function HomePage() {
               </div>
             </div>
           </div>
-          <div className={cx("col", "l-6", "m-6", "c-6")}>
+          <div className={cx("col", "l-6", "m-6", "c-12")}>
             <div
               style={{
                 backgroundImage: `url(data:image/png;base64,${item.image})`,
@@ -209,7 +209,7 @@ function HomePage() {
   } else if (forte) {
     contentForte = forte.map((item) => {
       return (
-        <div key={item.id} className={cx("col", "l-4", "m-4", "c-4")}>
+        <div key={item.id} className={cx("col", "l-4", "m-4", "c-12")}>
           <div className={cx("cart--container")}>
             <div className={cx("cart--icon")}>
               <img src={`data:image/png;base64,${item.image}`} />

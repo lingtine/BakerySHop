@@ -6,8 +6,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { getProduct, addToCart } from "~/store";
-import { InputQuantity, Accordion } from "~/components";
+import { InputQuantity, Accordion, Button } from "~/components";
 import { usePriceFormatter, useThunk } from "~/hooks";
+
+import ModalPopUp from "./ModalPopUp";
 const cx = classNames.bind(styles);
 
 function ProductDetailPage() {
@@ -20,6 +22,7 @@ function ProductDetailPage() {
   const { data } = useSelector((state) => state.cart);
 
   const dispatch = useDispatch();
+  const [isOpen, setIsOpen] = useState(false);
 
   const price = usePriceFormatter(product ? product.unit_price : 0, "VND");
   const total = usePriceFormatter(
@@ -34,24 +37,54 @@ function ProductDetailPage() {
   const handleChangeQuantity = (value) => {
     setQuantity(value);
   };
+  const handleOpen = () => {
+    setIsOpen(true);
+  };
+  const handleClose = () => {
+    setIsOpen(false);
+  };
 
+  const actionContent = (
+    <div className={cx("modal-action")}>
+      <Button
+        className={cx("modal-action-btn")}
+        onClick={handleClose}
+        primary
+        outline
+      >
+        Tiếp tục mua hàng
+      </Button>
+      <Button
+        className={cx("modal-action-btn")}
+        onClick={handleClose}
+        to={"/cart"}
+        primary
+        outline
+      >
+        Đi đến giỏ hàng
+      </Button>
+    </div>
+  );
   const handleBuying = () => {
     if (!isAuthenticated) {
       navigate("/login");
     } else {
-      dispatch(
-        addToCart({
-          userId: user.id,
-          product: {
-            productId: product.id,
-            productType: product.id_type,
-            productName: product.name,
-            productImage: product.image,
-            quantity,
-            price: product.promotion_price || product.unit_price,
-          },
-        })
-      );
+      if (quantity !== 0) {
+        handleOpen();
+        dispatch(
+          addToCart({
+            userId: user.id,
+            product: {
+              productId: product.id,
+              productType: product.id_type,
+              productName: product.name,
+              productImage: product.image,
+              quantity,
+              price: product.promotion_price || product.unit_price,
+            },
+          })
+        );
+      }
     }
   };
 
@@ -88,6 +121,14 @@ function ProductDetailPage() {
             {total}
           </button>
         </div>
+
+        {isOpen && (
+          <ModalPopUp actions={actionContent} onClose={handleClose}>
+            <div className={cx("modal-heading")}>
+              Đã thêm sản phẩm vào giỏ hàng
+            </div>
+          </ModalPopUp>
+        )}
         <Accordion items={contentAccordion} />
         <div className={cx("product-note")}>
           VAT will be added at check out.

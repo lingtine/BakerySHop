@@ -6,9 +6,9 @@ import { AiOutlineArrowRight, AiOutlineArrowLeft } from "react-icons/ai";
 
 const cx = classNames.bind(styles);
 
-function Slider({ data, quantityDisplayed = 4 }) {
+function Slider({ data, quantityDisplayed = 1 }) {
   const [slideIndex, setSlideIndex] = useState(0);
-  const lengthSlide = data.length - quantityDisplayed + 1;
+  const lengthSlide = data.length - quantityDisplayed;
 
   const nextSlide = () => {
     setSlideIndex(slideIndex + 1);
@@ -19,12 +19,16 @@ function Slider({ data, quantityDisplayed = 4 }) {
   };
 
   const trackStyles = {
-    transform: `translateX(-${slideIndex * (100 / 3)}%)`,
+    transform: `translateX(-${slideIndex * (100 / quantityDisplayed)}%)`,
+  };
+
+  const slideShow = {
+    minWidth: `${100 / quantityDisplayed}%`,
   };
 
   const renderData = data.map((item) => {
     return (
-      <div className={cx("slide")}>
+      <div className={cx("slide")} style={slideShow}>
         <Card content={item} />
       </div>
     );

@@ -57,3 +57,43 @@
     color: var(---color-a80);
   }
 }
+
+.modal-shadow {
+  position: fixed;
+  background-color: #fff;
+  inset: 0;
+  opacity: 0.4;
+}
+
+.modal-content {
+  position: fixed;
+  z-index: 999;
+  top: 35%;
+  right: 35%;
+  left: 35%;
+  bottom: 35%;
+  background-color: #fff;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  flex-direction: column;
+  .modal-action {
+    display: flex;
+    justify-content: space-between;
+    padding: 18px 16px;
+    color: var(---color-primary);
+
+    .modal-action-btn {
+      padding: 8px 8px;
+    }
+  }
+
+  .modal-heading {
+    text-transform: uppercase;
+    color: var(---color-primary);
+    font-weight: 800;
+  }
+}

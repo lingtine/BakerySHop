@@ -25,6 +25,7 @@ function FagsPage() {
   } else if (error) {
     content = "lỗi ùi";
   } else if (data) {
+    console.log(data);
     content = <Accordion items={data} />;
   }
 

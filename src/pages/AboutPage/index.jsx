@@ -115,7 +115,7 @@ function AboutPage() {
   } else if (position) {
     contentPosition = position.map((item) => {
       return (
-        <div key={item.id} className={cx("col", "l-4", "m-4", "c-4")}>
+        <div key={item.id} className={cx("col", "l-4", "m-4", "c-12")}>
           <div className={cx("cart--container")}>
             <div className={cx("cart--image")}>
               <div

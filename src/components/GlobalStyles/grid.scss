@@ -16,6 +16,9 @@
   margin-right: -4px;
 }
 .row.reverse {
+  flex-direction: column-reverse;
+}
+.row.row-reverse {
   flex-direction: row-reverse;
 }
 
@@ -148,7 +151,9 @@
     margin-left: -4px;
     margin-right: -4px;
   }
-
+  .row.reverse {
+    flex-direction: row;
+  }
   .col {
     padding-left: 4px;
     padding-right: 4px;
@@ -284,7 +289,9 @@
     margin-left: -12px;
     margin-right: -12px;
   }
-
+  .row.reverse {
+    flex-direction: row;
+  }
   .row.sm-gutter {
     margin-left: -5px;
     margin-right: -5px;

@@ -1,10 +1,11 @@
 import classNames from "classnames/bind";
 import { useState } from "react";
 import styles from "./Cart.module.scss";
-import { InputQuantity } from "~/components";
+import { Button, InputQuantity } from "~/components";
 import { useDispatch } from "react-redux";
 import { updateCart } from "~/store";
 import { usePriceFormatter } from "~/hooks";
+import { removeProduct } from "~/store";
 
 const cx = classNames.bind(styles);
 
@@ -17,19 +18,25 @@ function ProductCartItem({ product }) {
   );
   const price = usePriceFormatter(product.price, "VND");
   const handleChangeQuantity = (value) => {
-    setQuantity(value);
-    dispatch(
-      updateCart({
-        product: {
-          productId: product.productId,
-          productType: product.productType,
-          quantity: value,
-        },
-      })
-    );
+    if (value !== 0) {
+      setQuantity(value);
+      dispatch(
+        updateCart({
+          product: {
+            productId: product.productId,
+            productType: product.productType,
+            quantity: value,
+          },
+        })
+      );
+    } else {
+      dispatch(removeProduct(product.productId));
+    }
   };
 
-  console.log(product);
+  const handleRemove = () => {
+    dispatch(removeProduct(product.productId));
+  };
 
   return (
     <div className={cx("product-container")}>
@@ -42,7 +49,12 @@ function ProductCartItem({ product }) {
                 backgroundImage: `url(data:image/png;base64,${product.productImage})`,
               }}
             ></div>
-            <div className={cx("content-name")}>{product.productName}</div>
+            <div className={cx("content-wrapper")}>
+              <div className={cx("content-name")}>{product.productName}</div>
+              <Button onClick={handleRemove} className={cx("btn-remove")}>
+                remove
+              </Button>
+            </div>
           </div>
         </div>
         <div className={cx("col", "l-7", "m-0", "c-0")}>

@@ -2,31 +2,49 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import styles from "./CheckoutPage.module.scss";
 import classNames from "classnames/bind";
-import { Button, SelectBox } from "~/components";
+import { Button } from "~/components";
+import { order } from "~/store";
+import { useThunk } from "~/hooks";
 import { useState } from "react";
 
+import ModalPopUp from "./ModalPopUp";
 import { IoIosArrowBack } from "react-icons/io";
 
 const cx = classNames.bind(styles);
 
-function FormCheckout() {
-  const [gender, setGender] = useState();
-  const optionGenders = [
-    {
-      id: 1,
-      label: "male",
-      value: "male",
-    },
-    {
-      id: 2,
-      label: "female",
-      value: "female",
-    },
-  ];
+function FormCheckout({ paymentType }) {
+  const [doOrder] = useThunk(order);
+  const [isOpen, setIsOpen] = useState(false);
 
-  const handleChangeGender = (option) => {
-    setGender(option);
+  const handleOpen = () => {
+    setIsOpen(true);
   };
+  const handleClose = () => {
+    setIsOpen(false);
+  };
+
+  const actionContent = (
+    <div className={cx("modal-action")}>
+      <Button
+        className={cx("modal-action-btn")}
+        onClick={handleClose}
+        to={"/"}
+        primary
+        outline
+      >
+        Đi đến trang chủ
+      </Button>
+      <Button
+        className={cx("modal-action-btn")}
+        onClick={handleClose}
+        to={"/collection"}
+        primary
+        outline
+      >
+        Tiếp tục mua hàng
+      </Button>
+    </div>
+  );
 
   const formik = useFormik({
     initialValues: {
@@ -45,8 +63,12 @@ function FormCheckout() {
         .required("Vui lòng nhập số điện thoại")
         .required("Vui lòng nhập số điện thoại"),
     }),
-    onSubmit: (values) => {},
+    onSubmit: (values) => {
+      doOrder({ ...values, paymentType });
+      handleOpen();
+    },
   });
+
   return (
     <form className={cx("login-form")} onSubmit={formik.handleSubmit}>
       <div className={cx("form-input")}>
@@ -54,26 +76,16 @@ function FormCheckout() {
           placeholder="name"
           name="name"
           type="text"
-          value={formik.values.password}
+          value={formik.values.name}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
         />
         <div className={cx("form-input--label")}>Name</div>
       </div>
 
-      {formik.touched.password && formik.errors.password && (
-        <div className={cx("messenger-error")}>{formik.errors.password}</div>
+      {formik.touched.name && formik.errors.name && (
+        <div className={cx("messenger-error")}>{formik.errors.name}</div>
       )}
-      {/* <div className={cx("input-select")}>
-        <SelectBox
-          options={optionGenders}
-          onChange={handleChangeGender}
-          selected={gender}
-        />
-      </div>
-      {formik.touched.password && formik.errors.password && (
-        <div className={cx("messenger-error")}>{formik.errors.password}</div>
-      )} */}
 
       <div className={cx("form-input")}>
         <input
@@ -86,8 +98,8 @@ function FormCheckout() {
         />
         <div className={cx("form-input--label")}>address</div>
       </div>
-      {formik.touched.email && formik.errors.email && (
-        <div className={cx("messenger-error")}>{formik.errors.email}</div>
+      {formik.touched.address && formik.errors.address && (
+        <div className={cx("messenger-error")}>{formik.errors.address}</div>
       )}
 
       <div className={cx("form-input")}>
@@ -114,18 +126,29 @@ function FormCheckout() {
         />
         <div className={cx("form-input--label")}>Note</div>
       </div>
-      {formik.touched.password && formik.errors.password && (
-        <div className={cx("messenger-error")}>{formik.errors.password}</div>
+      {formik.touched.note && formik.errors.note && (
+        <div className={cx("messenger-error")}>{formik.errors.note}</div>
       )}
 
       <div className={cx("actions")}>
-        <Button className={cx("btn-cart")}>
-          <IoIosArrowBack />
-          <p>Quay trở lại vào giỏ hàng</p>
+        <Button
+          leftIcon={<IoIosArrowBack />}
+          to={"/cart"}
+          className={cx("btn-cart")}
+        >
+          Quay trở lại vào giỏ hàng
         </Button>
         <Button primary outline className={cx("btn-order")} type="submit">
           Đặt Hàng
         </Button>
+
+        {isOpen && (
+          <ModalPopUp actions={actionContent} onClose={handleClose}>
+            <div className={cx("modal-heading")}>
+              Đã thêm sản phẩm vào giỏ hàng
+            </div>
+          </ModalPopUp>
+        )}
       </div>
     </form>
   );

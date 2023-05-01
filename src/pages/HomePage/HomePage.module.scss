@@ -97,3 +97,9 @@ $color-text-light: var(---color-text-light);
 .forte {
   margin: 40px 0;
 }
+
+@media (max-width: 740px) {
+  .address-container {
+    padding-top: 20px;
+  }
+}

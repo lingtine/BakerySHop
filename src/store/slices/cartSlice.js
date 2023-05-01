@@ -61,6 +61,15 @@ const cartSlice = createSlice({
         JSON.stringify(state.data)
       );
     },
+    removeProduct: (state, action) => {
+      state.data.items = state.data.items.filter(
+        (item) => item.productId !== action.payload
+      );
+      localStorage.setItem(
+        `cart_${state.data.userId}`,
+        JSON.stringify(state.data)
+      );
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(getUser.fulfilled, (state, action) => {
@@ -85,9 +94,12 @@ const cartSlice = createSlice({
       })
       .addCase(order.fulfilled, (state, action) => {
         state.status = "succeeded";
+        state.data.items = [];
+        localStorage.removeItem(`cart_${state.data.userId}`);
       });
   },
 });
 
-export const { addToCart, setCart, updateCart } = cartSlice.actions;
+export const { addToCart, setCart, updateCart, removeProduct } =
+  cartSlice.actions;
 export default cartSlice.reducer;
