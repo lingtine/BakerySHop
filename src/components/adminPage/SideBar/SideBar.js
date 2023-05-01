@@ -37,7 +37,7 @@ function SideBar() {
             className="header-sidebar_menu">
                 <SubMenu icon={<AiOutlineShoppingCart/>} defaultOpen component={<Link />} label="Đơn hàng">
                     <MenuItem component={<Link to="/admin/carts" />}>Tổng đơn hàng</MenuItem>
-                    <MenuItem>Đơn hàng chờ</MenuItem>
+                    <MenuItem component={<Link to="/admin/test"/>}>Đơn hàng chờ</MenuItem>
                 </SubMenu>
                 <SubMenu icon={<BsFillPersonFill/>}  label="Khách hàng"> 
                     <MenuItem component={<Link to="/admin/customers"/>}> Khách hàng </MenuItem>
@@ -51,7 +51,7 @@ function SideBar() {
                     </SubMenu>
                 </SubMenu>
                 <SubMenu icon={<HiGlobeAlt/>} component={<Link  />} label="Website"> 
-                    <MenuItem>Slide</MenuItem>
+                    <MenuItem component={<Link to="/designwebsite/slide"/>}>Slide</MenuItem>
                     <MenuItem>Footer</MenuItem>
                 </SubMenu>
                 <MenuItem icon={<BsCurrencyDollar/>} component={<Link to="/admin/renevue"  />}>Doanh thu</MenuItem>

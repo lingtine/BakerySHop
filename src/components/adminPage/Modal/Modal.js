@@ -1,32 +1,24 @@
 import "./Modal.scss";
-import ReactDOM from "react-dom";
 import React from "react";
 import { useState, useEffect } from "react";
+import FormInfo from "../Form/FormEditInfo";
 
-function Modal(status) {
-  const [checked, setChecked] = useState(status.props);
+function Modal(customer) {
 
-  useEffect(() => {
-    const elementSearched = document.querySelector(".panel");
-    if (checked) {
-      elementSearched.classList.add("active");
-      console.log("đã đúng");
-    } else {
-      elementSearched.classList.remove("active");
-      console.log("sai");
-    }
-  }, []);
+
+  const handleClose = () => {
+    customer.onStatus(true)
+  }
+  console.log(customer);
 
   return (
     <div class="panel overlay hidden" id="my-panel">
       <div class="panel-body">
-        <div class="panel-body--search">
-          <input
-            type="text"
-            class="panel-body--input"
-            placeholder="Search..."
-          />
-          <span class="panel-body--line"></span>
+        <div class="panel-body__change">
+       
+          <div className="close" onClick={handleClose}>X</div>
+          <h2>Chỉnh Sửa Thông tin</h2>
+                <FormInfo  props={customer.props}/>
         </div>
       </div>
     </div>

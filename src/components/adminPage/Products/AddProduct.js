@@ -2,12 +2,14 @@ import {useEffect, useState}  from 'react';
 import { useNavigate } from "react-router-dom";
 import HeaderContent from "../HeaderAdmin/headerContent";
 import { MdUpdate } from 'react-icons/md';
+import Button from "~/components/Button"
+
 function AddProduct() {
   const navigate = useNavigate();
+  const [image, setImage] = useState();
   const [types, setTypes] = useState([]);
   const [name, setName] = useState();
   const [images, setImages] = useState()
-  const [image, setImage] = useState();
   const [productType, setProductType] = useState();
   const [productTypeName, setProductTypeName] = useState();
   const [description, setDescription] = useState();
@@ -159,7 +161,7 @@ function AddProduct() {
                     <input type="text" placeholder="Chú thích về sản phẩm..." name="id_type" value={productType} onChange={e => setProductType(e.target.value)} />
                   </div>
                   <div className="addproduct-form__btn">
-                    <button type="submit">Thêm sản phẩm</button>
+                    <Button type="submit">Thêm sản phẩm</Button>
                   </div>
                   </form>
                 </div>
