@@ -16,17 +16,18 @@ function LoginPage() {
   const [doObtainAccessToken] = useThunk(obtainAccessToken);
   const [doGetUser] = useThunk(getUser);
 
-  const { isAuthenticated, accessToken, status, error } = useSelector(
+  const { isAuthenticated, accessToken, error } = useSelector(
     (state) => state.auth
   );
 
   const navigate = useNavigate();
   useEffect(() => {
+    console.log(error);
     if (isAuthenticated) {
       navigate("/");
       doGetUser(accessToken);
     }
-  }, [isAuthenticated, navigate, accessToken, doGetUser]);
+  }, [isAuthenticated, navigate, accessToken]);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -44,18 +45,13 @@ function LoginPage() {
       doObtainAccessToken(values);
     },
   });
-
-  if (error) {
-    console.log(error);
-  }
-
   return (
     <div className={cx("wrapper")}>
       <div className={cx("login")}>
         <h2 className={cx("login-heading")}>Login</h2>
-        {status === "failed" && (
+        {error === "Unauthorized" && (
           <div className={cx("messenger-error-login")}>
-            Email hoặc mật khẩu không chính xác.
+            email or password is incorrect
           </div>
         )}
         <form className={cx("login-form")} onSubmit={formik.handleSubmit}>

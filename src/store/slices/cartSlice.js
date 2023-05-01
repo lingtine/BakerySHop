@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getUser, authRefresh } from "../thunks";
+import { getUser, authRefresh, order } from "../thunks";
 const cartSlice = createSlice({
   name: "cart",
   initialState: {
@@ -76,6 +76,16 @@ const cartSlice = createSlice({
         total: 0,
       };
     });
+    builder
+      .addCase(order.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(order.rejected, (state, action) => {
+        state.status = "failed";
+      })
+      .addCase(order.fulfilled, (state, action) => {
+        state.status = "succeeded";
+      });
   },
 });
 

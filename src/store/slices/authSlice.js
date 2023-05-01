@@ -25,8 +25,7 @@ const authSlice = createSlice({
       })
       .addCase(obtainAccessToken.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.payload;
-        console.log(action.payload);
+        state.error = action.payload.error;
       });
     //get user
     builder

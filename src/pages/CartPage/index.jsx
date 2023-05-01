@@ -86,7 +86,9 @@ function CartPage() {
           <div className={cx("row")}>
             <div className={cx("col", "l-12", "m-12", "c-12")}>
               <div className={cx("cart-action-check-out")}>
-                <Button className={cx("btn-check-out")}>Check out</Button>
+                <Button to={"/checkout"} className={cx("btn-check-out")}>
+                  Check out
+                </Button>
               </div>
             </div>
           </div>

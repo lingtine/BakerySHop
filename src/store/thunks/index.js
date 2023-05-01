@@ -1,3 +1,5 @@
+import { FormikProvider } from "formik";
+
 //cart
 export { addCart } from "./addCart";
 export { fetchCart } from "./fetchCart";
@@ -35,3 +37,7 @@ export { fetchAboutKitchen } from "./fetchAboutKitchen";
 export { fetchHiring } from "./fetchHiring";
 export { fetchPosition } from "./fetchPosition";
 export { fetchSlideBanner } from "./fetchSlideBanner";
+
+//order
+
+export { order } from "./order";
