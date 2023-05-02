@@ -6,8 +6,13 @@ import React from "react";
 import Chart from "../adminPage/Chart/Chart";
 import AdminPieChart from "../adminPage/Chart/PieChart";
 import AdminPieChart2 from "../adminPage/Chart/PieChart2";
+import { useSelector } from "react-redux";
+import { Navigate, useNavigate } from "react-router-dom";
 
 function AdminPage() {
+
+  
+
   const [orders, setOrders] = useState([]);
   const [orderTotal, setOrderTotal] = useState(0);
   const [orderCod, setOrderCod] = useState(0);
@@ -15,8 +20,8 @@ function AdminPage() {
   const [done, setDone] = useState(0);
   const [doneWCod, setDoneWCod] = useState(0);
   const [doneWBank, setDoneWBank] = useState(0);
-  const [orderCancel, setOrderCancel] = useState(0)
-
+  const [orderCancel, setOrderCancel] = useState(0);
+  const navigate= useNavigate()
   useEffect(() => {
     const fecthOrder = () => {
       fetch("http://localhost:81/api/order-list")
@@ -57,10 +62,9 @@ function AdminPage() {
             totalBank += 1;
             setDoneWBank(totalBank);
             break;
-        } 
-      } else if(order.state == 3) {
-          orderCancel +=1;
-          
+        }
+      } else if (order.state == 3) {
+        orderCancel += 1;
       }
     });
     setOrderTotal(totalOrder);
@@ -68,6 +72,13 @@ function AdminPage() {
     setOrderBank(orders.length - codOrder);
     setDone(orderDone);
     setOrderCancel(orderCancel);
+  }
+
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
+
+  // Redirect to login page if user is not authenticated or is not an admin
+  if (!isAuthenticated || !user.isAdmin) {
+    navigate("/login") ;
   }
 
   const data = {
@@ -165,14 +176,25 @@ function AdminPage() {
                   <div>Đơn đã hoàn tất: {done}</div>
                   <div>Đơn đã hủy: {orderCancel}</div>
                 </div>
-                <div className="admin-statistics__data--ratio">Tỷ lệ hủy đơn: {<span>{((Number(orderCancel)/Number(orders.length))*100).toFixed(2)}%</span>}</div>
+                <div className="admin-statistics__data--ratio">
+                  Tỷ lệ hủy đơn:{" "}
+                  {
+                    <span>
+                      {(
+                        (Number(orderCancel) / Number(orders.length)) *
+                        100
+                      ).toFixed(2)}
+                      %
+                    </span>
+                  }
+                </div>
                 <AdminPieChart props={data} />
-
               </div>
 
               <div className="admin-statistics__chart--description">
                 <div>
-                  <span className="description-span ordercod"></span>Đơn đã hoàn tất
+                  <span className="description-span ordercod"></span>Đơn đã hoàn
+                  tất
                 </div>
                 <div>
                   <span className="description-span orderbank"></span>Đơn hủy
@@ -200,12 +222,26 @@ function AdminPage() {
                   <span className="description-span orderbank"></span>Đơn
                   Banking
                 </div>
+                <div>
+                  <span className="description-span ordercancel"></span>Đơn Hủy
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <Chart props={data} />
+        <div style={{padding: "70px", height: "700px"}} className="admin-statistics__chart--payment">
+          <div className="admin-statistics__data">
+          <div className="admin-statistics__data--chart">
+                {/* <label>Tổng đơn hàng</label> */}
+                <div className="admin-statistics__data--label ">
+                  <span>{orders.length}</span> Đơn hàng
+                  <div>Tổng thu: {orderTotal}</div>
+                </div>
+                <Chart props={data} />
+              </div>
+          </div>
+        </div>
       </div>
       {/* <Doughnut  data={test} /> */}
     </React.Fragment>

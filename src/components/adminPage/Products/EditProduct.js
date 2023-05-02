@@ -6,6 +6,7 @@ import Button from "~/components/Button";
 
 function EditProduct({ match }) {
   const [types, setTypes] = useState([]);
+
   const [product, setProduct] = useState([]);
   const [name, setName] = useState();
   const [images, setImages] = useState();
@@ -25,8 +26,15 @@ function EditProduct({ match }) {
       fetch(`http://localhost:81/api/products/${id}`)
         .then((res) => res.json())
         .then((data) => {
-         setProduct(data.product);
-          getOldData(data.product)
+          setProduct(data.product);
+          getOldData(data.product);
+        })
+        .then((data) => {
+          fetch("http://localhost:81/api/products-type")
+            .then((res) => res.json())
+            .then((data) => {
+              setTypes(data.productByType);
+            });
         });
     };
     fetchProducts();
@@ -34,15 +42,15 @@ function EditProduct({ match }) {
 
   const getOldData = (data) => {
     setName(data.name);
-    setProductType(data.id);
+    setProductType(data.id_type);
     setImages(data.image);
     setDescription(data.description);
     setStock(data.stock);
     setPrice(data.unit_price);
-    setProductTypeName(data.unit)
+    setProductTypeName(data.unit);
     setPromotion(data.promotion_price);
-    setAlreadyInStock(data.new)
-  }
+    setAlreadyInStock(data.new);
+  };
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
@@ -71,7 +79,7 @@ function EditProduct({ match }) {
 
     const formData = new FormData();
     formData.append("name", name);
-    formData.append("id_type", 1);
+    formData.append("id_type", productType);
     formData.append("unit_price", price);
     formData.append("unit", productTypeName);
     formData.append("stock", stock);
@@ -80,7 +88,24 @@ function EditProduct({ match }) {
     formData.append("new", 1);
     formData.append("description", description);
     const myJson = formDataToJson(formData);
-    console.log("name :", name,"unit", productTypeName,"price", price,"stock", stock,"img", images, promotion,alreadyInStock, description, productType);
+    console.log(
+      "name :",
+      name,
+      "id_type",
+      productType,
+      "unit",
+      productTypeName,
+      "price",
+      price,
+      "stock",
+      stock,
+      "img",
+      // images,
+      promotion,
+      alreadyInStock,
+      description,
+      productType
+    );
     fetch(`http://localhost:81/api/products/${id}`, {
       method: "PUT",
       headers: {
@@ -94,12 +119,15 @@ function EditProduct({ match }) {
         console.log(data); // the newly added product object returned by the API
       })
       .catch((error) => {
-        console.error("Error change tpye:", error);
+        alert("Có lỗi trong quá trình thay đổi:", error);
       });
     alert("đã chỉnh sửa");
-    navigate("/admin/products");
-  }
 
+    window.location.reload();
+  }
+  console.log(product);
+
+  const loading = true;
   return (
     <div className="addproducts-page">
       <div className="admin-content">
@@ -125,9 +153,14 @@ function EditProduct({ match }) {
                     <select
                       style={{ width: "100%" }}
                       name="unit"
-                      onChange={(e) => setName(e.target.value)}
+                      value={productType}
+                      onChange={(e) => setProductType(e.target.value)}
                     >
-                      <option value={product.id_type}>{product.id_type}</option>
+                      {types.map((type, i) => (
+                        <option key={type.id} value={type.id}>
+                          {type.name}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 </div>
@@ -180,12 +213,18 @@ function EditProduct({ match }) {
                 ></textarea>
               </div>
               <div className="addproduct-form__promotion">
-                    <label htmlFor="description">Giảm giá</label>
-                    <input type="text" placeholder="Giảm giá sản phẩm..." name="promotion_price" value={promotion} onChange={e => setPromotion(e.target.value)} />
-                  </div>
+                <label htmlFor="description">Giảm giá</label>
+                <input
+                  type="text"
+                  placeholder="Giảm giá sản phẩm..."
+                  name="promotion_price"
+                  value={promotion}
+                  onChange={(e) => setPromotion(e.target.value)}
+                />
+              </div>
 
               <div className="addproduct-form__btn">
-                <Button type="submit">Thêm sản phẩm</Button>
+                <Button type="submit">Cập nhật</Button>
               </div>
             </form>
           </div>

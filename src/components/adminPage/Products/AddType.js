@@ -65,7 +65,7 @@ function AddType({ match }) {
       <div className="admin-content">
         <HeaderContent props={"Loại sản phẩm"} />
         <div className="admin-content__form">
-          <h1>Chỉnh sửa loại sản phẩm</h1>
+          <h1>Thêm loại sản phẩm</h1>
           <div className="addproduct-form">
             <form style={{width: "100%"}} onSubmit={handleSubmit}>
               <div className="addproduct-form__heading">
@@ -76,12 +76,13 @@ function AddType({ match }) {
                     name="name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
+                    required
                   />
                 </div>
               </div>
               <div className="addproduct-form__image">
                 <label htmlFor="image">Hình ảnh</label>
-                <input type="file"  accept="image/jpeg,image/png" onChange={handleImageUpload} />
+                <input type="file"  accept="image/jpeg,image/png" onChange={handleImageUpload} required />
                 <img style={{width: '100%', height: '500px'}} src={image}></img>
               </div>
 

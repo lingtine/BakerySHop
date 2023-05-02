@@ -24,7 +24,9 @@ import Customers from "~/components/adminPage/Users/Customer";
 import AddProduct from "~/components/adminPage/Products/AddProduct";
 import EditProduct from "~/components/adminPage/Products/EditProduct";
 
-const privateRoutes = [];
+const privateRoutes = [
+  
+];
 const publicRoutes = [
   { path: "/", component: HomePage, layout: DefaultLayout },
   { path: "*", component: NotFoundPage, layout: DefaultLayout },
