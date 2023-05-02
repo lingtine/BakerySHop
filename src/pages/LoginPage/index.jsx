@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import styles from "./LoginPage.module.scss";
 import classNames from "classnames/bind";
 import { useNavigate } from "react-router-dom";
@@ -23,12 +23,11 @@ function LoginPage() {
 
   const navigate = useNavigate();
   useEffect(() => {
-    console.log(error);
     if (isAuthenticated) {
       navigate("/");
       doGetUser(accessToken);
     }
-  }, [isAuthenticated, navigate, accessToken]);
+  }, [isAuthenticated, navigate, accessToken, doGetUser]);
   const formik = useFormik({
     initialValues: {
       email: "",

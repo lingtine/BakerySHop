@@ -147,7 +147,6 @@ function AboutPage() {
     contentHiring = "error";
   } else if (hiring) {
     contentHiring = hiring.map((item) => {
-      console.log(item);
       return (
         <div className={cx("row", "no-gutters")}>
           <div className={cx("col", "l-6", "m-6", "c-12")}>

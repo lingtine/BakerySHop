@@ -16,8 +16,11 @@ function RegisterPage() {
 
   const [doRegister, error] = useThunk(register);
 
-  const { error: messengerError } = useSelector((state) => state.auth);
+  const { error: messengerError, status } = useSelector((state) => state.auth);
 
+  if (status === "succeeded") {
+    navigate("/login");
+  }
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -50,7 +53,6 @@ function RegisterPage() {
   });
 
   if (error) {
-    console.log(messengerError);
   }
   return (
     <div className={cx("wrapper")}>
