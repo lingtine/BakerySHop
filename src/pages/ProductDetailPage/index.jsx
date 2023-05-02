@@ -44,6 +44,7 @@ function ProductDetailPage() {
   const handleClose = () => {
     setIsOpen(false);
   };
+  console.log(product);
 
   const actionContent = (
     <div className={cx("modal-action")}>
