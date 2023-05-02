@@ -15,7 +15,7 @@ function ModalPopUp({ onClose, children, actions }) {
 
   return ReactDOM.createPortal(
     <div>
-      <div className={cx("modal-shadow")} onClick={onClose}></div>
+      <div className={cx("modal-shadow")}></div>
       <div className={cx("modal-content")}>
         {children}
         {actions}
