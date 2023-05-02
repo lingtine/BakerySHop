@@ -19,7 +19,7 @@ function CartPage() {
   if (data.items) {
     renderCart = data.items.map((item) => {
       return (
-        <div className={cx("col", "l-12", "m-12", "c-12")}>
+        <div className={cx("col", "l-12", "m-12", "c-12")} key={item.productId}>
           <ProductCartItem key={item.productId} product={item} />
         </div>
       );

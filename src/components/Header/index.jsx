@@ -14,6 +14,7 @@ import TopBar from "./TopBar";
 import Button from "../Button";
 import { fetchCollections } from "~/store";
 import { useThunk } from "~/hooks";
+import { useTranslation } from "react-i18next";
 
 const cx = classNames.bind(styles);
 
@@ -128,6 +129,9 @@ function Header() {
                     >
                       fags
                     </Link>
+
+                    <button>vi</button>
+                    <button>en</button>
                   </div>
                 </ModalSubMenu>
               )}

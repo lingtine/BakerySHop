@@ -11,6 +11,7 @@ import {
 import { useThunk } from "~/hooks";
 import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
+import { Fragment } from "react";
 
 const cx = classNames.bind(styles);
 
@@ -53,7 +54,7 @@ function AboutPage() {
   } else if (aboutBaker) {
     contentAboutBaker = aboutBaker.map((item) => {
       return (
-        <>
+        <Fragment key={item.id}>
           <div className={cx("row")}>
             <div className={cx("col", "l-12", "m-12", "c-12")}>
               <div className={cx("heading", "heading--left")}>
@@ -73,7 +74,7 @@ function AboutPage() {
               </div>
             </div>
           </div>
-        </>
+        </Fragment>
       );
     });
   }
@@ -85,7 +86,7 @@ function AboutPage() {
   } else if (aboutKitchen) {
     contentAboutKitchen = aboutKitchen.map((item) => {
       return (
-        <div className={cx("row", "no-gutters")}>
+        <div className={cx("row", "no-gutters")} key={item.id}>
           <div className={cx("col", "l-6", "m-6", "c-12")}>
             <div className={cx("theme-container")}>
               <div className={cx("heading", "heading--left")}>
@@ -148,7 +149,7 @@ function AboutPage() {
   } else if (hiring) {
     contentHiring = hiring.map((item) => {
       return (
-        <div className={cx("row", "no-gutters")}>
+        <div className={cx("row", "no-gutters")} key={item.id}>
           <div className={cx("col", "l-6", "m-6", "c-12")}>
             <div className={cx("theme-container")}>
               <div className={cx("heading", "heading--left")}>

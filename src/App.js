@@ -20,7 +20,7 @@ function App() {
     if (cart) {
       dispatch(setCart(JSON.parse(cart)));
     }
-  }, []);
+  }, [doGetUser, dispatch]);
   useEffect(() => {
     if (user) {
       const cart = localStorage.getItem(`cart_${user.id}`);
@@ -29,7 +29,7 @@ function App() {
         dispatch(setCart(JSON.parse(cart)));
       }
     }
-  }, [user]);
+  }, [user, dispatch]);
 
   const route = publicRoutes.map((route, index) => {
     const Page = route.component;
@@ -37,7 +37,7 @@ function App() {
     return {
       path: route.path,
       element: (
-        <Layout>
+        <Layout key={index}>
           <Page />
         </Layout>
       ),

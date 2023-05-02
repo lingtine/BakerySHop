@@ -1,5 +1,3 @@
-import { FormikProvider } from "formik";
-
 //cart
 export { addCart } from "./addCart";
 export { fetchCart } from "./fetchCart";
