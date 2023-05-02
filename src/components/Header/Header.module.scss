@@ -62,9 +62,25 @@
       display: flex;
       text-transform: uppercase;
       font-weight: 500;
-
       margin-left: 12px;
       margin-right: 4px;
+      position: relative;
+      padding: 8px 0;
+
+      &::before {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        width: 0;
+        transition: width 0.2s linear;
+      }
+      &:hover {
+        opacity: 0.8;
+      }
+      &:hover:before {
+        width: 100%;
+        border: 1px solid var(---inverse-primary);
+      }
     }
 
     .sub-nav {
@@ -99,6 +115,9 @@
     .action-item {
       font-size: 1.8rem;
       margin-right: 16px;
+      &:hover {
+        opacity: 0.8;
+      }
     }
   }
 }
