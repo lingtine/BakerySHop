@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import ProductItem from "./ProductItem";
 import { usePriceFormatter } from "~/hooks";
+import { Helmet } from "react-helmet-async";
 
 import { TbTruckDelivery } from "react-icons/tb";
 import { BiStoreAlt } from "react-icons/bi";
@@ -71,6 +72,9 @@ function CheckoutPage() {
 
   return (
     <div className={cx("checkout-wrapper")}>
+      <Helmet>
+        <title>Thanh Toán – BAKES SAIGON</title>
+      </Helmet>
       <div className={cx("grid", "wide")}>
         <div className={cx("row")}>
           <div className={cx("col", "l-6", "m-12", "c-12")}>

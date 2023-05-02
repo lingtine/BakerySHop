@@ -1,8 +1,6 @@
 import {
   HomePage,
   AboutPage,
-  BakesClubPage,
-  BDayBookingPage,
   CartPage,
   FagsPage,
   Collections,
@@ -32,8 +30,6 @@ const publicRoutes = [
   { path: "*", component: NotFoundPage, layout: DefaultLayout },
   { path: "/about", component: AboutPage, layout: DefaultLayout },
   { path: "/account", component: AccountPage, layout: DefaultLayout },
-  { path: "/bakes-club", component: BakesClubPage, layout: DefaultLayout },
-  { path: "/b-day-booking", component: BDayBookingPage, layout: DefaultLayout },
   { path: "/cart", component: CartPage, layout: DefaultLayout },
   {
     path: "/collections",

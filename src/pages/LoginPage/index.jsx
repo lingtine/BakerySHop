@@ -7,6 +7,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { obtainAccessToken, getUser } from "~/store";
 import { useThunk } from "~/hooks";
+import { Helmet } from "react-helmet-async";
 
 import { Button } from "~/components";
 
@@ -47,6 +48,9 @@ function LoginPage() {
   });
   return (
     <div className={cx("wrapper")}>
+      <Helmet>
+        <title>Tài khoản – BAKES SAIGON</title>
+      </Helmet>
       <div className={cx("login")}>
         <h2 className={cx("login-heading")}>Login</h2>
         {error === "Unauthorized" && (

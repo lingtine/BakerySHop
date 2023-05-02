@@ -1,11 +1,11 @@
-import { useEffect, lazy, Suspense } from "react";
+import { useEffect } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { publicRoutes } from "~/routes";
 import { useThunk } from "./hooks";
 import { getUser, setCart } from "./store";
 import { useSelector } from "react-redux";
-
+import { HelmetProvider } from "react-helmet-async";
 function App() {
   const [doGetUser] = useThunk(getUser);
   const dispatch = useDispatch();
@@ -45,9 +45,11 @@ function App() {
   });
   const router = createBrowserRouter(route);
   return (
-    <div className="App">
-      <RouterProvider router={router}></RouterProvider>
-    </div>
+    <HelmetProvider>
+      <div className="App">
+        <RouterProvider router={router}></RouterProvider>
+      </div>
+    </HelmetProvider>
   );
 }
 

@@ -4,6 +4,7 @@ import classNames from "classnames/bind";
 import styles from "./account.module.scss";
 import { authRefresh } from "~/store";
 import { useThunk } from "~/hooks";
+import { Helmet } from "react-helmet-async";
 
 const cx = classNames.bind(styles);
 function AccountPage() {
@@ -21,6 +22,9 @@ function AccountPage() {
   }
   return (
     <div className={cx("wrapper")}>
+      <Helmet>
+        <title>Tài khoản – BAKES SAIGON</title>
+      </Helmet>
       <div className={cx("grid", "wide")}>
         <div className={cx("account-header")}>
           <div className={cx("row")}>

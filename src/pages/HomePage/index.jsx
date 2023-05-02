@@ -11,7 +11,7 @@ import {
 } from "~/store";
 import { Banner, Button, Slider } from "~/components";
 import { useEffect } from "react";
-
+import { Helmet } from "react-helmet-async";
 const cx = classNames.bind(styles);
 
 function HomePage() {
@@ -230,6 +230,9 @@ function HomePage() {
   }
   return (
     <div>
+      <Helmet>
+        <title>BÁNH SÀI GÒN – BAKES SAIGON</title>
+      </Helmet>
       {/* {banner} */}
       <div className={cx("grid")}>
         <div className={cx("row", "no-gutters")}>

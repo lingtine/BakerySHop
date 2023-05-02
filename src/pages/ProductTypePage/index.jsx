@@ -3,6 +3,7 @@ import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
+import { Helmet } from "react-helmet-async";
 
 import { Card, SelectBox } from "~/components";
 import { fetchProductsByCollection, sorted } from "~/store";
@@ -36,6 +37,7 @@ function ProductTypePage() {
   } else if (error) {
     content = <h1>isError</h1>;
   } else if (data) {
+    console.log(data);
     content = data.map((product) => {
       if (layoutActive === 0) {
         return (
@@ -107,6 +109,9 @@ function ProductTypePage() {
   ];
   return (
     <div className={cx("wrapper")}>
+      <Helmet>
+        <title>{collectionId || "sản phẩm"} – BAKES SAIGON</title>
+      </Helmet>
       <div className={cx("grid", "wide")}>
         <div className={cx("row")}>
           <div className={cx("col", "l-12", "m-12", "c-12")}>

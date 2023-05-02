@@ -4,6 +4,7 @@ import classNames from "classnames/bind";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 import { getProduct, addToCart } from "~/store";
 import { InputQuantity, Accordion, Button } from "~/components";
@@ -139,6 +140,9 @@ function ProductDetailPage() {
 
   return (
     <div className={cx("wrapper")}>
+      <Helmet>
+        <title>{product ? product.name : "sản phẩm"} – BAKES SAIGON</title>
+      </Helmet>
       <div>
         <div className={cx("grid", "wide")}>
           <div className={cx("row")}>

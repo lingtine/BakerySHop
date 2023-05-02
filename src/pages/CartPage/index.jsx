@@ -4,6 +4,7 @@ import { HiOutlineArrowNarrowLeft } from "react-icons/hi";
 import { Button } from "~/components";
 import styles from "./Cart.module.scss";
 import ProductCartItem from "./ProductCartItem";
+import { Helmet } from "react-helmet-async";
 
 import { usePriceFormatter } from "~/hooks";
 
@@ -27,6 +28,9 @@ function CartPage() {
   }
   return (
     <div className={cx("wrapper")}>
+      <Helmet>
+        <title>Giỏ hàng của bạn – BAKES SAIGON</title>
+      </Helmet>
       <div className={cx("grid", "wide")}>
         <div className={cx("row")}>
           <div className={cx("col", "l-12", "m-12", "c-12")}>

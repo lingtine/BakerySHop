@@ -7,6 +7,7 @@ import { Button } from "~/components";
 import { useThunk } from "~/hooks";
 import { register } from "~/store";
 import { useSelector } from "react-redux";
+import { Helmet } from "react-helmet-async";
 
 const cx = classNames.bind(styles);
 
@@ -53,6 +54,9 @@ function RegisterPage() {
   }
   return (
     <div className={cx("wrapper")}>
+      <Helmet>
+        <title>Đăng kí – BAKES SAIGON</title>
+      </Helmet>
       <div className={cx("register")}>
         <h2 className={cx("register-heading")}>Sign up</h2>
         {messengerError && (

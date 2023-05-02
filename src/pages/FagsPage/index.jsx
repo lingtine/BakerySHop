@@ -5,6 +5,7 @@ import { fetchFags } from "~/store";
 import { useThunk } from "~/hooks";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import { Helmet } from "react-helmet-async";
 
 const cx = classNames.bind(styles);
 
@@ -31,6 +32,9 @@ function FagsPage() {
 
   return (
     <div className={cx("wrapper")}>
+      <Helmet>
+        <title>Câu hỏi thường gặp – BAKES SAIGON</title>
+      </Helmet>
       <Banner image={banner} />
       <div className={cx("grid", "wide")}>
         <div className={cx("row")}>

@@ -1,7 +1,5 @@
 export { default as HomePage } from "./HomePage";
 export { default as AboutPage } from "./AboutPage";
-export { default as BakesClubPage } from "./BakesClubPage";
-export { default as BDayBookingPage } from "./BDayBookingPage";
 export { default as CartPage } from "./CartPage";
 export { default as FagsPage } from "./FagsPage";
 export { default as LoginPage } from "./LoginPage";
