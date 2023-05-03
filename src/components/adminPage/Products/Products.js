@@ -100,7 +100,7 @@ function ProductsPage() {
                   ) : (
                     displayedProducts.map((product, index) => (
                       <tr style={{ textAlign: "center" }} key={product.id}>
-                        <td>{product.id}</td>
+                        <td>#{product.id.toString().padStart(3, "0")}</td>
                         <td style={{ width: "100px" }}>
                           <img
                             className="img-product"

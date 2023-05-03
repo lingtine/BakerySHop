@@ -1,11 +1,20 @@
 import { useEffect } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { publicRoutes } from "~/routes";
+import { publicRoutes, PrivateRoute } from "~/routes";
 import { useThunk } from "./hooks";
 import { getUser, setCart } from "./store";
 import { useSelector } from "react-redux";
 import { HelmetProvider } from "react-helmet-async";
+
+import {
+  LoginPage,
+  RegisterPage,
+} from "~/pages";
+import AdminPage from "~/components/adminPage/adminPage.js";
+import { Navigate, useNavigate } from "react-router-dom";
+
+
 function App() {
   const [doGetUser, isLoading, error, data] = useThunk(getUser);
   const { accessToken } = useSelector((state) => state.auth);

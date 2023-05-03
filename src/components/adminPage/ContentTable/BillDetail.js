@@ -68,13 +68,13 @@ function BillDetail({ order }) {
       .catch((error) => {
         console.error("Error updating state of bill:", error);
       });
-      if(state == 3) {
-        alert(`Đã hủy đơn hàng ${id}`)
-        navigate("/admin/carts")
-      } else {
-        alert(`Đã thay đổi trạng thái`)
-        window.location.reload();
-      }
+    if (state == 3) {
+      alert(`Đã hủy đơn hàng ${id}`);
+      navigate("/admin/carts");
+    } else {
+      alert(`Đã thay đổi trạng thái`);
+      window.location.reload();
+    }
   };
 
   useEffect(() => {
@@ -145,31 +145,31 @@ function BillDetail({ order }) {
                 </div>
               </div>
 
-              
-                {check ? (
-                  <div></div>
-                ) : (
-                  <div className="order-detail__btn">
-                    <div class="dropdown">
-                      <Button class="order-detail__btn--change btn">Thao tác</Button>
-                      <div class="dropdown-content">
-                        <a onClick={() => handleChangeOrder(1)}>Đang giao hàng</a>
-                        <a onClick={() => handleChangeOrder(2)}>Đã giao hàng</a>
-                      </div>
-                    </div>
-                    <Button
-                      className="order-detail__btn--delete btn"
-                      disabled={isDeleting}
-                      onClick={() => handleChangeOrder(3)}
-                    >
-                      Hủy đơn hàng
-                      <span className="order-icon__container">
-                        <AiOutlineDelete />
-                      </span>
+              {check ? (
+                <div></div>
+              ) : (
+                <div className="order-detail__btn">
+                  <div class="dropdown">
+                    <Button class="order-detail__btn--change btn">
+                      Thao tác
                     </Button>
+                    <div class="dropdown-content">
+                      <a onClick={() => handleChangeOrder(1)}>Đang giao hàng</a>
+                      <a onClick={() => handleChangeOrder(2)}>Đã giao hàng</a>
+                    </div>
                   </div>
-                )}
-              
+                  <Button
+                    className="order-detail__btn--delete btn"
+                    disabled={isDeleting}
+                    onClick={() => handleChangeOrder(3)}
+                  >
+                    Hủy đơn hàng
+                    <span className="order-icon__container">
+                      <AiOutlineDelete />
+                    </span>
+                  </Button>
+                </div>
+              )}
             </div>
 
             <div className="order-time">
@@ -230,8 +230,10 @@ function BillDetail({ order }) {
                   <div className="order-content__bill">
                     <div className="order-content__bill--note">
                       <h4>Ghi chú cho đơn hàng</h4>
-                      <input placeholder="Thêm ghi chú cho đơn hàng" />
-                      <button>Cập nhật</button>
+                      <textarea placeholder="Thêm ghi chú cho đơn hàng"></textarea>
+                      <Button className="order-detail__btn--delete btn">
+                        Cập nhật
+                      </Button>
                     </div>
                     <div className="order-content__bill--detail">
                       <div className="order-content__bill--detail---item">

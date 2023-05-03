@@ -20,11 +20,23 @@
         font-weight: 600;
     }
 
-    &__description {
-        font-size: 16px;
-        font-weight:300;
-        margin-bottom: 16px;
+    &__search {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 4px;
+        & > input {
+            width: 215px;
+            height: 28px;
+        }
+        &--description {
+            font-size: 16px;
+            font-weight:300;
+        
+        }
     }
+
+    
 
     &__btn {
         border-radius: 5px;
@@ -67,7 +79,9 @@
             }
         }
     }
-
+    &---link {
+        font-size: 16px;
+    }
 }
 
 .admin-table__info--title tr th{

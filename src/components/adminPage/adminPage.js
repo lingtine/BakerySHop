@@ -6,12 +6,8 @@ import React from "react";
 import Chart from "../adminPage/Chart/Chart";
 import AdminPieChart from "../adminPage/Chart/PieChart";
 import AdminPieChart2 from "../adminPage/Chart/PieChart2";
-import { useSelector } from "react-redux";
-import { Navigate, useNavigate } from "react-router-dom";
-
+import RequireAuth from "./RequireAuth";
 function AdminPage() {
-
-  
 
   const [orders, setOrders] = useState([]);
   const [orderTotal, setOrderTotal] = useState(0);
@@ -21,7 +17,7 @@ function AdminPage() {
   const [doneWCod, setDoneWCod] = useState(0);
   const [doneWBank, setDoneWBank] = useState(0);
   const [orderCancel, setOrderCancel] = useState(0);
-  const navigate= useNavigate()
+  
   useEffect(() => {
     const fecthOrder = () => {
       fetch("http://localhost:81/api/order-list")
@@ -74,12 +70,7 @@ function AdminPage() {
     setOrderCancel(orderCancel);
   }
 
-  const { isAuthenticated, user } = useSelector((state) => state.auth);
 
-  // Redirect to login page if user is not authenticated or is not an admin
-  if (!isAuthenticated || !user.isAdmin) {
-    navigate("/login") ;
-  }
 
   const data = {
     orders: orders.length,
@@ -94,6 +85,7 @@ function AdminPage() {
 
   return (
     <React.Fragment>
+      
       <div className="admin-content">
         <HeaderContent props={"Doanh thu"} />
         <div className="admin-statistics">
@@ -243,7 +235,6 @@ function AdminPage() {
           </div>
         </div>
       </div>
-      {/* <Doughnut  data={test} /> */}
     </React.Fragment>
   );
 }

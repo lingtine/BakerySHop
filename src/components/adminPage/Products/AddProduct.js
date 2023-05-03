@@ -217,13 +217,13 @@ function AddProduct() {
                 />
               </div>
               <div className="addproduct-form__unit_price">
-                <label htmlFor="description">Loại</label>
+                <label htmlFor="description">Kích thước</label>
                 <input
                   type="text"
                   placeholder="Chú thích về sản phẩm..."
                   name="id_type"
                   value={productType}
-                  onChange={(e) => setProductType(e.target.value)}
+                  onChange={(e) => setProductTypeName(e.target.value)}
                   required
                   onInvalid="this.setCustomValidity('Vui lòng nhập trường này')"
                 />
