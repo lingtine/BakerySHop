@@ -10,3 +10,5 @@ export { default as NotFoundPage } from "./NotFoundPage";
 export { default as ProductTypePage } from "./ProductTypePage";
 export { default as ProductDetailPage } from "./ProductDetailPage";
 export { default as CheckoutPage } from "./CheckoutPage";
+export { default as PasswordResetPage } from "./PasswordResetPage";
+export { default as ResetPasswordPage } from "./ResetPasswordPage";

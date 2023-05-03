@@ -3,7 +3,7 @@ import styles from "./RegisterPage.module.scss";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { useSelector } from "react-redux";
 import { useThunk } from "~/hooks";
@@ -14,23 +14,20 @@ const cx = classNames.bind(styles);
 
 function RegisterPage() {
   const navigate = useNavigate();
+  const [doRegister, isLoading, error, data] = useThunk(register);
 
-  const [doRegister, error] = useThunk(register);
-
-  const {
-    error: messengerError,
-    status,
-    isAuthenticated,
-  } = useSelector((state) => state.auth);
+  const [showMessengerError, setShowMessengerError] = useState(false);
 
   useEffect(() => {
-    if (isAuthenticated) {
-      navigate("/");
-    }
-    if (status === "succeeded" && isAuthenticated) {
+    if (isLoading) {
+    } else if (error) {
+      console.log(error);
+      setShowMessengerError(true);
+    } else if (data) {
+      console.log(data);
       navigate("/login");
     }
-  }, [navigate, status, isAuthenticated]);
+  }, [navigate, isLoading, error, data]);
 
   const formik = useFormik({
     initialValues: {
@@ -63,8 +60,6 @@ function RegisterPage() {
     },
   });
 
-  if (error) {
-  }
   return (
     <div className={cx("wrapper")}>
       <Helmet>
@@ -72,9 +67,9 @@ function RegisterPage() {
       </Helmet>
       <div className={cx("register")}>
         <h2 className={cx("register-heading")}>Sign up</h2>
-        {messengerError && (
+        {showMessengerError && (
           <div className={cx("messenger-error-login")}>
-            {messengerError.errors.email[0]}
+            {error.errors.email}
           </div>
         )}
         <form className={cx("register-form")} onSubmit={formik.handleSubmit}>

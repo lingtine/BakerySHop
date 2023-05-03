@@ -11,6 +11,8 @@ import {
   ProductTypePage,
   ProductDetailPage,
   CheckoutPage,
+  PasswordResetPage,
+  ResetPasswordPage,
 } from "~/pages";
 import { DefaultLayout, NoneLayout, NoHeaderLayout } from "~/layouts";
 
@@ -52,6 +54,16 @@ const publicRoutes = [
 
   { path: "/register", component: RegisterPage, layout: DefaultLayout },
   { path: "/checkout", component: CheckoutPage, layout: NoHeaderLayout },
+  {
+    path: "/account/forgot-password",
+    component: PasswordResetPage,
+    layout: DefaultLayout,
+  },
+  {
+    path: "/response-password-reset/:token",
+    component: ResetPasswordPage,
+    layout: DefaultLayout,
+  },
 
   { path: "/admin", component: AdminPage, layout: NoneLayout },
   { path: "/admin/carts", component: ContentTable, layout: NoneLayout },

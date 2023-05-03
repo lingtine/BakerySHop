@@ -27,7 +27,6 @@ function LoginPage() {
     if (data) {
       navigate("/");
       localStorage.setItem("accessToken", data.access_token);
-
       doGetUser(accessToken);
     } else if (error) {
       setShowMessengerError(true);
@@ -107,7 +106,13 @@ function LoginPage() {
         </form>
 
         <div className={cx("actions")}>
-          <Button to={"/register"}>Sign In</Button>
+          <Button className={cx("btn")} to={"/account/forgot-password"}>
+            Forgot password
+          </Button>
+
+          <Button className={cx("btn")} to={"/register"}>
+            Sign In
+          </Button>
         </div>
       </div>
     </div>

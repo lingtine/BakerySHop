@@ -14,6 +14,8 @@ export { obtainAccessToken } from "./obtainAccessToken";
 export { register } from "./register";
 export { logout } from "./logout";
 export { getUser } from "./getUser";
+export { resetPassword } from "./resetPassword";
+export { changePassword } from "./changePassword";
 
 //fags
 

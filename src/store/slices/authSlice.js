@@ -1,5 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { obtainAccessToken, getUser, logout, register } from "../thunks";
+import {
+  obtainAccessToken,
+  getUser,
+  logout,
+  register,
+  resetPassword,
+  changePassword,
+} from "../thunks";
 
 const authSlice = createSlice({
   name: "auth",
@@ -65,6 +72,28 @@ const authSlice = createSlice({
         state.status = "succeeded";
       })
       .addCase(register.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      });
+    builder
+      .addCase(resetPassword.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(resetPassword.fulfilled, (state) => {
+        state.status = "succeeded";
+      })
+      .addCase(resetPassword.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      });
+    builder
+      .addCase(changePassword.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(changePassword.fulfilled, (state) => {
+        state.status = "succeeded";
+      })
+      .addCase(changePassword.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       });
