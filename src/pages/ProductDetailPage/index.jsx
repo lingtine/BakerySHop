@@ -95,11 +95,12 @@ function ProductDetailPage() {
   } else if (error) {
     content = <h1>lỗi rồi</h1>;
   } else if (product) {
+    console.log(product);
     const contentAccordion = [
       {
         id: Math.random(),
-        label: "description",
-        content: product.description,
+        name: "description",
+        description: product.description,
       },
     ];
     content = (
