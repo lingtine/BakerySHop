@@ -37,7 +37,7 @@ function SideBar() {
             className="header-sidebar_menu">
                 <SubMenu icon={<AiOutlineShoppingCart/>} defaultOpen component={<Link />} label="Đơn hàng">
                     <MenuItem component={<Link to="/admin/carts" />}>Tổng đơn hàng</MenuItem>
-                    <MenuItem component={<Link to="/admin/test"/>}>Đơn hàng chờ</MenuItem>
+                    
                 </SubMenu>
                 <SubMenu icon={<BsFillPersonFill/>}  label="Khách hàng"> 
                     <MenuItem component={<Link to="/admin/customers"/>}> Khách hàng </MenuItem>
