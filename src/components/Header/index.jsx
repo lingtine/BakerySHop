@@ -128,6 +128,9 @@ function Header() {
                     >
                       fags
                     </Link>
+
+                    <button>vi</button>
+                    <button>en</button>
                   </div>
                 </ModalSubMenu>
               )}

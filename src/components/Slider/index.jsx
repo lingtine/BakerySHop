@@ -28,7 +28,7 @@ function Slider({ data, quantityDisplayed = 1 }) {
 
   const renderData = data.map((item) => {
     return (
-      <div className={cx("slide")} style={slideShow}>
+      <div className={cx("slide")} style={slideShow} key={item.id}>
         <Card content={item} />
       </div>
     );

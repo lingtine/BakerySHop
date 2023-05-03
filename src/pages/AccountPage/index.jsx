@@ -1,25 +1,49 @@
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useThunk } from "~/hooks";
 import classNames from "classnames/bind";
 import styles from "./account.module.scss";
-import { authRefresh } from "~/store";
-import { useThunk } from "~/hooks";
+import { logout } from "~/store";
 import { Helmet } from "react-helmet-async";
+import { Button } from "~/components";
+import { useEffect } from "react";
 
 const cx = classNames.bind(styles);
 function AccountPage() {
-  const [doLogout] = useThunk(authRefresh);
+  const [doLogout, isLoading, error, data] = useThunk(logout);
   const navigate = useNavigate();
-  const { isAuthenticated } = useSelector((state) => state.auth);
+  const { isAuthenticated, user, accessToken } = useSelector(
+    (state) => state.auth
+  );
 
+  useEffect(() => {
+    if (isLoading) {
+    } else if (error) {
+    } else if (data) {
+      navigate("/");
+      localStorage.removeItem("accessToken");
+    }
+  }, [isAuthenticated, navigate, isLoading, error, data]);
   const handleLogout = () => {
-    doLogout();
-    navigate("/");
+    doLogout(accessToken);
   };
 
-  if (!isAuthenticated) {
-    navigate("/");
+  let renderInfo;
+  if (user) {
+    renderInfo = (
+      <div className={cx("account-info")}>
+        <div className={cx("content-info")}>
+          <div className={cx("content-title")}>Email:</div>
+          <div>{user.email}</div>
+        </div>
+        <div className={cx("content-info")}>
+          <div className={cx("content-title")}>Name:</div>
+          <div>{user.name}</div>
+        </div>
+      </div>
+    );
   }
+
   return (
     <div className={cx("wrapper")}>
       <Helmet>
@@ -39,6 +63,26 @@ function AccountPage() {
                   log out
                 </button>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className={cx("grid", "wide")}>
+        <div className={cx("row")}>
+          <div className={cx("col", "l-6", "m-6", "c-6")}>{renderInfo}</div>
+          <div className={cx("col", "l-6", "m-6", "c-6")}>
+            <div className={cx("account-content")}>
+              {user && user.level === 1 && (
+                <Button
+                  primary
+                  outline
+                  className={cx("btn-admin")}
+                  to={"/admin"}
+                >
+                  Go To Admin Page
+                </Button>
+              )}
             </div>
           </div>
         </div>

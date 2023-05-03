@@ -87,6 +87,7 @@ function HomePage() {
       const reverse = index % 2 !== 0;
       return (
         <div
+          key={index}
           className={cx("row", {
             "row-reverse": reverse,
           })}
@@ -95,7 +96,7 @@ function HomePage() {
             <img
               className={cx("product-image")}
               src={`data:image/png;base64,${item.product.image}`}
-              alt=""
+              alt="product"
             />
           </div>
           <div className={cx("col", "l-6", "m-6", "c-6")}>
@@ -176,7 +177,7 @@ function HomePage() {
   } else if (branch) {
     contentBranch = branch.map((item) => {
       return (
-        <div className={cx("row", "reverse", "no-gutters")}>
+        <div className={cx("row", "reverse", "no-gutters")} key={item.id}>
           <div className={cx("col", "l-6", "m-6", "c-12")}>
             <div className={cx("address-container")}>
               <div className={cx("heading")}>
@@ -212,7 +213,7 @@ function HomePage() {
         <div key={item.id} className={cx("col", "l-4", "m-4", "c-12")}>
           <div className={cx("cart--container")}>
             <div className={cx("cart--icon")}>
-              <img src={`data:image/png;base64,${item.image}`} />
+              <img alt="cart" src={`data:image/png;base64,${item.image}`} />
             </div>
             '
             <div className={cx("cart--content")}>

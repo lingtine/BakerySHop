@@ -1,5 +1,3 @@
-import { FormikProvider } from "formik";
-
 //cart
 export { addCart } from "./addCart";
 export { fetchCart } from "./fetchCart";
@@ -14,7 +12,7 @@ export { fetchSellingProducts } from "./fetchSellingProducts";
 //login
 export { obtainAccessToken } from "./obtainAccessToken";
 export { register } from "./register";
-export { authRefresh } from "./authRefresh";
+export { logout } from "./logout";
 export { getUser } from "./getUser";
 
 //fags

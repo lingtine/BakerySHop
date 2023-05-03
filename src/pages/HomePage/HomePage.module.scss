@@ -24,6 +24,10 @@ $color-text-light: var(---color-text-light);
       border: none;
       color: #000;
       font-weight: 500;
+      &:hover {
+        background-color: var(---color-primary);
+        color: #fff;
+      }
     }
   }
 }
@@ -35,6 +39,13 @@ $color-text-light: var(---color-text-light);
 .selling-products {
   .product-image {
     max-width: 100%;
+    background-size: cover;
+    transform: scale(1);
+    transition: transform 0.2s linear;
+
+    &:hover {
+      transform: scale(0.8);
+    }
   }
   .selling-products-container {
     display: flex;

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import ReactDOM from "react-dom";
 import classNames from "classnames/bind";
-import styles from "./CheckoutPage.module.scss";
+import styles from "./Card.module.scss";
 
 const cx = classNames.bind(styles);
 
@@ -15,7 +15,7 @@ function ModalPopUp({ onClose, children, actions }) {
 
   return ReactDOM.createPortal(
     <div>
-      <div className={cx("modal-shadow")}></div>
+      <div className={cx("modal-shadow")} onClick={onClose}></div>
       <div className={cx("modal-content")}>
         {children}
         {actions}

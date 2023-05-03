@@ -1,11 +1,12 @@
 import classNames from "classnames/bind";
 import styles from "./CheckoutPage.module.scss";
 import FormCheckout from "./FormCheckout";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import ProductItem from "./ProductItem";
 import { usePriceFormatter } from "~/hooks";
 import { Helmet } from "react-helmet-async";
+import { useNavigate } from "react-router-dom";
 
 import { TbTruckDelivery } from "react-icons/tb";
 import { BiStoreAlt } from "react-icons/bi";
@@ -15,9 +16,16 @@ const cx = classNames.bind(styles);
 
 function CheckoutPage() {
   const [paymentType, setPaymentType] = useState(0);
-  const { user } = useSelector((state) => state.auth);
+  const { user, isAuthenticated, status } = useSelector((state) => state.auth);
   const { data } = useSelector((state) => state.cart);
   const total = usePriceFormatter(data.total, "VND");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isAuthenticated && status === "error") {
+      navigate("/login");
+    }
+  }, [navigate, isAuthenticated, status]);
 
   const paymentTypes = [
     {

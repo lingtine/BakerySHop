@@ -1,4 +1,3 @@
-import { Footer } from "~/components";
 import classNames from "classnames/bind";
 import styles from "./NoHeaderLayout.module.scss";
 

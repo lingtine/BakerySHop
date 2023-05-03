@@ -6,7 +6,7 @@ import { Button } from "~/components";
 import { order } from "~/store";
 import { useThunk } from "~/hooks";
 import { useState } from "react";
-
+import { useSelector } from "react-redux";
 import ModalPopUp from "./ModalPopUp";
 import { IoIosArrowBack } from "react-icons/io";
 
@@ -15,6 +15,8 @@ const cx = classNames.bind(styles);
 function FormCheckout({ paymentType }) {
   const [doOrder] = useThunk(order);
   const [isOpen, setIsOpen] = useState(false);
+  const { items, total } = useSelector((state) => state.cart.data);
+  const { user } = useSelector((state) => state.auth);
 
   const handleOpen = () => {
     setIsOpen(true);
@@ -64,7 +66,16 @@ function FormCheckout({ paymentType }) {
         .required("Vui lòng nhập số điện thoại"),
     }),
     onSubmit: (values) => {
-      doOrder({ ...values, paymentType });
+      doOrder({
+        paymentType,
+        items,
+        total,
+        email: user.email,
+        phone_number: values.phoneNumber,
+        address: values.address,
+        name: values.name,
+        note: values.note,
+      });
       handleOpen();
     },
   });

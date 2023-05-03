@@ -25,4 +25,31 @@
       }
     }
   }
+
+  .account-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 80px 40px;
+
+    .content-info {
+      display: flex;
+      color: var(---color-text);
+
+      margin-top: 10px;
+
+      .content-title {
+        margin-right: 20px;
+      }
+    }
+  }
+  .account-content {
+    display: flex;
+    justify-content: center;
+    margin: 80px;
+    .btn-admin {
+      color: var(---color-text);
+      padding: 12px;
+    }
+  }
 }

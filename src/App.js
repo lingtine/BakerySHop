@@ -7,29 +7,24 @@ import { getUser, setCart } from "./store";
 import { useSelector } from "react-redux";
 import { HelmetProvider } from "react-helmet-async";
 function App() {
-  const [doGetUser] = useThunk(getUser);
+  const [doGetUser, isLoading, error, data] = useThunk(getUser);
+  const { accessToken } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
-  useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken");
-    const cart = localStorage.getItem("cart");
 
+  useEffect(() => {
     if (accessToken) {
       doGetUser(accessToken);
     }
-    if (cart) {
-      dispatch(setCart(JSON.parse(cart)));
-    }
-  }, []);
+  }, [accessToken, doGetUser]);
   useEffect(() => {
-    if (user) {
-      const cart = localStorage.getItem(`cart_${user.id}`);
-
-      if (cart) {
-        dispatch(setCart(JSON.parse(cart)));
-      }
+    if (isLoading) {
+    } else if (error) {
+    } else if (data) {
+      const cartJson = localStorage.getItem(`cart_${data.id}`);
+      let cart = JSON.parse(cartJson);
+      dispatch(setCart(cart));
     }
-  }, [user]);
+  }, [isLoading, error, data, dispatch]);
 
   const route = publicRoutes.map((route, index) => {
     const Page = route.component;
@@ -37,7 +32,7 @@ function App() {
     return {
       path: route.path,
       element: (
-        <Layout>
+        <Layout key={index}>
           <Page />
         </Layout>
       ),
