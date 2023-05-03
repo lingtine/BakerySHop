@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { obtainAccessToken, getUser, authRefresh, register } from "../thunks";
+import { obtainAccessToken, getUser, logout, register } from "../thunks";
 
 const authSlice = createSlice({
   name: "auth",
@@ -21,7 +21,6 @@ const authSlice = createSlice({
         state.status = "succeeded";
         state.accessToken = action.payload.access_token;
         state.isAuthenticated = true;
-        localStorage.setItem("accessToken", action.payload.access_token);
       })
       .addCase(obtainAccessToken.rejected, (state, action) => {
         state.status = "failed";
@@ -44,19 +43,20 @@ const authSlice = createSlice({
 
     //logout
     builder
-      .addCase(authRefresh.pending, (state) => {
+      .addCase(logout.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(authRefresh.fulfilled, (state) => {
+      .addCase(logout.fulfilled, (state) => {
         state.status = "succeeded";
         state.accessToken = null;
         state.isAuthenticated = false;
-        localStorage.removeItem("accessToken");
       })
-      .addCase(authRefresh.rejected, (state, action) => {
+      .addCase(logout.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       });
+
+    //register
     builder
       .addCase(register.pending, (state) => {
         state.status = "loading";

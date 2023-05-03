@@ -16,7 +16,7 @@ function FormCheckout({ paymentType }) {
   const [doOrder] = useThunk(order);
   const [isOpen, setIsOpen] = useState(false);
   const { items, total } = useSelector((state) => state.cart.data);
-  const { email } = useSelector((state) => state.auth.user);
+  const { user } = useSelector((state) => state.auth);
 
   const handleOpen = () => {
     setIsOpen(true);
@@ -70,7 +70,7 @@ function FormCheckout({ paymentType }) {
         paymentType,
         items,
         total,
-        email,
+        email: user.email,
         phone_number: values.phoneNumber,
         address: values.address,
         name: values.name,

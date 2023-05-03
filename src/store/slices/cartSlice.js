@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getUser, authRefresh, order } from "../thunks";
+import { order, logout } from "../thunks";
 const cartSlice = createSlice({
   name: "cart",
   initialState: {
@@ -72,13 +72,7 @@ const cartSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(getUser.fulfilled, (state, action) => {
-      const cart = localStorage.getItem(`cart_${action.payload.id}`);
-      if (cart) {
-        state.data = cart;
-      }
-    });
-    builder.addCase(authRefresh.fulfilled, (state, action) => {
+    builder.addCase(logout.fulfilled, (state, action) => {
       state.data = {
         userId: 0,
         items: [],

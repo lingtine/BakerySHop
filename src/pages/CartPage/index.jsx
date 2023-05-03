@@ -8,13 +8,22 @@ import NoCart from "./NoCart";
 import { Helmet } from "react-helmet-async";
 
 import { usePriceFormatter } from "~/hooks";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const cx = classNames.bind(styles);
 
 function CartPage() {
   const { data } = useSelector((state) => state.cart);
-
   const total = usePriceFormatter(data ? data.total : 0, "VND");
+  const navigate = useNavigate();
+  const { status, isAuthenticated } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (status === "error" && !isAuthenticated) {
+      navigate("/login");
+    }
+  }, [isAuthenticated, status, navigate]);
 
   let renderCart;
   if (data.items) {

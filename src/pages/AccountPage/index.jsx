@@ -1,28 +1,35 @@
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { useThunk } from "~/hooks";
 import classNames from "classnames/bind";
 import styles from "./account.module.scss";
-import { authRefresh } from "~/store";
-import { useThunk } from "~/hooks";
+import { logout } from "~/store";
 import { Helmet } from "react-helmet-async";
 import { Button } from "~/components";
+import { useEffect } from "react";
 
 const cx = classNames.bind(styles);
 function AccountPage() {
-  const [doLogout] = useThunk(authRefresh);
+  const [doLogout, isLoading, error, data] = useThunk(logout);
   const navigate = useNavigate();
-  const { isAuthenticated, user } = useSelector((state) => state.auth);
+  const { isAuthenticated, user, accessToken } = useSelector(
+    (state) => state.auth
+  );
 
+  useEffect(() => {
+    if (isLoading) {
+    } else if (error) {
+    } else if (data) {
+      navigate("/");
+      localStorage.removeItem("accessToken");
+    }
+  }, [isAuthenticated, navigate, isLoading, error, data]);
   const handleLogout = () => {
-    doLogout();
-    navigate("/");
+    doLogout(accessToken);
   };
-  if (!isAuthenticated) {
-    navigate("/");
-  }
+
   let renderInfo;
   if (user) {
-    console.log(user);
     renderInfo = (
       <div className={cx("account-info")}>
         <div className={cx("content-info")}>

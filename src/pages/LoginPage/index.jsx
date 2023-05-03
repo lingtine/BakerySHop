@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styles from "./LoginPage.module.scss";
 import classNames from "classnames/bind";
 import { useNavigate } from "react-router-dom";
@@ -14,20 +14,34 @@ import { Button } from "~/components";
 const cx = classNames.bind(styles);
 
 function LoginPage() {
-  const [doObtainAccessToken] = useThunk(obtainAccessToken);
+  const [doObtainAccessToken, isLoading, error, data] =
+    useThunk(obtainAccessToken);
+
   const [doGetUser] = useThunk(getUser);
 
-  const { isAuthenticated, accessToken, error } = useSelector(
-    (state) => state.auth
-  );
-
   const navigate = useNavigate();
+  const { accessToken } = useSelector((state) => state.auth);
+  const [showMessengerError, setShowMessengerError] = useState(false);
+
   useEffect(() => {
-    if (isAuthenticated) {
+    if (data) {
       navigate("/");
+      localStorage.setItem("accessToken", data.access_token);
+
       doGetUser(accessToken);
+    } else if (error) {
+      setShowMessengerError(true);
+    } else if (isLoading) {
     }
-  }, [isAuthenticated, navigate, accessToken, doGetUser]);
+  }, [
+    data,
+    navigate,
+    accessToken,
+    doGetUser,
+    setShowMessengerError,
+    error,
+    isLoading,
+  ]);
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -52,7 +66,7 @@ function LoginPage() {
       </Helmet>
       <div className={cx("login")}>
         <h2 className={cx("login-heading")}>Login</h2>
-        {error === "Unauthorized" && (
+        {showMessengerError && (
           <div className={cx("messenger-error-login")}>
             email or password is incorrect
           </div>

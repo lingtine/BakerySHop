@@ -1,13 +1,14 @@
-import styles from "./RegisterPage.module.scss";
 import classNames from "classnames/bind";
+import styles from "./RegisterPage.module.scss";
 import { useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { Button } from "~/components";
-import { useThunk } from "~/hooks";
-import { register } from "~/store";
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
+import { useSelector } from "react-redux";
+import { useThunk } from "~/hooks";
+import { Button } from "~/components";
+import { register } from "~/store";
 
 const cx = classNames.bind(styles);
 
@@ -16,11 +17,21 @@ function RegisterPage() {
 
   const [doRegister, error] = useThunk(register);
 
-  const { error: messengerError, status } = useSelector((state) => state.auth);
+  const {
+    error: messengerError,
+    status,
+    isAuthenticated,
+  } = useSelector((state) => state.auth);
 
-  if (status === "succeeded") {
-    navigate("/login");
-  }
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/");
+    }
+    if (status === "succeeded" && isAuthenticated) {
+      navigate("/login");
+    }
+  }, [navigate, status, isAuthenticated]);
+
   const formik = useFormik({
     initialValues: {
       name: "",
