@@ -26,6 +26,7 @@ function AccountPage() {
   }, [isAuthenticated, navigate, isLoading, error, data]);
   const handleLogout = () => {
     doLogout(accessToken);
+    navigate("/");
   };
 
   let renderInfo;

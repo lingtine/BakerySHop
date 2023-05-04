@@ -2,14 +2,38 @@ import { useState, useRef, useEffect } from "react";
 import { BiSearchAlt } from "react-icons/bi";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import "./headerContent.scss";
-
+import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { logout } from "~/store";
+import { useThunk } from "~/hooks";
 function HeaderContent(name) {
   const [title, setTitle] = useState(name);
   const [searchTerm, setSearchTerm] = useState("");
   const [results, setResults] = useState([]);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const ref = useRef(null);
+  const [showInfo, setShowInfo] = useState(false);
+  const [doLogout, isLoading, error, data] = useThunk(logout);
+  const navigate = useNavigate();
+  const { isAuthenticated, user, accessToken } = useSelector(
+    (state) => state.auth
+  );
 
+  useEffect(() => {
+    if (isLoading) {
+    } else if (error) {
+    } else if (data) {
+      navigate("/");
+      localStorage.removeItem("accessToken");
+    }
+  }, [isAuthenticated, navigate, isLoading, error, data]);
+  const handleLogout = () => {
+    doLogout(accessToken);
+  };
+
+  const handleInfoClick = () => {
+    setShowInfo(!showInfo);
+  };
   const handleInputChange = async (value) => {
     setSearchTerm(value);
   };
@@ -94,8 +118,24 @@ function HeaderContent(name) {
           )}
         </div>
         <div className="admin-profile">
-          <div className="admin-profile__user">Admin User</div>
-          <IoMdNotificationsOutline />
+          <div className="admin-profile__user" onClick={handleInfoClick}>
+            <span style={{cursor: 'pointer'}}>{user && user.name}</span>
+            <div
+              className="user-info"
+              style={{ display: showInfo ? "block" : "none" }}
+            >
+              
+              <ul className="user-info__show">
+                <li className="" >
+                    <Link to="/account"><span>Thông tin</span> </Link>                
+                </li>
+                <li className="" >
+                    <span onClick={handleLogout}>Logout</span>                 
+                </li>
+              </ul>
+            </div>
+          </div>
+          
         </div>
       </header>
     </div>

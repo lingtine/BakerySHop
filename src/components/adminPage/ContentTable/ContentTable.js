@@ -16,10 +16,9 @@ function ContentTable() {
   const [searchTerm, setSearchTerm] = useState("");
   const startIndex = page * rowsPerPage;
   const endIndex = startIndex + rowsPerPage;
-  const sortOrder = orders.slice().reverse();
-  const displayedOrder = sortOrder.slice(startIndex, endIndex);
+  ;
   const navigate = useNavigate();
-  console.log(sortOrder);
+  
   useEffect(() => {
     const fecthOrder = () => {
       fetch("http://localhost:81/api/order-list")
@@ -58,12 +57,14 @@ function ContentTable() {
         return "Đơn hủy";
     }
     setState(state);
-    console.log(state);
   };
 
   const filteredOrders = orders.filter((order) =>
-        order.name.toString().includes(searchTerm)
+        order.customer_name.toString().includes(searchTerm)
     );
+
+    const sortOrder = filteredOrders.slice().reverse();
+  const displayedOrder = sortOrder.slice(startIndex, endIndex)
 
   return (
     <div className="admin-content">
@@ -101,7 +102,7 @@ function ContentTable() {
               </thead>
 
               <tbody className="admin-table__info--data">
-                {filteredOrders ? filteredOrders.map((order) => (
+                {displayedOrder ? displayedOrder.map((order) => (
                   <tr style={{ textAlign: "center" }} key={order.id}>
                     <Link
                       className="admin-table__info--data---link"
@@ -111,7 +112,7 @@ function ContentTable() {
                       #{order.id.toString().padStart(4, "0")}
                     </Link>
                     <td>{order.date_order}</td>
-                    <td>{order.name}</td>
+                    <td>{order.customer_name}</td>
                     <td>{order.payment}</td>
                     <td>{order.total}</td>
                     <td>{changeState(order.state)}</td>

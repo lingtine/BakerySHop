@@ -56,17 +56,16 @@ function Customers() {
                 <button className="admin-table__btn--show"></button>
               </div>
             </div>
-            <p className="admin-table__description">Description</p>
+            <p className="admin-table__description">Khách hàng</p>
             <div className="admin-table__info">
               <table className="admin-table__info--show">
                 <thead className="admin-table__info--title">
                   <tr style={{ textAlign: "center" }}>
                     <th>Tên</th>
-                    <th>Giới tính</th>
                     <th>Số điện thoại</th>
                     <th>Địa chỉ</th>
                     <th>Email</th>
-                    <th></th>
+                    
                   </tr>
                 </thead>
 
@@ -75,15 +74,10 @@ function Customers() {
                     <React.Fragment key={customer.id}>
                       <tr style={{ textAlign: "center" }}>
                         <td>{customer.name}</td>
-                        <td>{customer.gender}</td>
                         <td>{customer.phone_number}</td>
                         <td>{customer.address}</td>
                         <td>{customer.email}</td>
-                        <td>
-                          <button onClick={() => toggleDetails(customer.id)}>
-                            Xem chi tiết
-                          </button>
-                        </td>
+                        
                       </tr>
                       {/* {showDetails.includes(staff.id) && (
                         <tr>

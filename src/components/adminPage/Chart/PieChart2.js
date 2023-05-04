@@ -15,7 +15,7 @@ import {
     const dataChart = [
       { name: "Đơn Cod", value: data.props.orderCod },
       { name: "Đơn Banking", value: data.props.orderBank },
-      { name: "Đơn hủy", value: 7 },
+      { name: "Đơn hủy", value: data.props.orderCancel },
     ];
   
     const data02 = [
@@ -29,7 +29,7 @@ import {
       <React.Fragment>
         <div className="Pie-Chart">
           <PieChart width={300} height={300}>
-            <Pie
+            {/* <Pie
               dataKey="value"
               isAnimationActive={false}
               data={dataChart}
@@ -45,7 +45,7 @@ import {
                   fill={COLORS[index % COLORS.length]}
                 />
               ))}
-            </Pie>
+            </Pie> */}
             <Pie
               data={dataChart}
               dataKey="value"

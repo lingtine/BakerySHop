@@ -191,7 +191,8 @@
 .admin-statistics__container {
   display: grid;
         grid-template-columns: 0.9fr 1fr;
-        grid-template-rows: 150px 150px;
+        // grid-template-rows: 150px 150px;
+        grid-template-rows: 150px;
         gap: 4rem;
   &--data {
     width: 100%;
@@ -204,6 +205,7 @@
 .admin-statistics {
   padding: 50px;
   &__data {
+    max-height: 482px;
     display: flex;
     flex-direction: column;
     background-color: #fff;
@@ -273,7 +275,7 @@
   display: flex;
   flex-direction: column;
     right: -70px;
-    top: 162px;
+    top: 142px;
     align-items: center;
     max-width: 160px;
     font-size: 14px;

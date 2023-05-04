@@ -1,14 +1,43 @@
 import "../GlobalStyles/GlobalStyles.scss";
 import "~/components/Header/index";
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import HeaderContent from "./HeaderAdmin/headerContent";
 import React from "react";
 import Chart from "../adminPage/Chart/Chart";
+import Chart2 from "../adminPage/Chart/Chart2";
 import AdminPieChart from "../adminPage/Chart/PieChart";
 import AdminPieChart2 from "../adminPage/Chart/PieChart2";
-import RequireAuth from "./RequireAuth";
-function AdminPage() {
+import { Navigate, useNavigate } from "react-router-dom";
 
+function AdminPage() {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const { isAuthenticated, user, accessToken } = useSelector(
+    (state) => state.auth
+  );
+
+  // Kiểm tra quyền truy cập và chuyển hướng nếu cần
+  if (!user) {
+    navigate("/login");
+  }
+  
+
+
+useEffect(() => {
+  if(isAuthenticated == false) {
+    navigateRouter("/login");
+  }
+  if(user.level !== 1) {
+    navigateRouter("/admin/err")
+  }
+}, [isAuthenticated, user, accessToken]);
+  
+const navigateRouter = (url) => {
+  navigate(url)
+}
+  
+  console.log(isAuthenticated, user, accessToken);
   const [orders, setOrders] = useState([]);
   const [orderTotal, setOrderTotal] = useState(0);
   const [orderCod, setOrderCod] = useState(0);
@@ -17,6 +46,9 @@ function AdminPage() {
   const [doneWCod, setDoneWCod] = useState(0);
   const [doneWBank, setDoneWBank] = useState(0);
   const [orderCancel, setOrderCancel] = useState(0);
+  const [saleMonth, setSaleMonth] = useState([]);
+  const [renevueYear, setRenevueYear] = useState([]);
+  const [renevuePreviousYear, setRenevuePreviousYear] = useState([]);
   
   useEffect(() => {
     const fecthOrder = () => {
@@ -24,22 +56,36 @@ function AdminPage() {
         .then((res) => res.json())
         .then((data) => {
           setOrders(data.order);
-        });
+        })
+        .then(
+          fetch("http://localhost:81/api/sales-report")
+        .then((res) => res.json())
+        .then((data) => {
+          setSaleMonth(data.sales_by_day_of_week);
+          setRenevueYear(data.sales_by_month_of_year);
+          setRenevuePreviousYear(data.sales_by_month_of_previous_year);
+        })
+        )
     };
     fecthOrder();
   }, []);
+
+  useEffect(() => {
+
+  })
 
   useEffect(() => {
     if (orders.length > 0) {
       getInfo(orders);
     }
   }, [orders]);
-
+  
   function getInfo(data) {
     var totalOrder = 0;
     var codOrder = 0;
     var orderDone = 0;
     var orderCancel = 0;
+    
     data.forEach((order) => {
       totalOrder = order.total + totalOrder;
       if (order.payment == "COD") {
@@ -47,18 +93,7 @@ function AdminPage() {
       }
       if (order.state == 1 || order.state == 2) {
         orderDone += 1;
-        switch (order.payment) {
-          case "COD":
-            var totalCod = 0;
-            totalCod += 1;
-            setDoneWCod(totalCod);
-            break;
-          case "ATM":
-            var totalBank = 0;
-            totalBank += 1;
-            setDoneWBank(totalBank);
-            break;
-        }
+        
       } else if (order.state == 3) {
         orderCancel += 1;
       }
@@ -69,8 +104,14 @@ function AdminPage() {
     setDone(orderDone);
     setOrderCancel(orderCancel);
   }
+  const codCount = orders.reduce((count, item) => {
+    if (item.state == 1 || item.state == 2 && item.payment === 'COD') {
+      return count + 1;
+    }
+    return count;
+  }, 0);
 
-
+  
 
   const data = {
     orders: orders.length,
@@ -80,9 +121,21 @@ function AdminPage() {
     orderCod: orderCod,
     orderCancel: orderCancel,
     status: true,
+    sale: saleMonth,
   };
-  console.log(Number(orders.length));
 
+  const totalByDay = saleMonth.reduce(
+    (total, sale) => total + sale.total_sales, 0
+    );
+  
+  const totalPrevious = renevueYear.reduce(
+    (total, sale) => total + sale.total_sales, 0
+    );
+    const totalNow = renevuePreviousYear.reduce(
+      (total, sale) => total + sale.total_sales, 0
+      );
+    console.log(totalNow);
+    console.log(totalPrevious);
   return (
     <React.Fragment>
       
@@ -102,12 +155,12 @@ function AdminPage() {
                   <span>{orderTotal && orderTotal}</span>
                 </div>
                 <div className="admin-statistics__data--table---value">
-                  hình thức: COD {orderCod}, Banking{orders.length - orderCod}
+                  Hình thức: COD {orderCod}, Banking {orders.length - orderCod}
                 </div>
               </div>
             </div>
 
-            <div className="admin-statistics__data">
+            {/* <div className="admin-statistics__data">
               <label>Tổng doanh thu</label>
               <div className="admin-statistics__data--table">
                 <div className="admin-statistics__data--table---value">
@@ -121,7 +174,7 @@ function AdminPage() {
                   Banking: <span>{orderBank}</span>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             <div className="admin-statistics__data">
               <label>Đơn hoàn tất</label>
@@ -132,29 +185,29 @@ function AdminPage() {
                 </div>
                 <div className="admin-statistics__data--table---value">
                   ATM:
-                  <span>{doneWBank}</span>
+                  <span>{done-codCount}</span>
                 </div>
                 <div className="admin-statistics__data--table---value">
                   COD:
-                  <span>{doneWCod}</span>
+                  <span>{codCount}</span>
                 </div>
               </div>
             </div>
 
-            <div className="admin-statistics__data">
+            {/* <div className="admin-statistics__data">
               <label>Đơn hủy</label>
               <div className="admin-statistics__data--table">
                 <div className="admin-statistics__data--table---value">
                   Tổng đơn hủy : {orderCancel}
                 </div>
                 <div className="admin-statistics__data--table---value">
-                  Sản phẩm
+                  Banking: 
                 </div>
                 <div className="admin-statistics__data--table---value">
                   COD:
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -169,7 +222,7 @@ function AdminPage() {
                   <div>Đơn đã hủy: {orderCancel}</div>
                 </div>
                 <div className="admin-statistics__data--ratio">
-                  Tỷ lệ hủy đơn:{" "}
+                  Tỷ lệ hủy đơn:
                   {
                     <span>
                       {(
@@ -180,7 +233,7 @@ function AdminPage() {
                     </span>
                   }
                 </div>
-                <AdminPieChart props={data} />
+                <AdminPieChart2 props={data} />
               </div>
 
               <div className="admin-statistics__chart--description">
@@ -189,7 +242,10 @@ function AdminPage() {
                   tất
                 </div>
                 <div>
-                  <span className="description-span orderbank"></span>Đơn hủy
+                  <span className="description-span orderbank"></span>Đơn Banking
+                </div>
+                <div>
+                  <span className="description-span ordercancel"></span>Đơn Hủy
                 </div>
               </div>
             </div>
@@ -198,37 +254,29 @@ function AdminPage() {
           <div className="admin-statistics__chart--payment">
             <div className="admin-statistics__data">
               <div className="admin-statistics__data--piechart">
-                <label>Tổng đơn hàng</label>
+              <label> Đặt Hàng theo ngày</label>
                 <div className="admin-statistics__data--label">
-                  <span>{orders.length}</span> Đơn hàng
-                  <div>Tổng thu: {orderTotal}</div>
+                  <div>Doanh thu</div>
                 </div>
-                <AdminPieChart2 props={data} />
-              </div>
-
-              <div className="admin-statistics__chart--description">
-                <div>
-                  <span className="description-span ordercod"></span>Đơn COD
-                </div>
-                <div>
-                  <span className="description-span orderbank"></span>Đơn
-                  Banking
-                </div>
-                <div>
-                  <span className="description-span ordercancel"></span>Đơn Hủy
-                </div>
+                <Chart2 props={data} />
               </div>
             </div>
           </div>
         </div>
 
-        <div style={{padding: "70px", height: "700px"}} className="admin-statistics__chart--payment">
-          <div className="admin-statistics__data">
+        <div style={{padding: "70px", height: "700px", display: "flex", justifyContent: "center"}} className="admin-statistics__chart--payment">
+          <div style={{width: "fit-content"}} className="admin-statistics__data">
           <div className="admin-statistics__data--chart">
-                {/* <label>Tổng đơn hàng</label> */}
-                <div className="admin-statistics__data--label ">
-                  <span>{orders.length}</span> Đơn hàng
-                  <div>Tổng thu: {orderTotal}</div>
+          <label> Đặt Hàng theo ngày</label>
+
+                <div style={{display: "flex"}} className="admin-statistics__data--label ">
+                  <div style={{display: "flex" , flexDirection: "column", marginBottom: "10px"}}>
+                    <span>Tổng doanh thu hiện tại: {totalNow}</span>
+                    <span>Tổng thu năm trước: {totalPrevious}</span>
+                  </div>
+                  <div style={{marginLeft: "50px"}}>
+                    <span>Tỷ lệ tăng trưởng: {((totalNow/totalPrevious)*100).toFixed(3)}%</span>
+                  </div>
                 </div>
                 <Chart props={data} />
               </div>
