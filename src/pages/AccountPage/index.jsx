@@ -5,7 +5,7 @@ import classNames from "classnames/bind";
 import styles from "./account.module.scss";
 import { logout } from "~/store";
 import { Helmet } from "react-helmet-async";
-import { Button } from "~/components";
+import { Button, LoadingComponent } from "~/components";
 import { useEffect } from "react";
 
 const cx = classNames.bind(styles);
@@ -50,44 +50,50 @@ function AccountPage() {
       <Helmet>
         <title>Tài khoản – BAKES SAIGON</title>
       </Helmet>
-      <div className={cx("grid", "wide")}>
-        <div className={cx("account-header")}>
-          <div className={cx("row")}>
-            <div className={cx("col", "l-6", "m-6", "c-6")}>
-              <div className={cx("header-title")}>
-                <p>My Account</p>
-              </div>
-            </div>
-            <div className={cx("col", "l-6", "m-6", "c-6")}>
-              <div className={cx("action-logout")}>
-                <button className={cx("btn-logout")} onClick={handleLogout}>
-                  log out
-                </button>
+      {isLoading ? (
+        <LoadingComponent />
+      ) : (
+        <>
+          <div className={cx("grid", "wide")}>
+            <div className={cx("account-header")}>
+              <div className={cx("row")}>
+                <div className={cx("col", "l-6", "m-6", "c-6")}>
+                  <div className={cx("header-title")}>
+                    <p>My Account</p>
+                  </div>
+                </div>
+                <div className={cx("col", "l-6", "m-6", "c-6")}>
+                  <div className={cx("action-logout")}>
+                    <button className={cx("btn-logout")} onClick={handleLogout}>
+                      log out
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      <div className={cx("grid", "wide")}>
-        <div className={cx("row")}>
-          <div className={cx("col", "l-6", "m-6", "c-6")}>{renderInfo}</div>
-          <div className={cx("col", "l-6", "m-6", "c-6")}>
-            <div className={cx("account-content")}>
-              {user && user.level === 1 && (
-                <Button
-                  primary
-                  outline
-                  className={cx("btn-admin")}
-                  to={"/admin"}
-                >
-                  Go To Admin Page
-                </Button>
-              )}
+          <div className={cx("grid", "wide")}>
+            <div className={cx("row")}>
+              <div className={cx("col", "l-6", "m-6", "c-6")}>{renderInfo}</div>
+              <div className={cx("col", "l-6", "m-6", "c-6")}>
+                <div className={cx("account-content")}>
+                  {user && user.level === 1 && (
+                    <Button
+                      primary
+                      outline
+                      className={cx("btn-admin")}
+                      to={"/admin"}
+                    >
+                      Go To Admin Page
+                    </Button>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
+        </>
+      )}
     </div>
   );
 }

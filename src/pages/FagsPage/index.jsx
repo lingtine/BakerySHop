@@ -1,4 +1,4 @@
-import { Accordion, Banner } from "~/components";
+import { Accordion, Banner, LoadingComponent } from "~/components";
 import styles from "./Fags.module.scss";
 import classNames from "classnames/bind";
 import { fetchFags } from "~/store";
@@ -34,14 +34,20 @@ function FagsPage() {
       <Helmet>
         <title>Câu hỏi thường gặp – BAKES SAIGON</title>
       </Helmet>
-      <Banner image={banner} />
-      <div className={cx("grid", "wide")}>
-        <div className={cx("row")}>
-          <div className={cx("col", "l-12", "m-12", "c-12")}>
-            <div className={cx("accordion-wrapper")}>{content}</div>
+      {isLoading ? (
+        <LoadingComponent />
+      ) : (
+        <>
+          <Banner image={banner} />
+          <div className={cx("grid", "wide")}>
+            <div className={cx("row")}>
+              <div className={cx("col", "l-12", "m-12", "c-12")}>
+                <div className={cx("accordion-wrapper")}>{content}</div>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
+        </>
+      )}
     </div>
   );
 }

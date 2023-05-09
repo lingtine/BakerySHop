@@ -10,3 +10,4 @@ export { default as SelectBox } from "./SelectBox";
 export { default as InputQuantity } from "./InputQuantity";
 export { default as SideBar } from "./SideBar";
 export { default as Slider } from "./Slider";
+export { default as LoadingComponent } from "./LoadingComponent";

@@ -1,6 +1,6 @@
 import styles from "./About.module.scss";
 import classNames from "classnames/bind";
-import { Banner } from "~/components";
+import { Banner, LoadingComponent } from "~/components";
 import { useSelector } from "react-redux";
 import {
   fetchAboutBaker,
@@ -48,7 +48,7 @@ function AboutPage() {
 
   let contentAboutBaker;
   if (isLoadingOfFetchAboutBaker) {
-    contentAboutBaker = "loading";
+    contentAboutBaker = <LoadingComponent />;
   } else if (errorOfFetchAboutBaker) {
     contentAboutBaker = "error";
   } else if (aboutBaker) {
@@ -80,7 +80,7 @@ function AboutPage() {
   }
   let contentAboutKitchen;
   if (isLoadingOfFetchAboutKitchen) {
-    contentAboutKitchen = "loading";
+    contentAboutKitchen = <LoadingComponent />;
   } else if (errorOfFetchAboutKitchen) {
     contentAboutKitchen = "error";
   } else if (aboutKitchen) {
@@ -111,7 +111,7 @@ function AboutPage() {
   }
   let contentPosition;
   if (isLoadingOfFetchPosition) {
-    contentPosition = "loading";
+    contentPosition = <LoadingComponent />;
   } else if (errorOfFetchPosition) {
     contentPosition = "error";
   } else if (position) {
@@ -143,7 +143,7 @@ function AboutPage() {
 
   let contentHiring;
   if (isLoadingOfFetchHiring) {
-    contentHiring = "loading";
+    contentHiring = <LoadingComponent />;
   } else if (errorOfFetchHiring) {
     contentHiring = "error";
   } else if (hiring) {

@@ -7,6 +7,7 @@ import { useThunk } from "~/hooks";
 import { useEffect } from "react";
 import { IoIosArrowForward } from "react-icons/io";
 import { Helmet } from "react-helmet-async";
+import { LoadingComponent } from "~/components";
 
 const cx = classNames.bind(styles);
 
@@ -60,16 +61,21 @@ function Collections() {
       <Helmet>
         <title>Bộ sưu tập – BAKES SAIGON</title>
       </Helmet>
-      <div className={cx("grid", "wide")}>
-        <div className={cx("row")}>
-          <div className={cx("col", "l-12", "m-12", "c-12")}>
-            <div className={cx("heading")}>
-              <h4>CATALOG</h4>
+
+      {isLoading ? (
+        <LoadingComponent />
+      ) : (
+        <div className={cx("grid", "wide")}>
+          <div className={cx("row")}>
+            <div className={cx("col", "l-12", "m-12", "c-12")}>
+              <div className={cx("heading")}>
+                <h4>CATALOG</h4>
+              </div>
             </div>
           </div>
+          <div className={cx("row")}>{content}</div>
         </div>
-        <div className={cx("row")}>{content}</div>
-      </div>
+      )}
     </div>
   );
 }

@@ -9,7 +9,7 @@ import {
   fetchBranch,
   fetchForte,
 } from "~/store";
-import { Banner, Button, Slider } from "~/components";
+import { Banner, Button, Slider, LoadingComponent } from "~/components";
 import { useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 const cx = classNames.bind(styles);
@@ -70,7 +70,7 @@ function HomePage() {
 
   let contentNewProducts;
   if (isLoadingOfNewProducts) {
-    contentNewProducts = <h1>Loading</h1>;
+    contentNewProducts = <LoadingComponent />;
   } else if (errorOfFetchNewProducts) {
     contentNewProducts = <h1>Lỗi tại thằng Thọ</h1>;
   } else if (newProducts) {
@@ -79,7 +79,7 @@ function HomePage() {
 
   let contentSellingProducts;
   if (isLoadingOfSellingProducts) {
-    contentSellingProducts = "loading";
+    contentSellingProducts = <LoadingComponent />;
   } else if (errorOfFetchSellingProducts) {
     contentSellingProducts = "lỗi rồi";
   } else if (sellingProducts) {
@@ -139,7 +139,7 @@ function HomePage() {
 
   let contentNoNasties;
   if (isLoadingNoNasties) {
-    contentNoNasties = "đang tải";
+    contentNoNasties = <LoadingComponent />;
   } else if (errorOfFetchNoNasties) {
     contentNoNasties = "lổi rồi";
   } else if (noNasties) {
@@ -171,7 +171,7 @@ function HomePage() {
 
   let contentBranch;
   if (isLoadingOfBranch) {
-    contentNoNasties = "đang tải";
+    contentNoNasties = <LoadingComponent />;
   } else if (errorOfFetchBranch) {
     contentNoNasties = "lổi rồi";
   } else if (branch) {
@@ -204,7 +204,7 @@ function HomePage() {
 
   let contentForte;
   if (isLoadingOfForte) {
-    contentForte = "đang tải";
+    contentForte = <LoadingComponent />;
   } else if (errorOfFetchForte) {
     contentForte = "lổi rồi";
   } else if (forte) {

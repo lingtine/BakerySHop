@@ -7,7 +7,12 @@ import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 
 import { getProduct, addToCart } from "~/store";
-import { InputQuantity, Accordion, Button } from "~/components";
+import {
+  InputQuantity,
+  Accordion,
+  Button,
+  LoadingComponent,
+} from "~/components";
 import { usePriceFormatter, useThunk } from "~/hooks";
 
 import ModalPopUp from "./ModalPopUp";
@@ -17,10 +22,9 @@ function ProductDetailPage() {
   const { productId } = useParams();
   const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
-  const [doGetProduct, isLoading, error] = useThunk(getProduct);
+  const [doGetProduct, isLoading, error, data] = useThunk(getProduct);
   const { data: product } = useSelector((state) => state.product);
   const { isAuthenticated, user } = useSelector((state) => state.auth);
-  const { data } = useSelector((state) => state.cart);
 
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
@@ -34,7 +38,6 @@ function ProductDetailPage() {
   useEffect(() => {
     doGetProduct(productId);
   }, [productId, doGetProduct]);
-  useEffect(() => {}, [data.items, data.totalPrice]);
   const handleChangeQuantity = (value) => {
     setQuantity(value);
   };
@@ -145,20 +148,26 @@ function ProductDetailPage() {
         <title>{product ? product.name : "sản phẩm"} – BAKES SAIGON</title>
       </Helmet>
       <div>
-        <div className={cx("grid", "wide")}>
-          <div className={cx("row")}>
-            <div className={cx("col", "l-8", "m-6", "c-12")}>
-              <div className={cx("product-wrapper-image")}>
-                <img
-                  className={cx("product-image")}
-                  src={product ? `data:image/png;base64,${product.image}` : ""}
-                  alt="thọ ngu"
-                />
+        {isLoading ? (
+          <LoadingComponent />
+        ) : (
+          <div className={cx("grid", "wide")}>
+            <div className={cx("row")}>
+              <div className={cx("col", "l-8", "m-6", "c-12")}>
+                <div className={cx("product-wrapper-image")}>
+                  <img
+                    className={cx("product-image")}
+                    src={
+                      product ? `data:image/png;base64,${product.image}` : ""
+                    }
+                    alt="thọ ngu"
+                  />
+                </div>
               </div>
+              <div className={cx("col", "l-4", "m-6", "c-12")}>{content}</div>
             </div>
-            <div className={cx("col", "l-4", "m-6", "c-12")}>{content}</div>
           </div>
-        </div>
+        )}
       </div>
     </div>
   );
