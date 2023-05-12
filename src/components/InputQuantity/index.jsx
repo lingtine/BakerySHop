@@ -5,7 +5,7 @@ import classNames from "classnames/bind";
 
 const cx = classNames.bind(styles);
 
-function InputQuantity({ quantity, onChange }) {
+function InputQuantity({ quantity, onChange, maxQuantity = 99 }) {
   const [value, setValue] = useState(quantity);
   const handleChange = (event) => {
     const value = parseInt(event.target.value);
@@ -22,9 +22,9 @@ function InputQuantity({ quantity, onChange }) {
     }
   };
   const handleIncrease = () => {
-    if (quantity >= 99) {
-      setValue(99);
-      onChange(99);
+    if (quantity >= maxQuantity) {
+      setValue(maxQuantity);
+      onChange(maxQuantity);
     } else {
       setValue(value + 1);
       onChange(quantity + 1);
@@ -38,9 +38,9 @@ function InputQuantity({ quantity, onChange }) {
       return;
     }
     const value = parseInt(e.target.value);
-    if (value > 99) {
-      setValue(99);
-      onChange(99);
+    if (value > maxQuantity) {
+      setValue(maxQuantity);
+      onChange(maxQuantity);
     } else {
       setValue(value);
       onChange(value);

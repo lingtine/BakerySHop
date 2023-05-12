@@ -85,6 +85,7 @@ function ProductDetailPage() {
               productImage: product.image,
               quantity,
               price: product.promotion_price || product.unit_price,
+              stock: product.stock,
             },
           })
         );
@@ -113,7 +114,15 @@ function ProductDetailPage() {
           <div className={cx("product-price")}>{price}</div>
         </div>
         <div className={cx("product-actions")}>
-          <InputQuantity quantity={quantity} onChange={handleChangeQuantity} />
+          <div className={cx("product-action")}>
+            <InputQuantity
+              maxQuantity={product.stock}
+              quantity={quantity}
+              onChange={handleChangeQuantity}
+            />
+            <div>{product.stock} sản phẩm có sẵn</div>
+          </div>
+
           <button
             onClick={handleBuying}
             disabled={!product.stock}

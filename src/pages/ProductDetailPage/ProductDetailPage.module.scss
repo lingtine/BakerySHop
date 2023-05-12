@@ -23,6 +23,13 @@
 
   .product-actions {
     margin: 16px 0;
+
+    .product-action {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(---color-primary);
+    }
     .btn-purchase {
       margin: 8px 0;
       padding: 12px 0;

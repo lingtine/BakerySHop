@@ -18,7 +18,7 @@ function ProductCartItem({ product }) {
   );
   const price = usePriceFormatter(product.price, "VND");
   const handleChangeQuantity = (value) => {
-    if (value !== 0) {
+    if (value > 0) {
       setQuantity(value);
       dispatch(
         updateCart({
@@ -68,6 +68,7 @@ function ProductCartItem({ product }) {
                   <InputQuantity
                     quantity={quantity}
                     onChange={handleChangeQuantity}
+                    maxQuantity={product.stock}
                   />
                 </div>
               </div>

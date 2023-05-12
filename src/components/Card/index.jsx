@@ -65,6 +65,7 @@ function Card({ content }) {
             productImage: content.image,
             quantity: 1,
             price: content.promotion_price || content.unit_price,
+            stock: content.stock,
           },
         })
       );
