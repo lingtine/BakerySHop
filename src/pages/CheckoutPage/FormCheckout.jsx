@@ -72,7 +72,7 @@ function FormCheckout({ paymentType, handleLoading }) {
     }),
     onSubmit: (values) => {
       doOrder({
-        paymentType,
+        paymentType: paymentType === 0 ? "COD" : "ATM",
         items,
         total,
         email: user.email,
