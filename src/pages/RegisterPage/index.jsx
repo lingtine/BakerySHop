@@ -24,7 +24,6 @@ function RegisterPage() {
       console.log(error);
       setShowMessengerError(true);
     } else if (data) {
-      console.log(data);
       navigate("/login");
     }
   }, [navigate, isLoading, error, data]);

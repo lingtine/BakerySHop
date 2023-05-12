@@ -13,9 +13,10 @@ const cx = classNames.bind(styles);
 
 function ResetPasswordPage() {
   const [doChangePassword, isLoading, error, data] = useThunk(changePassword);
+
   const navigate = useNavigate();
   const { token } = useParams();
-
+  const value = token.split("-");
   const [showMessengerError, setShowMessengerError] = useState(false);
   const [succeeded, setSucceeded] = useState(null);
 
@@ -23,6 +24,7 @@ function ResetPasswordPage() {
     if (data) {
       console.log(data);
       setSucceeded(data.data);
+      navigate("/login");
     } else if (error) {
       console.log(error);
       setShowMessengerError(true);
@@ -47,7 +49,8 @@ function ResetPasswordPage() {
     }),
     onSubmit: ({ password, password_confirmation }) => {
       doChangePassword({
-        resetToken: token,
+        resetToken: value[0],
+        email: value[1],
         password,
         password_confirmation,
       });
@@ -62,9 +65,9 @@ function ResetPasswordPage() {
         <h2 className={cx("forgot-password-heading")}>
           RESET ACCOUNT PASSWORD
         </h2>
-        {/* <p className={cx("forgot-password-sub-heading")}>
-          Enter a new password for lingtine@gmail.com
-        </p> */}
+        <p className={cx("forgot-password-sub-heading")}>
+          Enter a new password for {value[1]}
+        </p>
         {showMessengerError && (
           <div className={cx("messenger-error")}>Email is not registered</div>
         )}

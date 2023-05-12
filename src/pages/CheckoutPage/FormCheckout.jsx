@@ -5,15 +5,15 @@ import classNames from "classnames/bind";
 import { Button } from "~/components";
 import { order } from "~/store";
 import { useThunk } from "~/hooks";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import ModalPopUp from "./ModalPopUp";
 import { IoIosArrowBack } from "react-icons/io";
 
 const cx = classNames.bind(styles);
 
-function FormCheckout({ paymentType }) {
-  const [doOrder] = useThunk(order);
+function FormCheckout({ paymentType, handleLoading }) {
+  const [doOrder, isLoading, error, data] = useThunk(order);
   const [isOpen, setIsOpen] = useState(false);
   const { items, total } = useSelector((state) => state.cart.data);
   const { user } = useSelector((state) => state.auth);
@@ -25,6 +25,11 @@ function FormCheckout({ paymentType }) {
     setIsOpen(false);
   };
 
+  useEffect(() => {
+    if (data) {
+      handleOpen();
+    }
+  }, [data]);
   const actionContent = (
     <div className={cx("modal-action")}>
       <Button
@@ -39,7 +44,7 @@ function FormCheckout({ paymentType }) {
       <Button
         className={cx("modal-action-btn")}
         onClick={handleClose}
-        to={"/collection"}
+        to={"/collections"}
         primary
         outline
       >
@@ -71,12 +76,11 @@ function FormCheckout({ paymentType }) {
         items,
         total,
         email: user.email,
-        phone_number: values.phoneNumber,
+        phone_number: Number(values.phoneNumber),
         address: values.address,
         name: values.name,
         note: values.note,
       });
-      handleOpen();
     },
   });
 
@@ -155,9 +159,7 @@ function FormCheckout({ paymentType }) {
 
         {isOpen && (
           <ModalPopUp actions={actionContent} onClose={handleClose}>
-            <div className={cx("modal-heading")}>
-              Đã thêm sản phẩm vào giỏ hàng
-            </div>
+            <div className={cx("modal-heading")}>Đã đặt hàng thành công</div>
           </ModalPopUp>
         )}
       </div>

@@ -14,7 +14,9 @@ import { useNavigate } from "react-router-dom";
 const cx = classNames.bind(styles);
 
 function CartPage() {
+  const { items } = useSelector((state) => state.cart.data);
   const { data } = useSelector((state) => state.cart);
+
   const total = usePriceFormatter(data ? data.total : 0, "VND");
   const navigate = useNavigate();
   const { status, isAuthenticated } = useSelector((state) => state.auth);
@@ -25,6 +27,7 @@ function CartPage() {
     }
   }, [isAuthenticated, status, navigate]);
 
+  console.log(items);
   let renderCart;
   if (data.items) {
     renderCart = data.items.map((item) => {
@@ -42,7 +45,7 @@ function CartPage() {
         <title>Giỏ hàng của bạn – BAKES SAIGON</title>
       </Helmet>
 
-      {data.items.length === 0 ? (
+      {items.length === 0 ? (
         <NoCart />
       ) : (
         <div className={cx("grid", "wide")}>

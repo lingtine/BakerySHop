@@ -7,14 +7,6 @@ import { getUser, setCart } from "./store";
 import { useSelector } from "react-redux";
 import { HelmetProvider } from "react-helmet-async";
 
-import {
-  LoginPage,
-  RegisterPage,
-} from "~/pages";
-import AdminPage from "~/components/adminPage/adminPage.js";
-import { Navigate, useNavigate } from "react-router-dom";
-
-
 function App() {
   const [doGetUser, isLoading, error, data] = useThunk(getUser);
   const { accessToken } = useSelector((state) => state.auth);
@@ -31,7 +23,9 @@ function App() {
     } else if (data) {
       const cartJson = localStorage.getItem(`cart_${data.id}`);
       let cart = JSON.parse(cartJson);
-      dispatch(setCart(cart));
+      if (cart) {
+        dispatch(setCart(cart));
+      }
     }
   }, [isLoading, error, data, dispatch]);
 

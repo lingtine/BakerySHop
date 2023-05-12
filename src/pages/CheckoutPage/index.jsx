@@ -83,6 +83,7 @@ function CheckoutPage() {
       <Helmet>
         <title>Thanh Toán – BAKES SAIGON</title>
       </Helmet>
+
       <div className={cx("grid", "wide")}>
         <div className={cx("row")}>
           <div className={cx("col", "l-6", "m-12", "c-12")}>

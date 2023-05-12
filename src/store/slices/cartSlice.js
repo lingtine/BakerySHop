@@ -89,6 +89,7 @@ const cartSlice = createSlice({
       .addCase(order.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.data.items = [];
+        state.data.total = 0;
         localStorage.removeItem(`cart_${state.data.userId}`);
       });
   },
