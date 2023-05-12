@@ -87,7 +87,6 @@ function CartPage() {
               <div className={cx("col", "l-6", "m-12", "c-12")}>
                 <div className={cx("cart-notes-wrapper")}>
                   <h5>Note for Bakes (special instructions, writings, etc.)</h5>
-                  <textarea className={cx("product-note")}></textarea>
                 </div>
               </div>
               <div className={cx("col", "l-6", "m-12", "c-12")}>
