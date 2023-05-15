@@ -3,6 +3,7 @@ import { useParams, useHistory } from "react-router-dom";
 import HeaderContent from "../HeaderAdmin/headerContent";
 import { useNavigate } from "react-router-dom";
 import Button from "~/components/Button";
+import { useSelector } from "react-redux";
 
 function EditProduct({ match }) {
   const [types, setTypes] = useState([]);
@@ -21,9 +22,30 @@ function EditProduct({ match }) {
   const navigate = useNavigate();
   const { id } = useParams();
 
+  const { status, isAuthenticated, user, accessToken } = useSelector(
+    (state) => state.auth
+  );
+
+  // Kiểm tra quyền truy cập và chuyển hướng nếu cần
+  if (!user) {
+    navigate("/login");
+  }
+
+  useEffect(() => {
+    if (isAuthenticated == false && status == "error") {
+      navigateRouter("/login");
+    }
+    if (user.level !== 1) {
+      navigateRouter("/admin/err");
+    }
+  }, [isAuthenticated, user, accessToken]);
+
+  const navigateRouter = (url) => {
+    navigate(url);
+  };
   useEffect(() => {
     const fetchProducts = () => {
-      fetch(`http://localhost:81/api/products/${id}`)
+      fetch(`http://localhost:81/api/products/${id}`, {})
         .then((res) => res.json())
         .then((data) => {
           setProduct(data.product);
@@ -111,6 +133,8 @@ function EditProduct({ match }) {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        token_type: "bearer",
+        Authorization: `Bearer ${accessToken}`,
       },
       body: myJson,
     })
@@ -131,24 +155,23 @@ function EditProduct({ match }) {
   return (
     <div className="addproducts-page">
       <div className="admin-content">
-        <HeaderContent props={"Sửa sản phẩm"} />
+        <HeaderContent props={"Sửa sản phẩm"} />{" "}
         <div className="admin-content__form">
-          <h1> Sửa sản phẩm</h1>
+          <h1> Sửa sản phẩm </h1>{" "}
           <div className="addproduct-form">
             <form onSubmit={handleSubmit}>
               <div className="addproduct-form__heading">
                 <div className="addproduct-form__heading--name">
-                  <label htmlFor="name">Tên sản phẩm</label>
+                  <label htmlFor="name"> Tên sản phẩm </label>{" "}
                   <input
                     type="text"
                     name="name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                  />
-                </div>
-
+                  />{" "}
+                </div>{" "}
                 <div className="addproduct-form__heading--unit">
-                  <label htmlFor="unit">Loại sản phẩm</label>
+                  <label htmlFor="unit"> Loại sản phẩm </label>{" "}
                   <div className="select-dropdown">
                     <select
                       style={{ width: "100%" }}
@@ -158,78 +181,74 @@ function EditProduct({ match }) {
                     >
                       {types.map((type, i) => (
                         <option key={type.id} value={type.id}>
-                          {type.name}
+                          {" "}
+                          {type.name}{" "}
                         </option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-              </div>
-
+                      ))}{" "}
+                    </select>{" "}
+                  </div>{" "}
+                </div>{" "}
+              </div>{" "}
               <div className="addproduct-form__info">
                 <div className="addproduct-form__info--price">
-                  <label htmlFor="unit_price">Giá thành</label>
+                  <label htmlFor="unit_price"> Giá thành </label>{" "}
                   <input
                     type="text"
                     name="unit_price"
                     value={price}
                     onChange={(e) => setPrice(e.target.value)}
-                  />
-                </div>
-
+                  />{" "}
+                </div>{" "}
                 <div className="addproduct-form__info--Stock">
-                  <label htmlFor="stock">Số lượng</label>
+                  <label htmlFor="stock"> Số lượng </label>{" "}
                   <input
                     type="text"
                     name="stock"
                     value={stock}
                     onChange={(e) => setStock(e.target.value)}
-                  />
-                </div>
-              </div>
-
+                  />{" "}
+                </div>{" "}
+              </div>{" "}
               <div className="addproduct-form__image">
-                <label htmlFor="image">Hình ảnh</label>
+                <label htmlFor="image"> Hình ảnh </label>{" "}
                 <input
                   type="file"
                   accept="image/jpeg,image/png"
                   onChange={handleImageUpload}
-                />
+                />{" "}
                 <img
                   style={{ width: "100%", height: "100%" }}
                   src={`data:image/png;base64,${images}`}
                   onChange={handleImageUpload}
-                />
-              </div>
-
+                />{" "}
+              </div>{" "}
               <div className="addproduct-form__description">
-                <label htmlFor="description">Chú thích</label>
+                <label htmlFor="description"> Chú thích </label>{" "}
                 <textarea
                   type="text"
                   placeholder="Chú thích về sản phẩm..."
                   name="description"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                ></textarea>
-              </div>
+                ></textarea>{" "}
+              </div>{" "}
               <div className="addproduct-form__promotion">
-                <label htmlFor="description">Giảm giá</label>
+                <label htmlFor="description"> Giảm giá </label>{" "}
                 <input
                   type="text"
                   placeholder="Giảm giá sản phẩm..."
                   name="promotion_price"
                   value={promotion}
                   onChange={(e) => setPromotion(e.target.value)}
-                />
-              </div>
-
+                />{" "}
+              </div>{" "}
               <div className="addproduct-form__btn">
-                <Button type="submit">Cập nhật</Button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
+                <Button type="submit"> Cập nhật </Button>{" "}
+              </div>{" "}
+            </form>{" "}
+          </div>{" "}
+        </div>{" "}
+      </div>{" "}
     </div>
   );
 }

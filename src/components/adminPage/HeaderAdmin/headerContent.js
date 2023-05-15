@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "~/store";
 import { useThunk } from "~/hooks";
+
 function HeaderContent(name) {
   const [title, setTitle] = useState(name);
   const [searchTerm, setSearchTerm] = useState("");
@@ -63,6 +64,11 @@ function HeaderContent(name) {
     }
   };
 
+  const changePage = (event, id) => {
+    event.preventDefault();
+    navigate(`/admin/editproduct/${id}`);
+  };
+
   //   const handleKeyDown = (event) => {
   //     if (event.key === "Enter") {
   //       handleSearch();
@@ -82,7 +88,7 @@ function HeaderContent(name) {
   return (
     <div className="admin-container">
       <header className="admin-header">
-        <span className="admin-title">{title.props}</span>
+        <span className="admin-title"> {title.props} </span>{" "}
         <div className="admin-search" ref={ref}>
           <input
             className="admin-search__input"
@@ -91,53 +97,62 @@ function HeaderContent(name) {
             value={searchTerm}
             onChange={(e) => handleInputChange(e.target.value)}
             // onKeyDown={handleKeyDown}
-          />
+          />{" "}
           <label>
             <BiSearchAlt className="icon-search" />
-          </label>
+          </label>{" "}
           {isDropdownOpen && results.length > 0 && (
             <ul className="admin-search__results">
+              {" "}
               {results.map((result) => (
-                <li className="admin-search__results--item" key={result.id}>
+                <li
+                  onClick={(event) => changePage(event, result.id)}
+                  className="admin-search__results--item"
+                  key={result.id}
+                >
                   <div className="admin-search__results--item-img">
                     <img
                       className="img-product"
                       src={`data:image/png;base64,${result.image}`}
-                    />
-                  </div>
+                    />{" "}
+                  </div>{" "}
                   <div className="admin-search__results--item-info">
-                    <span>{result.name}</span>
+                    <span> {result.name} </span>{" "}
                     <div>
-                      <span>Tồn kho: {result.stock}</span>
-                      <span>{result.unit_price}</span>
-                    </div>
-                  </div>
+                      <span> Tồn kho: {result.stock} </span>{" "}
+                      <span> {result.unit_price} </span>{" "}
+                    </div>{" "}
+                  </div>{" "}
                 </li>
-              ))}
+              ))}{" "}
             </ul>
-          )}
-        </div>
+          )}{" "}
+        </div>{" "}
         <div className="admin-profile">
           <div className="admin-profile__user" onClick={handleInfoClick}>
-            <span style={{cursor: 'pointer'}}>{user && user.name}</span>
+            <span style={{ cursor: "pointer" }}>
+              {" "}
+              {user && user.name} <IoMdNotificationsOutline />{" "}
+            </span>{" "}
             <div
               className="user-info"
               style={{ display: showInfo ? "block" : "none" }}
             >
-              
               <ul className="user-info__show">
-                <li className="" >
-                    <Link to="/account"><span>Thông tin</span> </Link>                
-                </li>
-                <li className="" >
-                    <span onClick={handleLogout}>Logout</span>                 
-                </li>
-              </ul>
-            </div>
-          </div>
-          
-        </div>
-      </header>
+                <li className="">
+                  <Link to="/account">
+                    {" "}
+                    <span> Thông tin </span>{" "}
+                  </Link>{" "}
+                </li>{" "}
+                <li className="">
+                  <span onClick={handleLogout}> Logout </span>{" "}
+                </li>{" "}
+              </ul>{" "}
+            </div>{" "}
+          </div>{" "}
+        </div>{" "}
+      </header>{" "}
     </div>
   );
 }

@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import HeaderContent from "../HeaderAdmin/headerContent";
 import { MdUpdate } from "react-icons/md";
 import Button from "~/components/Button";
+import { useSelector } from "react-redux";
 
 function AddProduct() {
   const navigate = useNavigate();
@@ -16,8 +17,10 @@ function AddProduct() {
   const [promotion, setPromotion] = useState();
   const [stock, setStock] = useState();
   const [price, setPrice] = useState();
-  const [alreadyInStock, setAlreadyInStock] = useState();
-
+  const [alreadyInStock, setAlreadyInStock] = useState(1);
+  const { status, isAuthenticated, user, accessToken } = useSelector(
+    (state) => state.auth
+  );
   useEffect(() => {
     const fetchProducts = () => {
       fetch("http://localhost:81/api/products-type")
@@ -28,6 +31,23 @@ function AddProduct() {
     };
     fetchProducts();
   }, []);
+
+  if (!user) {
+    navigate("/login");
+  }
+
+  useEffect(() => {
+    if (isAuthenticated == false && status == "error") {
+      navigateRouter("/login");
+    }
+    if (user.level !== 1) {
+      navigateRouter("/admin/err");
+    }
+  }, [isAuthenticated, user, accessToken]);
+
+  const navigateRouter = (url) => {
+    navigate(url);
+  };
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
@@ -85,6 +105,8 @@ function AddProduct() {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        token_type: "bearer",
+        Authorization: `Bearer ${accessToken}`,
       },
       body: myJson,
     })
@@ -102,14 +124,14 @@ function AddProduct() {
   return (
     <div className="addproducts-page">
       <div className="admin-content">
-        <HeaderContent props={"Thêm sản phẩm"} />
+        <HeaderContent props={"Thêm sản phẩm"} />{" "}
         <div className="admin-content__form">
-          <h1> Thêm sản phẩm</h1>
+          <h1> Thêm sản phẩm </h1>{" "}
           <div className="addproduct-form">
             <form onSubmit={handleSubmit}>
               <div className="addproduct-form__heading">
                 <div className="addproduct-form__heading--name">
-                  <label htmlFor="name">Tên sản phẩm</label>
+                  <label htmlFor="name"> Tên sản phẩm </label>{" "}
                   <input
                     type="text"
                     name="name"
@@ -118,10 +140,9 @@ function AddProduct() {
                     required
                     onInvalid="this.setCustomValidity('Vui lòng nhập trường này')"
                   />
-                </div>
-
+                </div>{" "}
                 <div className="addproduct-form__heading--unit">
-                  <label htmlFor="unit">Loại sản phẩm</label>
+                  <label htmlFor="unit"> Loại sản phẩm </label>{" "}
                   <div className="select-dropdown">
                     <select
                       style={{ width: "100%" }}
@@ -131,21 +152,21 @@ function AddProduct() {
                     >
                       {types.map((type, i) => (
                         <option key={type.id} value={type.id}>
-                          {type.name}
+                          {" "}
+                          {type.name}{" "}
                         </option>
-                      ))}
-                    </select>
-                  </div>
+                      ))}{" "}
+                    </select>{" "}
+                  </div>{" "}
                   {/* <div className="addproduct-form__unit_price">
-                          <label htmlFor="description">Loại</label>
-                          <input type="text" placeholder="Chú thích về sản phẩm..." name="unit" value={value.unit} onChange={handleInputChange} />
-                      </div> */}
-                </div>
-              </div>
-
+                                                                                                                                                                          <label htmlFor="description">Loại</label>
+                                                                                                                                                                          <input type="text" placeholder="Chú thích về sản phẩm..." name="unit" value={value.unit} onChange={handleInputChange} />
+                                                                                                                                                                      </div> */}{" "}
+                </div>{" "}
+              </div>{" "}
               <div className="addproduct-form__info">
                 <div className="addproduct-form__info--price">
-                  <label htmlFor="unit_price">Giá thành</label>
+                  <label htmlFor="unit_price"> Giá thành </label>{" "}
                   <input
                     type="text"
                     name="unit_price"
@@ -154,10 +175,9 @@ function AddProduct() {
                     required
                     onInvalid="this.setCustomValidity('Vui lòng nhập trường này')"
                   />
-                </div>
-
+                </div>{" "}
                 <div className="addproduct-form__info--Stock">
-                  <label htmlFor="stock">Số lượng</label>
+                  <label htmlFor="stock"> Số lượng </label>{" "}
                   <input
                     type="text"
                     name="stock"
@@ -166,12 +186,11 @@ function AddProduct() {
                     required
                     onInvalid="this.setCustomValidity('Vui lòng nhập trường này')"
                   />
-                </div>
-              </div>
-
+                </div>{" "}
+              </div>{" "}
               <div className="addproduct-form__image">
-                <label htmlFor="image">Hình ảnh</label>
-                {/* <input type="file" accept="image/jpeg,image/png" name="image" onChange={handleInputChange} /> */}
+                <label htmlFor="image"> Hình ảnh </label>{" "}
+                {/* <input type="file" accept="image/jpeg,image/png" name="image" onChange={handleInputChange} /> */}{" "}
                 <input
                   type="file"
                   accept="image/jpeg,image/png"
@@ -179,12 +198,11 @@ function AddProduct() {
                   required
                   onInvalid="this.setCustomValidity('Vui lòng nhập trường này')"
                 />
-                <img style={{ width: "100%" }} src={image}></img>
-              </div>
-
+                <img style={{ width: "100%" }} src={image} />{" "}
+              </div>{" "}
               <div className="addproduct-form__description">
-                <label htmlFor="description">Chú thích</label>
-                <input
+                <label htmlFor="description"> Chú thích </label>{" "}
+                <textarea
                   type="text"
                   placeholder="Chú thích về sản phẩm..."
                   name="description"
@@ -193,9 +211,9 @@ function AddProduct() {
                   required
                   onInvalid="this.setCustomValidity('Vui lòng nhập trường này')"
                 />
-              </div>
+              </div>{" "}
               <div className="addproduct-form__promotion">
-                <label htmlFor="description">Giảm giá</label>
+                <label htmlFor="description"> Giảm giá </label>{" "}
                 <input
                   type="text"
                   placeholder="Chú thích về sản phẩm..."
@@ -205,19 +223,23 @@ function AddProduct() {
                   required
                   onInvalid="this.setCustomValidity('Vui lòng nhập trường này')"
                 />
-              </div>
-              <div className="addproduct-form__new">
-                <label htmlFor="description">Mới</label>
+              </div>{" "}
+              <div
+                style={{ marginTop: "16px" }}
+                className="addproduct-form__new"
+              >
+                <label htmlFor="description"> Mới </label>{" "}
                 <input
-                  type="text"
+                  type="checkbox"
                   placeholder="Chú thích về sản phẩm..."
                   name="new"
-                  value={alreadyInStock}
+                  // value={alreadyInStock}
+                  checked
                   onChange={(e) => setAlreadyInStock(e.target.value)}
-                />
-              </div>
+                />{" "}
+              </div>{" "}
               <div className="addproduct-form__unit_price">
-                <label htmlFor="description">Kích thước</label>
+                <label htmlFor="description"> Kích thước </label>{" "}
                 <input
                   type="text"
                   placeholder="Chú thích về sản phẩm..."
@@ -227,14 +249,14 @@ function AddProduct() {
                   required
                   onInvalid="this.setCustomValidity('Vui lòng nhập trường này')"
                 />
-              </div>
+              </div>{" "}
               <div className="addproduct-form__btn">
-                <Button type="submit">Thêm sản phẩm</Button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
+                <Button type="submit"> Thêm sản phẩm </Button>{" "}
+              </div>{" "}
+            </form>{" "}
+          </div>{" "}
+        </div>{" "}
+      </div>{" "}
     </div>
   );
 }

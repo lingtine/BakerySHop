@@ -7,6 +7,7 @@ import TablePagination from "@mui/material/TablePagination";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "../adminPage.scss";
+import { useSelector } from "react-redux";
 
 function ProductsPage() {
   const [products, setProducts] = useState([]);
@@ -17,7 +18,27 @@ function ProductsPage() {
   const endIndex = startIndex + rowsPerPage;
   const displayedProducts = products.slice(startIndex, endIndex);
   const navigate = useNavigate();
+  const { status, isAuthenticated, user, accessToken } = useSelector(
+    (state) => state.auth
+  );
 
+  // Kiểm tra quyền truy cập và chuyển hướng nếu cần
+  if (!user) {
+    navigate("/login");
+  }
+
+  useEffect(() => {
+    if (isAuthenticated == false && status == "error") {
+      navigateRouter("/login");
+    }
+    if (user.level !== 1) {
+      navigateRouter("/admin/err");
+    }
+  }, [isAuthenticated, user, accessToken]);
+
+  const navigateRouter = (url) => {
+    navigate(url);
+  };
   useEffect(() => {
     const fetchProducts = () => {
       fetch("http://localhost:81/api/products")
@@ -47,6 +68,12 @@ function ProductsPage() {
   const handleDelete = (id) => {
     fetch(`http://localhost:81/api/products/${id}`, {
       method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        token_type: "bearer",
+        Authorization: `Bearer ${accessToken}`,
+      },
     })
       .then((res) => res.json())
       .then((data) => {
@@ -55,6 +82,7 @@ function ProductsPage() {
       .catch((error) => {
         console.error("Error deleting product:", error);
       });
+    window.location.reload();
   };
 
   const handleChangePage = (event, newPage) => {
@@ -73,62 +101,57 @@ function ProductsPage() {
         <div className="admin-table">
           <div className="admin-table__container">
             <div className="admin-table__header">
-              <h3 className="admin-table__title">Danh sách sản phẩm</h3>
+              <h3 className="admin-table__title"> Danh sách sản phẩm </h3>{" "}
               <div className="admin-table__btn">
-                <button className="admin-table__btn--week"></button>
-                <button className="admin-table__btn--month"></button>
-              </div>
-            </div>
-            <p className="admin-table__description">Description</p>
+                <button className="admin-table__btn--week"> </button>{" "}
+                <button className="admin-table__btn--month"> </button>{" "}
+              </div>{" "}
+            </div>{" "}
+            <p className="admin-table__description"> Description </p>{" "}
             <div className="admin-table__info">
               <table className="admin-table__info--show">
                 <thead className="admin-table__info--title">
                   <tr style={{ textAlign: "center" }}>
-                    <th>Mã sản phảm</th>
-                    <th></th>
-                    <th>Tên</th>
-                    <th>Giá thành</th>
-                    <th>Tồn</th>
-                    <th>Loại</th>
-                    <th>Chỉnh sửa</th>
-                  </tr>
-                </thead>
-
+                    <th> Mã sản phảm </th> <th> </th> <th> Tên </th>{" "}
+                    <th> Giá thành </th> <th> Tồn </th> <th> Loại </th>{" "}
+                    <th> Chỉnh sửa </th>{" "}
+                  </tr>{" "}
+                </thead>{" "}
                 <tbody className="admin-table__info--data">
+                  {" "}
                   {loading ? (
-                    <div></div>
+                    <div> </div>
                   ) : (
                     displayedProducts.map((product, index) => (
                       <tr style={{ textAlign: "center" }} key={product.id}>
-                        <td>#{product.id.toString().padStart(3, "0")}</td>
+                        <td> #{product.id.toString().padStart(3, "0")} </td>{" "}
                         <td style={{ width: "100px" }}>
                           <img
                             className="img-product"
                             src={`data:image/png;base64,${product.image}`}
-                          />
-                        </td>
-                        <td>{product.name}</td>
-                        <td>{product.unit_price}</td>
-                        <td>{product.stock}</td>
-                        <td>{product.unit}</td>
+                          />{" "}
+                        </td>{" "}
+                        <td> {product.name} </td>{" "}
+                        <td> {product.unit_price} </td>{" "}
+                        <td> {product.stock} </td> <td> {product.unit} </td>{" "}
                         <td>
                           <Link
                             onClick={() => handleEditProduct(product)}
                             to={`/admin/editproduct/${product.id}`}
                           >
                             <FiEdit />
-                          </Link>
+                          </Link>{" "}
                           <AiOutlineDelete
                             onClick={() =>
                               alertDelete(product.name, product.id)
                             }
-                          />
-                        </td>
+                          />{" "}
+                        </td>{" "}
                       </tr>
                     ))
-                  )}
-                </tbody>
-              </table>
+                  )}{" "}
+                </tbody>{" "}
+              </table>{" "}
               <TablePagination
                 style={{ fontSize: "16px" }}
                 component="div"
@@ -137,11 +160,11 @@ function ProductsPage() {
                 onPageChange={handleChangePage}
                 rowsPerPage={rowsPerPage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
+              />{" "}
+            </div>{" "}
+          </div>{" "}
+        </div>{" "}
+      </div>{" "}
     </div>
   );
 }
