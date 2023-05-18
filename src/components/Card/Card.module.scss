@@ -42,14 +42,14 @@
 
   .container-img {
     position: relative;
-    width: 100%;
-    max-width: 300px;
+    max-width: 250px;
     display: flex;
     justify-content: center;
     align-items: center;
     margin-bottom: 12px;
     img {
-      width: 100%;
+      max-width: 100%;
+      max-height: 100%;
     }
 
     .status {
